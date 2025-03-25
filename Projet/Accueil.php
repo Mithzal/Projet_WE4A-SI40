@@ -9,7 +9,7 @@
  <body>
 
    <div class="content">
-    <p>En construction</p>
+    <p>Accueil en construction</p>
   </div>
 
  </body>

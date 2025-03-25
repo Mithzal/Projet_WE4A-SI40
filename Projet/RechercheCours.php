@@ -7,6 +7,6 @@ include("../PageParts/Header.php");
  <body>
 
       <div class="content">
-        <p>En construction</p>
+        <p>Recherche de cours en construction</p>
       </div>
  </body>

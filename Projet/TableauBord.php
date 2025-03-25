@@ -9,6 +9,6 @@ include("../PageParts/Header.php");
 
       <div class="content">
           <p>Je suis un body libre de toute tête</p>
-        <p>En construction</p>
+        <p>Tableau de bord en construction</p>
       </div>
  </body>
