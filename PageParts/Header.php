@@ -32,14 +32,14 @@
 
 <body>
 <div class="menu">
-    <a href="../Projet/Accueil.php">
+    <a href="../Pages/Accueil.php">
         <button class="logo-button">
             <img src="../Image/logo_utbm.png" alt="Logo" class="logo">
         </button>
     </a>
-    <a href="../Projet/RechercheCours.php"><button>Recherche de Cours</button></a>
-    <a href="../Projet/MesCours.php"><button>Mes cours</button></a>
-    <a href="../Projet/TableauBord.php"><button>Tableau de bord</button></a>
+    <a href="../Pages/RechercheCours.php"><button>Recherche de Cours</button></a>
+    <a href="../Pages/MesCours.php"><button>Mes cours</button></a>
+    <a href="../Pages/TableauBord.php"><button>Tableau de bord</button></a>
     <div class="dropdown">
         <button class="dropbtn">Sites de l'UTBM</button>
         <div class="dropdown-content">
