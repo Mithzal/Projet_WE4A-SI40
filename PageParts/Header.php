@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../Styles/Accueil.css"/>
+    <link rel="icon" type="image/x-icon" href="../Image/Moodle.ico"/>
 
     <?php
     $title = "Je suis le titre de la page";
