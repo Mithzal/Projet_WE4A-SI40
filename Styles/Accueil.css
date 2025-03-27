@@ -9,14 +9,12 @@ body {
   position: fixed; /* Ancre le menu en haut de l'écran */
   top: 0;
   width: 100%;
-  z-index: 1000; /* Assure que le menu reste au-dessus des autres éléments */
-  margin: 0; /* Supprime les marges du menu */
-  padding: 0.4%;
+  height: 8.5%;
+  display: flex;
+  align-items: center;
 }
 
 .menu .logo-button {
-  float: left;
-  padding: 0;
   border: none;
   background: none;
 }
@@ -35,11 +33,12 @@ body {
   display: block;
   color: white;
   text-align: center;
-  padding: 16px 16px;
+  padding: 20px 16px;
   text-decoration: none;
   font-size: 16px;
   border: none;
   background: none;
+  outline: 3px #007BC0;
 }
 
 .menu button.right {
@@ -60,18 +59,18 @@ body {
     background-color: #f9f9f9;
     border: none;
     cursor: pointer;
-    padding: 10px;
+    padding: 10px 16px;
   }
   
   .dropdown-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     top:100%;
     left:0;
+    width: 100%;
   }
   .dropdown-content a {
     color: black;
@@ -82,7 +81,7 @@ body {
   }
   
   .dropdown-content a:hover {
-    background-color: #f1f1f1;
+    background-color: #c2c2c2;
   }
   
   .dropdown:hover .dropdown-content {
@@ -93,7 +92,7 @@ body {
     color: black;
   }
   .content {
-    padding-top: 50px; 
+    padding-top: 60px;
   }
   .profile-button {
     background-color: #f9f9f9;

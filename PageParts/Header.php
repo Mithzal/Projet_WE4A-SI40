@@ -41,7 +41,7 @@
     <a href="../Pages/MesCours.php"><button>Mes cours</button></a>
     <a href="../Pages/TableauBord.php"><button>Tableau de bord</button></a>
     <div class="dropdown">
-        <button class="dropbtn">Sites de l'UTBM</button>
+        <button class="dropbtn">Sites de l'UTBM ▼</button>
         <div class="dropdown-content">
             <a href="https://outlook.office.com/mail/">Outlook</a>
             <a href="https://utbm.sharepoint.com/sites/Portail?sw=auth">My UTBM</a>
