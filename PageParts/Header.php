@@ -49,7 +49,12 @@
             <a href="https://ae.utbm.fr/">AE</a>
         </div>
     </div>
-    <button class="profile-button right">AS</button>
+
+    <?php
+    include("../PageParts/AccountManager.php");
+    ?>
+
+
 </div>
 
 </body>
