@@ -1,32 +1,25 @@
-.profile-button_right {
-    background-image: url('../Image/no_image.webp');
-    color: black;
-    border: none;
+.profile-button_right .profile_picture {
     border-radius: 50%;
-    width: 40px;
     height: 40px;
-    text-align: center;
+    width: 40px;
     font-size: 16px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed; /* Assure que le bouton reste visible */
-    top: 10px; /* Ajustez cette valeur pour positionner le bouton */
-    right: 10px; /* Ajustez cette valeur pour positionner le bouton */
-    z-index: 1001; /* Assure que le bouton reste au-dessus du menu */
-    align-content: center;
-    padding: 0;
+    margin-top: -20px;
+
+}
+.menu .profile-button_right:hover {
+    background-color: transparent !important; /* Désactive l'effet de survol */
+}
+.menu .profile_picture:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Ajoute une ombre lors du survol */
+
 }
 
-.profile-button_right:hover {
-    background-color: #e9e9e9;
-}
+
 
 .dropdown_account{
     top: 10px;
-    right: 10px; /* Positionne le dropdown à gauche */
-    z-index: 1001; /* Assure que le dropdown reste au-dessus du menu */
+    right: 10px; /* Positionne le dropdown à droite */
     position: relative;
     display: inline-block;
     float : right;
@@ -39,19 +32,16 @@
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.8);
     z-index: 1;
-    top: calc(100% + 50px); /* Position the dropdown content below the button */
+    top: 100% ; /* Position the dropdown content below the button */
     right: 0 ; /* Align the dropdown content to the left edge of the button */
     color: black;
     font-size: 14px;
     padding: 12px 16px;
     text-decoration: none;
 
-}
 
-.dropdown-content_account a:hover {
-    background-color: #f1f1f1;
 }
 
 .dropdown_account:hover .dropdown-content {
@@ -70,17 +60,8 @@
     display: block;
 }
 
-.profile_picture {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    object-fit: cover;
-    justify-content: center;
-}
 
-.popup {
+.popup  {
     display: none;
     position: fixed;
     z-index: 1002;
@@ -114,3 +95,18 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+.popup-content .popup-button {
+    display: block; /* ou inline-block, selon le contexte */
+    visibility: visible;
+    opacity: 1;
+    background-color: #4e4949; /* Couleur de fond */
+    cursor: pointer; /* Curseur de la souris */
+    padding: 10px 16px; /* Espacement interne */
+}
+.popup-content .popup-button:hover {
+    background-color: #c2c2c2; /* Couleur de fond au survol */
+    color: black; /* Couleur du texte au survol */
+    cursor: pointer; /* Curseur de la souris au survol */
+}
+

@@ -7,6 +7,13 @@ function toggleDropdown() {
     }
 }
 
+function setLoggin(value){//pas sur que ça fonctionne
+    $_SESSION['loggedin'] = value;
+
+}
+
+
+
 $(document).ready(function() {//je pense que ce bout de code n'est plus utile
     $('#profile').click(function(e) {
         e.preventDefault();

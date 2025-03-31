@@ -18,17 +18,21 @@
         <div class="dropdown-content_account" id="profileDropdown">
             <a href="#" id="profile" onclick="openProfilePopup()">Profil</a>
             <a href="#" id="settings">Notes</a>
-            <a href="#" id="logout">Déconnexion</a>
+            <a href="#" id="logout" onclick="setLoggin(false)">Déconnexion</a>
         </div>
     </div>
     <?php else : ?>
     <div>
-        <button class="profile-button right" onclick="toggleDropdown()"><img class="profile_picture" src="../Image/no_image.webp" alt="Profile Icon"></button>
+        <button class="profile-button_right" onclick="toggleDropdown()"><img class="profile_picture" src="../Image/no_image.webp" alt="Profile Icon"></button>
         <div class="dropdown-content_account" id="profileDropdown">
-            <a href="../Pages/Connexion.php">Connexion</a> <!-- Il va falloir modifier ce bouton pour amener sur la page de connexion -->
+            <a href="#" onclick="setLoggin(true)">Connexion</a> <!-- Il va falloir modifier ce bouton pour amener sur la page de connexion -->
         </div>
     </div>
-    <?php endif; ?>
+    <?php
+        $_SESSION['loggedin'] = true;
+    endif;
+
+    ?>
     <div id="content"></div>
 
     <script src="../script/AccountManagerDropdown.js"></script>
@@ -39,7 +43,7 @@
             <h2>Informations de l'utilisateur</h2>
             <p>Nom: John Doe</p>
             <p>Email: john.doe@example.com</p>
-            <button onclick="editProfile()">Modifier</button>
+            <button onclick="editProfile()" class="popup-button">Modifier</button>
         </div>
     </div>
 

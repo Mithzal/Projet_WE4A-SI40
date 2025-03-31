@@ -50,11 +50,11 @@
         </div>
     </div>
 
+
+
     <?php
     include("../PageParts/AccountManager.php");
     ?>
-
-
 </div>
 
 </body>
