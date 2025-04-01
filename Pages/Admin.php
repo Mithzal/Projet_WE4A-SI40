@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administration</title>
-    <link rel="stylesheet" href="Admin.css"> <!-- Lien vers un fichier CSS -->
-    <link rel="stylesheet" href="Accueil.css">
-    <script src="AdminScript.js" defer></script> <!-- Lien vers un fichier JS -->
+    <link rel="stylesheet" href="../Styles/Admin.css"> <!-- Lien vers un fichier CSS -->
+    <link rel="stylesheet" href="../Styles/Accueil.css">
+    <script src="../script/AdminScript.js" defer></script> <!-- Lien vers un fichier JS -->
 </head>
 <body>
     <div class="menu">
-        <a href="Accueil.html">
+        <a href="Accueil.php">
            <button class="logo-button">
-               <img src="logo_utbm.png" alt="Logo" class="logo">
+               <img src="../Image/logo_utbm.png" alt="Logo" class="logo">
            </button>
         </a>
-        <a href="RechercheCours.html"><button>Recherche de Cours</button></a>
-        <a href="MesCours.html"><button>Mes cours</button></a>
-        <a href="TableauBord.html"><button>Tableau de bord</button></a>
+        <a href="RechercheCours.php"><button>Recherche de Cours</button></a>
+        <a href="MesCours.php"><button>Mes cours</button></a>
+        <a href="TableauBord.php"><button>Tableau de bord</button></a>
         <button class="profile-button right">AS</button>
       </div>
 
@@ -39,7 +39,7 @@
             </div>
             <div class="tab-content" id="ues-tab" style="display: none;">
                 <h3>Liste des UE</h3>
-                <button class="tab-button"id="create-ue">Créer une UE</button>
+                <button class="tab-button" id="create-ue">Créer une UE</button>
                 <ul id="ue-list">
                     <!-- Liste des UE générée dynamiquement -->
                 </ul>
