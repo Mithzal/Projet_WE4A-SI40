@@ -73,13 +73,17 @@
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
 }
-
-.popup-content {
+.popup-box{
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: row;
 }
 
 .close {
@@ -96,17 +100,44 @@
     cursor: pointer;
 }
 
-.popup-content .popup-button {
+.popup-box .popup-button {
     display: block; /* ou inline-block, selon le contexte */
     visibility: visible;
     opacity: 1;
     background-color: #4e4949; /* Couleur de fond */
     cursor: pointer; /* Curseur de la souris */
     padding: 10px 16px; /* Espacement interne */
+    margin : 10px; /* Espacement externe */
 }
-.popup-content .popup-button:hover {
+.popup-box .popup-button:hover {
     background-color: #c2c2c2; /* Couleur de fond au survol */
     color: black; /* Couleur du texte au survol */
     cursor: pointer; /* Curseur de la souris au survol */
 }
+.popup-box .profile_picture{
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: -20px;
+}
 
+.popup-UE {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #fefefe;
+    padding: 20px;
+    width: 50%; /* Ajustez la largeur selon vos besoins */
+    border-left: 2px solid #000; /* Trait de séparation à gauche */
+    display: inline-block; /* Affichage en ligne */
+    vertical-align: top; /* Aligner en haut */
+    padding-left: 150px; /* Espace entre le trait et le texte */
+}
+.popup-content .profile{
+    display: flex;
+    margin-bottom: 20px; /* Espace entre les éléments */
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+}

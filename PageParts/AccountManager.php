@@ -38,12 +38,33 @@
     <script src="../script/AccountManagerDropdown.js"></script>
 
     <div id="profilePopup" class="popup">
-        <div class="popup-content">
+        <div class="popup-box">
             <span class="close" onclick="closeProfilePopup()">&times;</span>
-            <h2>Informations de l'utilisateur</h2>
-            <p>Nom: John Doe</p>
-            <p>Email: john.doe@example.com</p>
+            <div class="popup-content">
+                <div class="profile">
+                    <h2>Informations de l'utilisateur</h2>
+                    <p>Photo de profile : </p>
+                    <img class="profile_picture" src="../Image/no_image.webp" alt="Profile Icon">
+                    <p>Nom: John Doe</p>
+                    <p>Email: john.doe@example.com</p>
+
+                </div>
+
+                <div class="popup-UE">
+                    <h2>Mes UEs</h2>
+                    <ul>
+                        <li>UE1</li>
+                        <li>UE2</li>
+                        <li>UE3</li>
+                        <li>UE4</li>
+                        <li>UE5</li>
+                    </ul>
+
+
+                </div>
+            </div>
             <button onclick="editProfile()" class="popup-button">Modifier</button>
+            <button onclick="editPassWord()" class="popup-button">Changer le mot de passe</button>
         </div>
     </div>
 
