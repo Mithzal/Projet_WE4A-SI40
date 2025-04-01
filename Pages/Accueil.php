@@ -1,35 +1,32 @@
-// JE DOIS ENCORE ARRANGER LA PAGE POUR QU'ELLE FONCTIONNE
-
-
-
-
-<!DOCTYPE html>
-<html lang="fr">
-
-
- <?php
-    include("../PageParts/Header.php");
- ?>
-
- <body>
-
-   <div class="content">
-    <p>Accueil en construction</p>
-  </div>
-
-
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8">
+   <html lang="fr">
     <title>Accueil</title>
     <link rel="stylesheet" href="./Styles/style.css">
     <link rel="stylesheet" href="./Styles/login_style.css">
 </head>
 
 
-<body>
+ <?php
+    include("../PageParts/Header.php");
+ ?>
+
+
+
+
+
+    
+ <body>
+
+   <div class="content">
+    
+
+
+
+  
 
 <header class="topbar">
 
@@ -79,6 +76,8 @@
 
 
 
+    
+
 
 <div class="main-content">
 
@@ -103,6 +102,7 @@
         </div>
 
     </div>
+</div>
 
 
 </div>
