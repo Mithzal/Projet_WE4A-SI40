@@ -8,6 +8,6 @@ include("../PageParts/Header.php");
 
 
       <div class="content">
-        <p>Mes cours sont construction</p>
+        <p>Mes cours sont construction ça avance</p>
       </div>
  </body>
