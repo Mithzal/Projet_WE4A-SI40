@@ -2,11 +2,10 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-   <html lang="fr">
     <title>Accueil</title>
-    <link rel="stylesheet" href="./Styles/style.css">
-    <link rel="stylesheet" href="./Styles/login_style.css">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../Styles/style-accueil.css">
+    <link rel="stylesheet" href="../Styles/login_style.css">
 </head>
 
 
@@ -28,7 +27,7 @@
 
   
 
-<header class="topbar">
+
 
 
 <!-- Bouton pour ouvrir le menu -->
@@ -60,19 +59,19 @@
             <button type="submit" style="width:50%;">Se Connecter</button>
         </div>
     </form>
-    <script src="./scripts/verif_form.js"></script>
+    <script src="../script/verif_form.js"></script>
 
     <br>
     <div style="text-align: center;">
-        <a href="creation_compte.php">Pas encore de compte ?</a>
+        <!--<a href="creation_compte.php">-->Pas encore de compte ?<!--</a>  A MODIFIER -->
     </div>
 
 </div>
 
 <!-- script qui ouvre et ferme le menu latéral -->
-<script src="./scripts/login_menu.js"></script>
+<script src="../script/login_menu.js"></script>
 
-</header>
+
 
 
 
@@ -87,17 +86,17 @@
     <div class="grid-container">
 
         <div>
-            <img src="./ressources/architecture.webp" alt="architecture" class="grid-container-img">
+            <img src="../Image/architecture.webp" alt="architecture" class="grid-container-img">
             <h4>Read me</h4>
         </div>
 
         <div>
-            <a href="https://www.utbm.fr/"><img src="./ressources/utbm_montbe.webp" alt="batiment de l'utbm" class="grid-container-img"></a>
+            <a href="https://www.utbm.fr/"><img src="../Image/utbm_montbe.webp" alt="batiment de l'utbm" class="grid-container-img"></a>
             <h4><a href="https://www.utbm.fr/">Découvrir l'UTBM</a></h4>
         </div>
 
         <div>
-            <a href="https://bibliotheque.utbm.fr/"><img src="./ressources/semafort.jpg" alt="logo semafort" class="grid-container-img"></a>
+            <a href="https://bibliotheque.utbm.fr/"><img src="../Image/semafort.jpg" alt="logo semafort" class="grid-container-img"></a>
             <h4><a href="https://bibliotheque.utbm.fr/">Bibliothèque</a></h4>
         </div>
 
