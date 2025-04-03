@@ -17,7 +17,7 @@
         </button>
         <div class="dropdown-content_account" id="profileDropdown">
             <a href="#" id="profile" onclick="openProfilePopup()">Profil</a>
-            <a href="#" id="settings">Notes</a>
+            <a href="#" id="grades" onclick="openGradePopup()">Notes</a>
             <a href="#" id="logout" onclick="setLoggin(false)">Déconnexion</a>
         </div>
     </div>
@@ -68,7 +68,29 @@
         </div>
     </div>
 
+    <div id="gradePopup" class="gradePopup">
+        <div class="popup-box">
+            <span class="close" onclick="closeGradePopup()">&times;</span>
+            <div class="popup-content">
+                <h2>Mes notes</h2>
+                <table>
+                    <thead>
+                        <tr>
+
+                            <!-- Ajoutez d'autres en-têtes de colonne si nécessaire -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Les lignes du tableau seront générées dynamiquement par JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <script src="../script/ProfileMenu.js"></script>
+    <script src="../script/GradePopup.js"></script>
+
 
 
 </body>
