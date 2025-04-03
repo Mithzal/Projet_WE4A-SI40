@@ -8,19 +8,12 @@
     <link rel="stylesheet" href="../Styles/Accueil.css">
     <script src="../script/AdminScript.js" defer></script> <!-- Lien vers un fichier JS -->
 </head>
-<body>
-    <div class="menu">
-        <a href="Accueil.php">
-           <button class="logo-button">
-               <img src="../Image/logo_utbm.png" alt="Logo" class="logo">
-           </button>
-        </a>
-        <a href="RechercheCours.php"><button>Recherche de Cours</button></a>
-        <a href="MesCours.php"><button>Mes cours</button></a>
-        <a href="TableauBord.php"><button>Tableau de bord</button></a>
-        <button class="profile-button right">AS</button>
-      </div>
 
+<?php
+include("../PageParts/Header.php");
+?>
+
+<body>
     <h1 style="padding-top: 50px;">Page d'administration</h1>
     
     <main>

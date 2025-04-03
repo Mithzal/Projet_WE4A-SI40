@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f9fc;
+    margin: 0;
+    padding: 20px;
+}
+.container {
+    max-width: 1200px;
+    margin: 100px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    font-size: 24px;
+}
+.section {
+    margin-top: 20px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.course-grid {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+.course-card {
+    min-width: 25%;
+    background: #e3f2fd;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.arrows {
+    display: flex;
+    gap: 10px;
+}
+
+.prev, .next {
+    cursor: pointer;
+    padding: 16px;
+    color: gray;
+    font-weight: bold;
+    font-size: 18px;
+    user-select: none;
+    background-color: lightgray;
+    border: none;
+}
+.prev:hover, .next:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.favorites {
+    text-align: center;
+    padding: 30px;
+    color: gray;
+}
