@@ -32,12 +32,15 @@ include("../PageParts/Header.php");
             </div>
             <div class="tab-content" id="ues-tab" style="display: none;">
                 <h3>Liste des UE</h3>
-                <button class="tab-button" id="create-ue">Créer une UE</button>
+                <button class="tab-button"id="create-ue">Créer une UE</button>
                 <ul id="ue-list">
                     <!-- Liste des UE générée dynamiquement -->
                 </ul>
             </div>
+            <div id="creation-zone">
+                <!-- Les formulaires de création seront insérés ici dynamiquement -->
+            </div>
         </section>
-    </main> 
+    </main>
 </body>
 </html>
