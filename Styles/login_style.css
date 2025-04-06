@@ -11,6 +11,7 @@
     border: none;
     border-radius: 5px;
     transition-duration: 0.2s; /* temps que prends le bouton à passer à l'état hover */
+    z-index: 1001;
 }
 /* ombrage du bouton quand survolé */
 .menu-button:hover {
@@ -52,12 +53,11 @@
     cursor: pointer;
 }
 
-/*style du formulaire d'inscription*/
 
 /* Styles généraux pour le formulaire */
 form {
     max-width: 400px;
-    margin: 50px auto; /* Centrer le formulaire sur la page */
+    margin: 50px auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;

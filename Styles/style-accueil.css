@@ -1,40 +1,25 @@
-/*style de maud*/
 body {
-    background: #E0ECF9;
-    font-family: Arial, sans-serif;
+    font-family: Verdana, serif;
     display: flex;
+    background-color: #E0ECF9;
     margin: 0;
 }
 
-.main-content {
-    background: #FFFFFF;
-    margin-top : 7%;
+.container {
+    display: flex;
+    width: 96%;
+    margin-top: 6%;
     margin-left: 2%;
     margin-right: 2%;
+}
+
+.main-content {
+    border-radius: 10px;
+    background: #FFFFFF;
     padding: 20px;
     flex-grow: 1;
 }
-/*
-.topbar {
-    width: 100%;
-    background-color: #007BC0;
-    color: white;
-    padding: 15px 0;
-    text-align: left;
-    position: fixed;
-    top : 0;
-    left: 0;
-}
 
-
-.topbar ul li a:hover {
-    color: black;
-    background-color: #FFFFFF;
-}
-*/
-/*fin du style de Maud*/
-
-/*style des liens*/
 a{
     color: black;
 }
@@ -57,4 +42,17 @@ a:hover {
     width: 100%;
     height: 70%;
     border-radius: 3%;
+}
+
+#search-bar {
+    padding: 8px;
+    width: 30%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#sort-courses {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administration</title>
     <link rel="stylesheet" href="../Styles/Admin.css"> <!-- Lien vers un fichier CSS -->
-    <link rel="stylesheet" href="../Styles/Accueil.css">
+    <link rel="stylesheet" href="../Styles/Header.css">
     <script src="../script/AdminScript.js" defer></script> <!-- Lien vers un fichier JS -->
 </head>
 
