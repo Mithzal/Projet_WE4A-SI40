@@ -33,11 +33,13 @@ include("../PageParts/Header.php");
             <button>Participants</button>
             <button>Notes</button>
         </div>
-        <section id="introduction">
-            <h2>Introduction</h2>
-            <p>Bienvenue dans ce cours. Vous apprendrez les bases essentielles.</p>
+        <section id="introduction" class="post message information" data-date="2024-06-01">
+            <div class="information text-content">
+                <h2>Introduction</h2>
+                <p>Bienvenue dans ce cours. Vous apprendrez les bases essentielles.</p>
+            </div>
         </section>
-        <section id="messageimportant" class="post message important">
+        <section id="messageimportant" class="post message important" data-date="2024-12-20">
             <div class="alert-icon">
                 <div class="circle"></div>
                 <div class="exclamation">!</div>
@@ -47,11 +49,13 @@ include("../PageParts/Header.php");
                 <p>Ceci est très important</p>
             </div>
         </section>
-        <section id="messageinfo" class="post message information">
-            <h2>Message information</h2>
-            <p>Ceci est une information</p>
+        <section id="messageinfo" class="post message information" data-date="2024-09-05">
+            <div class="information text-content">
+                <h2>Message information</h2>
+                <p>Ceci est une information</p>
+            </div>
         </section>
-        <section id="download" class="post depot">
+        <section id="download" class="post depot" data-date="2024-11-15">
             <div class="download-icon">
                 <div class="arrow-head"></div>
                 <div class="bar"></div>
@@ -62,7 +66,7 @@ include("../PageParts/Header.php");
                 <a href="#" class="download">Télécharger le fichier ZIP</a>
             </div>
         </section>
-        <section id="quiz">
+        <section id="quiz" data-date="2024-08-30">
             <h2>Quiz Final</h2>
             <p>Testez vos connaissances en passant le quiz final.</p>
         </section>
