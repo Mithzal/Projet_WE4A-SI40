@@ -19,7 +19,7 @@
         case "TableauBord.php":
             $title = "Tableau de bord";
             break;
-        case "Accueil.php":
+        case "index.php":
             $title = "Moodle";
             break;
     }
@@ -31,7 +31,7 @@
 
 <header class="header">
     <div class="menu">
-        <a href="../Pages/Accueil.php">
+        <a href="../Pages/index.php">
             <button class="logo-button">
                 <img src="../Image/logo_utbm.png" alt="Logo" class="logo">
             </button>
