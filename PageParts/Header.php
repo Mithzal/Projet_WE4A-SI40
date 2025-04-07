@@ -54,6 +54,9 @@
                 <a href="https://ae.utbm.fr/">AE</a>
             </div>
         </div>
+        <a href="../Pages/Admin.php">
+            <button>Administration</button>
+        </a>
 
 
         <?php

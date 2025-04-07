@@ -30,7 +30,7 @@ include("../PageParts/Header.php");
                  <h3>Mathématiques</h3>
                  <p>Introduction aux fonctions et aux dérivées.</p>
                  <div class="course-footer">
-                     <a href="#">Accéder</a>
+                     <a href="UnCours.php">Accéder</a>
                      <span class="progress">Progression : 75%</span>
                  </div>
              </div>
@@ -38,7 +38,7 @@ include("../PageParts/Header.php");
                  <h3>Informatique</h3>
                  <p>Développement web et algorithmique.</p>
                  <div class="course-footer">
-                     <a href="#">Accéder</a>
+                     <a href="UnCours.php">Accéder</a>
                      <span class="progress">Progression : 0%</span>
                  </div>
              </div>
@@ -46,7 +46,7 @@ include("../PageParts/Header.php");
                  <h3>Physique</h3>
                  <p>Mécanique et thermodynamique.</p>
                  <div class="course-footer">
-                     <a href="#">Accéder</a>
+                     <a href="UnCours.php">Accéder</a>
                      <span class="progress">Progression : 30%</span>
                  </div>
              </div>
@@ -55,7 +55,7 @@ include("../PageParts/Header.php");
                  <h3>Chimie</h3>
                  <p>Equations chimiques et lois de conservation.</p>
                  <div class="course-footer">
-                     <a href="#">Accéder</a>
+                     <a href="UnCours.php">Accéder</a>
                      <span class="progress">Progression : 0%</span>
                  </div>
              </div>
@@ -63,7 +63,7 @@ include("../PageParts/Header.php");
                  <h3>Design</h3>
                  <p>Exploration des principes de conception et du processus créatif.</p>
                  <div class="course-footer">
-                     <a href="#">Accéder</a>
+                     <a href="UnCours.php">Accéder</a>
                      <span class="progress">Progression : 7%</span>
                  </div>
              </div>
@@ -71,7 +71,7 @@ include("../PageParts/Header.php");
                  <h3>Electronique analogique</h3>
                  <p>Introduction aux amplificateurs opérationnels.</p>
                  <div class="course-footer">
-                     <a href="#">Accéder</a>
+                     <a href="UnCours.php">Accéder</a>
                      <span class="progress">Progression : 62%</span>
                  </div>
              </div>

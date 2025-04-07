@@ -14,7 +14,7 @@ include("../PageParts/Header.php");
 ?>
 
 <body>
-    <h1 style="padding-top: 50px;">Page d'administration</h1>
+    <h1 style="padding-top: 50px;">Page d'administration (non définitive)</h1>
     
     <main>
         <section id="catalogue">
