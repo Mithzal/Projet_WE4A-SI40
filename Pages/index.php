@@ -50,7 +50,7 @@ include("../PageParts/Header.php");
 
         <br>
         <div style="text-align: center;">
-            <!--<a href="creation_compte.php">-->Pas encore de compte ?<!--</a>  A MODIFIER -->
+            <!--<a href="creation_compte.php">-->Mot de passe oublié ?<!--</a>  A MODIFIER -->
         </div>
 
     </div>

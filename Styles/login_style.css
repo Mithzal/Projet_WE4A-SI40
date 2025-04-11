@@ -1,29 +1,29 @@
 /* Bouton pour ouvrir le menu */
 .menu-button {
     position: fixed;
-    top: 10px;
+    top: 0;
     right: 70px;
-    padding: 10px 20px;
+    padding: 20px 16px;
     font-size: 16px;
-    cursor: pointer;
     background-color: #007BC0;
     color: #fff;
     border: none;
-    border-radius: 5px;
     transition-duration: 0.2s; /* temps que prends le bouton à passer à l'état hover */
     z-index: 1001;
 }
+
 /* ombrage du bouton quand survolé */
 .menu-button:hover {
-    background-color: #007BC0;
-    color: white;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 1);
+    background-color: white;
+    color: black;
+    /*box-shadow: -2px 0 5px rgba(0, 0, 0, 1);*/
+    cursor: pointer;
 }
 
 /* Menu latéral */
 .side-menu {
     position: fixed;
-    top: 0;
+    top: 60px;
     right: -30%; /* Caché à droite par défaut */
     width: 30%;
     height: 100%;
@@ -34,6 +34,7 @@
     transition: right 0.3s ease; /* Animation pour l'ouverture/fermeture */
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
     padding-top: 20px;
+
 }
 
 /* Menu visible */
@@ -115,7 +116,7 @@ form input[type="password"]:focus {
 form button[type="submit"] {
     width: 100%; /* Bouton pleine largeur */
     padding: 10px;
-    background-color: #007bff; /* Bleu clair */
+    background-color: #007BC0;
     color: white;
     border: none;
     border-radius: 5px;
@@ -126,7 +127,7 @@ form button[type="submit"] {
 
 /* Effet au survol */
 form button[type="submit"]:hover {
-    background-color: #0056b3; /* Bleu plus foncé */
+    background-color: #5eb7e8 ; /* Bleu plus clair */
 }
 
 /* Pour rendre le formulaire plus attrayant */
