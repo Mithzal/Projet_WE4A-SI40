@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MessDetectorOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PHPCSFixerOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PHPCodeSnifferOptionsConfiguration">
+    <option name="highlightLevel" value="WARNING" />
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PhpCodeSniffer">
+    <phpcs_settings>
+      <phpcs_by_interpreter asDefaultInterpreter="true" interpreter_id="fb8769c1-7819-4ff1-9373-b7f6fce34548" timeout="30000" />
+    </phpcs_settings>
+  </component>
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/dependency-injection" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/dotenv" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/framework-bundle" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/flex" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/maker-bundle" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/polyfill-php83" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/runtime" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/routing" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/composer" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/cache-contracts" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/cache" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/config" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
+  <component name="PhpStan">
+    <PhpStan_settings>
+      <phpstan_by_interpreter asDefaultInterpreter="true" interpreter_id="fb8769c1-7819-4ff1-9373-b7f6fce34548" timeout="60000" />
+    </PhpStan_settings>
+  </component>
+  <component name="PhpStanOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="Psalm">
+    <Psalm_settings>
+      <psalm_fixer_by_interpreter asDefaultInterpreter="true" interpreter_id="fb8769c1-7819-4ff1-9373-b7f6fce34548" timeout="60000" />
+    </Psalm_settings>
+  </component>
+  <component name="PsalmOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+</project>
