@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f975514-52ee-4c1a-b8ec-530653c4bb34" name="Changes" comment="add header into symfony">
-      <change afterPath="$PROJECT_DIR$/public/Images/Moodle.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Images/logo_utbm.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Scripts/AccountManagerDropdown.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Styles/AccountManagerStyle.css" afterDir="false" />
+    <list default="true" id="8f975514-52ee-4c1a-b8ec-530653c4bb34" name="Changes" comment="add accountanagement into symfony">
+      <change afterPath="$PROJECT_DIR$/public/Images/no_image.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Scripts/GradePopup.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Scripts/ProfileMenu.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -256,7 +255,7 @@
       <workItem from="1744383382758" duration="382000" />
       <workItem from="1744611110292" duration="4956000" />
       <workItem from="1744616591029" duration="858000" />
-      <workItem from="1744629941196" duration="3005000" />
+      <workItem from="1744629941196" duration="5137000" />
     </task>
     <task id="LOCAL-00001" summary="add symfony files">
       <option name="closed" value="true" />
@@ -346,7 +345,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744617443871</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="add accountanagement into symfony">
+      <option name="closed" value="true" />
+      <created>1744633017165</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1744633017165</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -383,18 +390,7 @@
     <MESSAGE value="add symfony files from the didactitial" />
     <MESSAGE value="je push des fichiers qu'il faudrait pas ?" />
     <MESSAGE value="add header into symfony" />
-    <option name="LAST_COMMIT_MESSAGE" value="add header into symfony" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/templates/base.html.twig</url>
-          <line>42</line>
-          <option name="temporary" value="true" />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="add accountanagement into symfony" />
+    <option name="LAST_COMMIT_MESSAGE" value="add accountanagement into symfony" />
   </component>
 </project>

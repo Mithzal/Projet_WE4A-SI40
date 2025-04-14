@@ -15,8 +15,9 @@
 
 
         <script src="{{ asset('Scripts/AccountManagerDropdown.js') }}"></script>
-        <script src="../script/ProfileMenu.js"></script>
-        <script src="../script/GradePopup.js"></script>
+        <script src="{{ asset('Scripts/ProfileMenu.js') }}"></script>
+        <script src="{{ asset('Sripts/GradePopup.js') }}"></script>
+
         {% block javascripts %}
         {% endblock %}
 
@@ -39,13 +40,13 @@
                 <img src="{{ asset('Images/logo_utbm.png') }}" alt="Logo" class="logo">
             </button>
         </a>
-        <a href="../Pages/RechercheCours.php">
+        <a href="{{ path('RechercheCours') }}">
             <button>Recherche de Cours</button>
         </a>
-        <a href="../Pages/MesCours.php">
+        <a href="{{ path('MesCours') }}">
             <button>Mes cours</button>
         </a>
-        <a href="../Pages/TableauBord.php">
+        <a href="{{ path('TableauDeBord') }}">
             <button>Tableau de bord</button>
         </a>
         <div class="dropdown">
@@ -65,7 +66,7 @@
 
         <div class="dropdown_account">
             <button class="profile-button_right" onclick="toggleDropdown()">
-                <img class="profile_picture" src="../Image/no_image.webp" alt="Profile Icon">
+                <img class="profile_picture" src="{{ asset('Images/no_image.webp') }}" alt="Profile Icon">
             </button>
             <div class="dropdown-content_account" id="profileDropdown">
                 <a href="#" id="profile" onclick="openProfilePopup()">Profil</a>
@@ -85,7 +86,7 @@
                     <div class="profile">
                         <h2>Informations de l'utilisateur</h2>
                         <p>Photo de profile : </p>
-                        <img class="profile_picture" src="../Image/no_image.webp" alt="Profile Icon">
+                        <img class="profile_picture" src="{{ asset('Images/no_image.webp') }}" alt="Profile Icon">
                         <p>Nom: John Doe</p>
                         <p>Email: john.doe@example.com</p>
 
