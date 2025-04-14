@@ -6,14 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class TableauDeBordController extends AbstractController
+final class UnCoursController extends AbstractController
 {
-    #[Route('/tableauDeBord', name: 'TableauDeBord')]
+    #[Route('/cours', name: 'unCours')]
     public function index(): Response
     {
-        $data = [
-            'variableTitre' => 'Tableau de bord'
+        $data =[
+            'variableTitre' => 'Cours'
         ];
-        return $this->render('tableau_de_bord/index.html.twig', $data);
+        return $this->render('un_cours/index.html.twig', $data);
     }
 }

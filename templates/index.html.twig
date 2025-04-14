@@ -3,16 +3,19 @@
 
     {% block title %} {{ variableTitre}}   {% endblock %}
     {% block stylesheets %}
-    <link rel="stylesheet" href="../Styles/style-accueil.css">
-    <link rel="stylesheet" href="../Styles/login_style.css">
+    <link rel="stylesheet" href="{{ asset('Styles/style-accueil.css') }}">
+    <link rel="stylesheet" href="{{ asset('Styles/login-style.css') }}">
     {% endblock %}
-    
 
-<?php
-include("../PageParts/Header.php");
-?>
+{% block javascripts %}
+    <script src="{{ asset('Scripts/verif_form.js') }}"></script>
 
-<body>
+    <!-- script qui ouvre et ferme le menu latéral -->
+    <script src="{{ asset('Script/login_menu.js') }}"></script>
+{% endblock %}
+
+
+{% block body %}
 
 <div class="container">
 
@@ -45,7 +48,7 @@ include("../PageParts/Header.php");
                 <button type="submit" style="width:50%;">Se Connecter</button>
             </div>
         </form>
-        <script src="../script/verif_form.js"></script>
+
 
         <br>
         <div style="text-align: center;">
@@ -54,8 +57,8 @@ include("../PageParts/Header.php");
 
     </div>
 
-    <!-- script qui ouvre et ferme le menu latéral -->
-    <script src="../script/login_menu.js"></script>
+
+
 
 
     <div class="main-content">
@@ -65,18 +68,17 @@ include("../PageParts/Header.php");
         <!-- affichage des infos dans des div en grid -->
         <div class="grid-container">
             <div>
-                <img src="../Image/architecture.webp" alt="architecture" class="grid-container-img">
+                <img src="{{ asset('Images/architecture.webp') }}" alt="architecture" class="grid-container-img">
                 <h4>Read me</h4>
             </div>
 
             <div>
-                <a href="https://www.utbm.fr/"><img src="../Image/utbm_montbe.webp" alt="batiment de l'utbm"
-                                                    class="grid-container-img"></a>
+                <a href="https://www.utbm.fr/"><img src="{{ asset('Images/utbm_montbe.webp') }}" alt="batiment de l'utbm" class="grid-container-img"></a>
                 <h4><a href="https://www.utbm.fr/">Découvrir l'UTBM</a></h4>
             </div>
 
             <div>
-                <a href="https://bibliotheque.utbm.fr/"><img src="../Image/semafort.jpg" alt="logo semafort"
+                <a href="https://bibliotheque.utbm.fr/"><img src="{{ asset('Images/semafort.jpg') }}" alt="logo semafort"
                                                              class="grid-container-img"></a>
                 <h4><a href="https://bibliotheque.utbm.fr/">Bibliothèque</a></h4>
             </div>
@@ -84,5 +86,4 @@ include("../PageParts/Header.php");
         </div>
     </div>
 </div>
-</body>
-</html>
+{% endblock %}

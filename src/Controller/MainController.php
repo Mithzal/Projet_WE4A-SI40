@@ -15,6 +15,6 @@ final class MainController extends AbstractController
         $data = [
             'variableTitre'=> 'Home'
         ];
-        return $this->render("base.html.twig", $data);
+        return $this->render("index.html.twig", $data);
     }
 }

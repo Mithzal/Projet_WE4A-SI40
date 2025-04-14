@@ -1,20 +1,92 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MesCoursController!{% endblock %}
+{% block title %}{{ variableTitre }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('Styles/MesCours.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('Scripts/MesCours.js') }}" defer></script>
+
+{% endblock %}
+
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container">
+        <main class="main-content">
+            <h1>Mes Cours</h1>
+            <div class="course-controls">
+                <input type="text" id="search-bar" placeholder="Rechercher un cours...">
+                <select id="sort-courses">
+                    <option value="name">Trier par nom</option>
+                    <option value="date">Trier par dernier accès</option>
+                </select>
+            </div>
+            <div class="courses">
+                <div class="course-card" data-last-access="5">
+                    <img src="{{ asset('Images/math.jpg') }}" alt="Mathématiques">
+                    <h3>Mathématiques</h3>
+                    <p>Introduction aux fonctions et aux dérivées.</p>
+                    <div class="course-footer">
+                        <a href="{{ path('unCours') }}">Accéder</a>
+                        <span class="progress">Progression : 75%</span>
+                    </div>
+                </div>
+                <div class="course-card" data-last-access="3">
+                    <h3>Informatique</h3>
+                    <p>Développement web et algorithmique.</p>
+                    <div class="course-footer">
+                        <a href="{{ path('unCours') }}">Accéder</a>
+                        <span class="progress">Progression : 0%</span>
+                    </div>
+                </div>
+                <div class="course-card" data-last-access="1">
+                    <h3>Physique</h3>
+                    <p>Mécanique et thermodynamique.</p>
+                    <div class="course-footer">
+                        <a href="{{ path('unCours') }}">Accéder</a>
+                        <span class="progress">Progression : 30%</span>
+                    </div>
+                </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+                <div class="course-card" data-last-access="7">
+                    <h3>Chimie</h3>
+                    <p>Equations chimiques et lois de conservation.</p>
+                    <div class="course-footer">
+                        <a href="{{ path('unCours') }}">Accéder</a>
+                        <span class="progress">Progression : 0%</span>
+                    </div>
+                </div>
+                <div class="course-card" data-last-access="2">
+                    <h3>Design</h3>
+                    <p>Exploration des principes de conception et du processus créatif.</p>
+                    <div class="course-footer">
+                        <a href="{{ path('unCours') }}">Accéder</a>
+                        <span class="progress">Progression : 7%</span>
+                    </div>
+                </div>
+                <div class="course-card" data-last-access="4">
+                    <h3>Electronique analogique</h3>
+                    <p>Introduction aux amplificateurs opérationnels.</p>
+                    <div class="course-footer">
+                        <a href="{{ path('unCours') }}">Accéder</a>
+                        <span class="progress">Progression : 62%</span>
+                    </div>
+                </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/marti/Documents/Cours/Info2/WE4A/projet_web/src/Controller/MesCoursController.php</code></li>
-        <li>Your template at <code>C:/Users/marti/Documents/Cours/Info2/WE4A/projet_web/templates/mes_cours/index.html.twig</code></li>
-    </ul>
-</div>
+            </div>
+        </main>
+        <aside class="newsfeed">
+            <h2>Fil d'actualité</h2>
+            <ul>
+                <li>Nouveau devoir en Mathématiques</li>
+                <li>Webinaire en Informatique demain</li>
+                <li>Résultats du test de Physique disponibles</li>
+            </ul>
+        </aside>
+    </div>
+
 {% endblock %}
+
+
