@@ -1,16 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
+            <link rel="stylesheet" type="text/css" href="{{ asset('Styles/Header.css') }}"/>
+            <link rel="icon" type="image/x-icon" href="../Image/Moodle.ico"/>
         {% endblock %}
+
+        <title>{% block title %}Welcome!{% endblock %}</title>
 
         {% block javascripts %}
         {% endblock %}
+
     </head>
+
     <body>
         {% block body %}{% endblock %}
     </body>
+</html>
+<!DOCTYPE html>
+<html lang="fr">
+
+<!-- La "tête" sert à définir des propriétés globales de la page -->
+
+
+<header class="header">
+    <div class="menu">
+        <a href="../Pages/index.php">
+            <button class="logo-button">
+                <img src="../Image/logo_utbm.png" alt="Logo" class="logo">
+            </button>
+        </a>
+        <a href="../Pages/RechercheCours.php">
+            <button>Recherche de Cours</button>
+        </a>
+        <a href="../Pages/MesCours.php">
+            <button>Mes cours</button>
+        </a>
+        <a href="../Pages/TableauBord.php">
+            <button>Tableau de bord</button>
+        </a>
+        <div class="dropdown">
+            <button class="dropbtn">Sites de l'UTBM ▼</button>
+            <div class="dropdown-content">
+                <a href="https://outlook.office.com/mail/">Outlook</a>
+                <a href="https://utbm.sharepoint.com/sites/Portail?sw=auth">My UTBM</a>
+                <a href="https://bibliotheque.utbm.fr/">Bibliotheque</a>
+                <a href="https://ae.utbm.fr/">AE</a>
+            </div>
+        </div>
+        <a href="../Pages/Admin.php">
+            <button>Administration</button>
+        </a>
+
+
+        <?php
+        include("../PageParts/AccountManager.php");
+        ?>
+    </div>
+
+</header>
+
 </html>
