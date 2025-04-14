@@ -4,15 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f975514-52ee-4c1a-b8ec-530653c4bb34" name="Changes" comment="je push des fichiers qu'il faudrait pas ?">
-      <change afterPath="$PROJECT_DIR$/public/Styles/Header.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="8f975514-52ee-4c1a-b8ec-530653c4bb34" name="Changes" comment="add header into symfony">
+      <change afterPath="$PROJECT_DIR$/public/Images/Moodle.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Images/logo_utbm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Scripts/AccountManagerDropdown.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/Styles/AccountManagerStyle.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,6 +27,7 @@
       <list>
         <option value="TypeScript File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -190,6 +189,7 @@
       <path value="$PROJECT_DIR$/vendor/symfony/twig-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/twig-bridge" />
       <path value="$PROJECT_DIR$/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/asset" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
@@ -212,7 +212,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "SymfonyUpdate",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/marti/Documents/GitHub",
+    "last_opened_file_path": "C:/Users/marti/Documents/Cours/Info2/WE4A/projet_web/public/Images",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -224,6 +224,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\marti\Documents\Cours\Info2\WE4A\projet_web\public\Images" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="ComposerRunConfigurationType" factoryName="Composer Script">
       <option name="pathToComposerJson" value="$PROJECT_DIR$/projet_we4a/composer.json" />
@@ -250,7 +255,8 @@
       <workItem from="1744268788031" duration="42000" />
       <workItem from="1744383382758" duration="382000" />
       <workItem from="1744611110292" duration="4956000" />
-      <workItem from="1744616591029" duration="741000" />
+      <workItem from="1744616591029" duration="858000" />
+      <workItem from="1744629941196" duration="3005000" />
     </task>
     <task id="LOCAL-00001" summary="add symfony files">
       <option name="closed" value="true" />
@@ -332,7 +338,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744615642021</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="add header into symfony">
+      <option name="closed" value="true" />
+      <created>1744617443870</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1744617443871</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -368,6 +382,19 @@
     <MESSAGE value="add symfony files" />
     <MESSAGE value="add symfony files from the didactitial" />
     <MESSAGE value="je push des fichiers qu'il faudrait pas ?" />
-    <option name="LAST_COMMIT_MESSAGE" value="je push des fichiers qu'il faudrait pas ?" />
+    <MESSAGE value="add header into symfony" />
+    <option name="LAST_COMMIT_MESSAGE" value="add header into symfony" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/templates/base.html.twig</url>
+          <line>42</line>
+          <option name="temporary" value="true" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
