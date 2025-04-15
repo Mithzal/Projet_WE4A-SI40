@@ -2,13 +2,26 @@ const initialContent = document.getElementById("profilePopup").innerHTML;//on r�
 
 function openProfilePopup() {
     document.getElementById("profilePopup").innerHTML = initialContent;
-    document.getElementById("profilePopup").style.display = "block";
+
+    const popup = document.getElementById('profilePopup');
+    if (popup) {
+        popup.style.display = 'block';
+    } else {
+        console.error("L'élément avec l'ID 'profilePopup' est introuvable.");
+    }
 }
 
 function closeProfilePopup() {
-    document.getElementById("profilePopup").style.display = "none";
     document.getElementById("profilePopup").innerHTML = initialContent; // Réinitialise le contenu de la popup
+
+    const popup = document.getElementById('profilePopup');
+    if (popup) {
+        popup.style.display = 'none';
+    } else {
+        console.error("L'élément avec l'ID 'profilePopup' est introuvable.");
+    }
 }
+
 
 function editProfile() {//cette fonction vient écraser le contenu de la div avec l'id profilePopup
     document.getElementById("profilePopup").innerHTML = `

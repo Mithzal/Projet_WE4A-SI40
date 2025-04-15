@@ -4,14 +4,14 @@
     {% block title %} {{ variableTitre}}   {% endblock %}
     {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('Styles/style-accueil.css') }}">
-    <link rel="stylesheet" href="{{ asset('Styles/login-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('Styles/login_style.css') }}">
     {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('Scripts/verif_form.js') }}"></script>
+    <script src="{{ asset('Scripts/verif_form.js') }}" defer ></script>
 
     <!-- script qui ouvre et ferme le menu latéral -->
-    <script src="{{ asset('Script/login_menu.js') }}"></script>
+    <script src="{{ asset('Scripts/login_menu.js') }}" defer></script>
 {% endblock %}
 
 

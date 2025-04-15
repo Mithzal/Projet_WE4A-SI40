@@ -4,37 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f975514-52ee-4c1a-b8ec-530653c4bb34" name="Changes" comment="edit base.html.twig with correct routes">
-      <change afterPath="$PROJECT_DIR$/public/Images/architecture.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Images/math.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Images/semafort.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Images/utbm_montbe.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Scripts/AdminScript.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Scripts/MesCours.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Scripts/RechercheCours.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Scripts/TableauBord.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Scripts/UnCours.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Scripts/login_menu.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Scripts/verif_form.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Styles/Admin.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Styles/MesCours.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Styles/TableauBord.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Styles/UnCours.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Styles/login_style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Styles/style-accueil.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/admin/admin.html.twig" afterDir="false" />
+    <list default="true" id="8f975514-52ee-4c1a-b8ec-530653c4bb34" name="Changes" comment="add all files in different controller/twig templates&#10;&#10;.js files don't work !">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AccountManagerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdminController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MesCoursController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MesCoursController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RechercheCoursController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RechercheCoursController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/TableauDeBordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TableauDeBordController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/account_manager/accountManager.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Scripts/ProfileMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Scripts/ProfileMenu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin/admin.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/admin.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/mes_cours/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mes_cours/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/recherche_cours/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recherche_cours/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/tableau_de_bord/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/tableau_de_bord/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/un_cours/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/un_cours/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,24 +205,24 @@
     <option name="showMembers" value="true" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "SymfonyUpdate",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/marti/Documents/Cours/Info2/WE4A/projet_web/public/Scripts",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "IntelliLang.Configuration",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\PhpStorm 2024.3.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;SymfonyUpdate&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/marti/Documents/Cours/Info2/WE4A/projet_web/public/Scripts&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;IntelliLang.Configuration&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\PhpStorm 2024.3.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\marti\Documents\Cours\Info2\WE4A\projet_web\public\Scripts" />
@@ -285,7 +261,8 @@
       <workItem from="1744611110292" duration="4956000" />
       <workItem from="1744616591029" duration="858000" />
       <workItem from="1744629941196" duration="5218000" />
-      <workItem from="1744645745147" duration="3599000" />
+      <workItem from="1744645745147" duration="3715000" />
+      <workItem from="1744698377143" duration="2288000" />
     </task>
     <task id="LOCAL-00001" summary="add symfony files">
       <option name="closed" value="true" />
@@ -391,7 +368,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744635941725</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="add all files in different controller/twig templates&#10;&#10;.js files don't work !">
+      <option name="closed" value="true" />
+      <created>1744649651772</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1744649651772</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -430,7 +415,8 @@
     <MESSAGE value="add header into symfony" />
     <MESSAGE value="add accountanagement into symfony" />
     <MESSAGE value="edit base.html.twig with correct routes" />
-    <option name="LAST_COMMIT_MESSAGE" value="edit base.html.twig with correct routes" />
+    <MESSAGE value="add all files in different controller/twig templates&#10;&#10;.js files don't work !" />
+    <option name="LAST_COMMIT_MESSAGE" value="add all files in different controller/twig templates&#10;&#10;.js files don't work !" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

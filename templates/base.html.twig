@@ -14,9 +14,10 @@
         <title>{% block title %}{{ variableTitre }}{% endblock %}</title>
 
 
-        <script src="{{ asset('Scripts/AccountManagerDropdown.js') }}"></script>
-        <script src="{{ asset('Scripts/ProfileMenu.js') }}"></script>
-        <script src="{{ asset('Sripts/GradePopup.js') }}"></script>
+        <script src="{{ asset('Scripts/AccountManagerDropdown.js') }}" defer></script>
+        <script src="{{ asset('Scripts/ProfileMenu.js') }}" defer></script>
+        <script src="{{ asset('Scripts/GradePopup.js') }}" defer></script>
+
 
         {% block javascripts %}
         {% endblock %}
