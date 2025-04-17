@@ -1,11 +1,5 @@
 const initialContent2 = document.getElementById("gradePopup").innerHTML;//on récupère le contenu initial de la popup pour pouvoir l'utiliser plus tard
 
-const grades = [
-    { ue: "Mathématique", notes: ["15/20", "16/20","17/20", "5/20", "80/100"] },
-    { ue: "Physique", notes: ["12/20"] },
-    { ue: "Anglais", notes: ["18/20", "17/20", "19/20"] },
-    // Ajoutez d'autres notes ici
-];
 
 function calculateAverage(notes) {
     let total = 0;
@@ -18,7 +12,7 @@ function calculateAverage(notes) {
     return (total / count).toFixed(2); // Retourne la moyenne arrondie à 2 décimales
 }
 
-function openGradePopup() {
+function openGradePopup(grades) {
     const gradePopup = document.getElementById("gradePopup");
     const tableHead = gradePopup.querySelector("table thead tr");
     const tableBody = gradePopup.querySelector("table tbody");
