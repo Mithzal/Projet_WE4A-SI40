@@ -4,11 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f975514-52ee-4c1a-b8ec-530653c4bb34" name="Changes" comment="update the javascripts">
+    <list default="true" id="8f975514-52ee-4c1a-b8ec-530653c4bb34" name="Changes" comment="separation for the model mvc">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Scripts/GradePopup.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Scripts/GradePopup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdminController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/MesCoursController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MesCoursController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RechercheCoursController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RechercheCoursController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/TableauDeBordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TableauDeBordController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/UnCoursController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UnCoursController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/mes_cours/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mes_cours/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -264,7 +269,8 @@
       <workItem from="1744723931305" duration="514000" />
       <workItem from="1744726808961" duration="470000" />
       <workItem from="1744727419361" duration="1202000" />
-      <workItem from="1744874486135" duration="1828000" />
+      <workItem from="1744874486135" duration="1887000" />
+      <workItem from="1745050829081" duration="3085000" />
     </task>
     <task id="LOCAL-00001" summary="add symfony files">
       <option name="closed" value="true" />
@@ -386,7 +392,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744700740049</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="separation for the model mvc">
+      <option name="closed" value="true" />
+      <created>1744876393519</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1744876393519</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -427,7 +441,8 @@
     <MESSAGE value="edit base.html.twig with correct routes" />
     <MESSAGE value="add all files in different controller/twig templates&#10;&#10;.js files don't work !" />
     <MESSAGE value="update the javascripts" />
-    <option name="LAST_COMMIT_MESSAGE" value="update the javascripts" />
+    <MESSAGE value="separation for the model mvc" />
+    <option name="LAST_COMMIT_MESSAGE" value="separation for the model mvc" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

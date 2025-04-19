@@ -14,9 +14,15 @@
         <title>{% block title %}{{ variableTitre }}{% endblock %}</title>
 
 
+        <script>
+            const grades = {{ grades|json_encode|raw }};
+        </script>
+
         <script src="{{ asset('Scripts/AccountManagerDropdown.js') }}" defer></script>
         <script src="{{ asset('Scripts/ProfileMenu.js') }}" defer></script>
         <script src="{{ asset('Scripts/GradePopup.js') }}" defer></script>
+
+
 
 
         {% block javascripts %}
@@ -58,9 +64,7 @@
                 <button>Administration</button>
             </a>
 
-            <script>
-                const grades = {{ grades|json_encode|raw }};
-            </script>
+
 
             <div class="dropdown_account">
                 <button class="profile-button_right" onclick="toggleDropdown()">

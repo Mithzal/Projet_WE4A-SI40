@@ -36,7 +36,7 @@ final class MainController extends AbstractController
                  [ 'ue' => "Arts Plastiques", 'notes' => ["19/20"] ],
              ];
 
-
+        //ces variables sont nécessaire pour les "popups" d'information du profile et des notes
         $data = [
             'variableTitre'=> 'Home',
             'FirstName' => $FirstName,
