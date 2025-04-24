@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UEsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UEsRepository::class)]
@@ -29,6 +30,9 @@ class UEs
      */
     #[ORM\OneToMany(targetEntity: Notes::class, mappedBy: 'ue_id')]
     private Collection $notes;
+
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $Illustration = null;
 
     public function __construct()
     {
@@ -102,6 +106,18 @@ class UEs
                 $note->setUeId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIllustration()
+    {
+        return $this->Illustration;
+    }
+
+    public function setIllustration($Illustration): static
+    {
+        $this->Illustration = $Illustration;
 
         return $this;
     }
