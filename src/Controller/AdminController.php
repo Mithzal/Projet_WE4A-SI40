@@ -2,15 +2,26 @@
 
 namespace App\Controller;
 
+use App\Entity\Utilisateurs;
+use App\Entity\UEs;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\UtilisateursType;
+use App\Form\UEType;
+
 
 final class AdminController extends AbstractController
 {
     #[Route('/admin', name: 'admin')]
-    public function index(): Response
+    public function index(EntityManagerInterface $entityManager): Response
     {
+        // Récupérer les utilisateurs et les UE depuis la base de données
+        $users = $entityManager->getRepository(Utilisateurs::class)->findAll();
+        $ues = $entityManager->getRepository(UEs::class)->findAll();
+
         $FirstName = 'John';
         $LastName = 'Doe';
         $email = 'johndoe@example.com';
@@ -34,18 +45,80 @@ final class AdminController extends AbstractController
             [ 'ue' => "Philosophie", 'notes' => ["10/20"] ],
             [ 'ue' => "Arts Plastiques", 'notes' => ["19/20"] ],
         ];
-
-        //ces variables sont nécessaire pour les "popups" d'information du profile et des notes
         $data = [
-            'variableTitre'=> 'Home',
+            'variableTitre' => 'Administration',
+            'users' => $users,
+            'ues' => $ues,
             'FirstName' => $FirstName,
             'Lastname' => $LastName,
             'email' => $email,
             'photoDeProfil' => $photoDeProfil,
             'UEs' => $UEs,
             'grades' => $grades
-
         ];
+
         return $this->render('admin/admin.html.twig', $data);
+    }
+
+    #[Route('/admin/create-user', name: 'admin_create_user')]
+    public function createUser(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = new Utilisateurs();
+        $form = $this->createForm(UtilisateursType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            if ($request->isXmlHttpRequest()) {
+                return new Response('Utilisateur créé avec succès !', 200);
+            }
+
+            $this->addFlash('success', 'Utilisateur créé avec succès !');
+            return $this->redirectToRoute('admin');
+        }
+
+        $data = [
+            'form' => $form->createView(),
+            'variableTitre' => 'Créer un utilisateur',
+            'FirstName' => 'John',
+            'Lastname' => 'Doe',
+            'email' => 'johndoe@example.com',
+            'photoDeProfil' => 'Images/no_image.webp',
+        ];
+
+        return $this->render('admin/create_user.html.twig', $data);
+    }
+
+    #[Route('/admin/create-ue', name: 'admin_create_ue')]
+    public function createUE(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $ue = new UEs();
+        $form = $this->createForm(UEType::class, $ue);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($ue);
+            $entityManager->flush();
+
+            if ($request->isXmlHttpRequest()) {
+                return new Response('UE créée avec succès !', 200);
+            }
+
+            $this->addFlash('success', 'UE créée avec succès !');
+            return $this->redirectToRoute('admin');
+        }
+
+        $data = [
+            'form' => $form->createView(),
+            'variableTitre' => 'Créer une UE',
+            'FirstName' => 'John',
+            'Lastname' => 'Doe',
+            'email' => 'johndoe@example.com',
+            'photoDeProfil' => 'Images/no_image.webp',
+        ];
+
+        return $this->render('admin/create_ue.html.twig', $data);
     }
 }

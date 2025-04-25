@@ -44,6 +44,32 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    document.addEventListener("submit", (event) => {
+        if (event.target.tagName === "FORM") {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData,
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Formulaire soumis avec succès !");
+                        document.getElementById("creation-zone").innerHTML = ""; // Vide la zone de création
+                    } else {
+                        alert("Erreur lors de la soumission du formulaire.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la soumission :", error);
+                    alert("Une erreur est survenue.");
+                });
+        }
+    });
+
     // Affichage dynamique des formulaires
     document.getElementById("create-user").addEventListener("click", () => {
         showForm("user");
@@ -53,92 +79,25 @@ document.addEventListener("DOMContentLoaded", () => {
         showForm("ue");
     });
 
-        function showForm(type) {
+    function showForm(type) {
         const creationZone = document.getElementById("creation-zone");
-    
-        const formContainer = document.createElement("div");
-        formContainer.classList.add("form-popup");
-    
-        // Générer un identifiant unique pour chaque formulaire
-        const uniqueId = `${type}-form-${Date.now()}`;
-        formContainer.innerHTML = `
-            <form id="${uniqueId}">
-                <h3>${type === "user" ? "Créer un utilisateur" : "Créer une UE"}</h3>
-                ${type === "user" ? `
-                    <div>
-                        <label for="name-${uniqueId}">Nom :</label>
-                        <input type="text" id="name-${uniqueId}" name="name" required>
-                    </div>
-                    <div>
-                        <label for="email-${uniqueId}">Email :</label>
-                        <input type="email" id="email-${uniqueId}" name="email" required>
-                    </div>
-                    <div>
-                        <label for="role-${uniqueId}">Rôle :</label>
-                        <select id="role-${uniqueId}" name="role">
-                            <option value="admin">Admin</option>
-                            <option value="prof">Prof</option>
-                            <option value="admin-prof">Admin et Prof</option>
-                            <option value="etudiant">Étudiant</option>
-                        </select>
-                    </div>
-                ` : `
-                    <div>
-                        <label for="code-${uniqueId}">Code :</label>
-                        <input type="text" id="code-${uniqueId}" name="code" required>
-                    </div>
-                    <div>
-                        <label for="title-${uniqueId}">Intitulé :</label>
-                        <input type="text" id="title-${uniqueId}" name="title" required>
-                    </div>
-                    <div>
-                        <label for="image-${uniqueId}">Image :</label>
-                        <input type="file" id="image-${uniqueId}" name="image">
-                    </div>
-                `}
-                <div>
-                    <button type="submit" class="sub-button">Enregistrer</button>
-                    <button type="button" class="close-form">Annuler</button>
-                </div>
-            </form>
-        `;
-    
-        creationZone.appendChild(formContainer);
-    
-        // Gestion de la fermeture du formulaire
-        formContainer.querySelector(".close-form").addEventListener("click", () => {
-            // Ajoutez la classe "closing" pour déclencher l'animation
-            formContainer.classList.add("closing");
-        
-            // Supprimez l'élément après la durée de l'animation (300ms dans ce cas)
-            setTimeout(() => {
-                formContainer.remove();
-            }, 300); // Correspond à la durée définie dans la transition CSS
-        });
-    
-        // Gestion de l'envoi du formulaire via AJAX
-        formContainer.querySelector("form").addEventListener("submit", (event) => {
-            event.preventDefault();
-    
-            const formData = new FormData(event.target);
-    
-            fetch(`/create-${type}`, {
-                method: "POST",
-                body: formData,
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert(`${type === "user" ? "Utilisateur" : "UE"} créé avec succès.`);
-                        formContainer.remove();
-                        // Actualiser la liste dynamiquement si nécessaire
-                    } else {
-                        alert(`Erreur lors de la création du ${type}.`);
-                    }
-                })
-                .catch(error => {
-                    console.error("Erreur AJAX :", error);
-                    alert("Une erreur est survenue.");
+
+        fetch(`/admin/create-${type}`)
+            .then(response => response.text())
+            .then(html => {
+                creationZone.innerHTML = html;
+
+                // Ajoutez un bouton pour fermer le formulaire
+                const closeButton = document.createElement("button");
+                closeButton.textContent = "Annuler";
+                closeButton.classList.add("close-form");
+                closeButton.addEventListener("click", () => {
+                    creationZone.innerHTML = ""; // Vide la zone de création
                 });
-        });
+                creationZone.appendChild(closeButton);
+            })
+            .catch(error => {
+                console.error("Erreur lors du chargement du formulaire :", error);
+            });
     }
 });

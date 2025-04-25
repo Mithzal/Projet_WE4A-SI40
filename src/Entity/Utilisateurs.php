@@ -16,7 +16,7 @@ class Utilisateurs
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $Prénom = null;
+    private ?string $Prenom = null;
 
     #[ORM\Column(length: 50)]
     private ?string $Nom = null;
@@ -46,14 +46,14 @@ class Utilisateurs
         return $this->id;
     }
 
-    public function getPrénom(): ?string
+    public function getPrenom(): ?string
     {
-        return $this->Prénom;
+        return $this->Prenom;
     }
 
-    public function setPrénom(string $Prénom): static
+    public function setPrenom(string $Prenom): static
     {
-        $this->Prénom = $Prénom;
+        $this->Prenom = $Prenom;
 
         return $this;
     }

@@ -4,16 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f975514-52ee-4c1a-b8ec-530653c4bb34" name="Changes" comment="separation for the model mvc">
+    <list default="true" id="8f975514-52ee-4c1a-b8ec-530653c4bb34" name="Changes" comment="add all files in different controller/twig templates&#10;&#10;.js files don't work !">
+      <change afterPath="$PROJECT_DIR$/templates/admin/create_ue.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/admin/create_user.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Scripts/AdminScript.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Scripts/AdminScript.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdminController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MesCoursController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MesCoursController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RechercheCoursController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RechercheCoursController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/TableauDeBordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TableauDeBordController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UnCoursController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UnCoursController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/mes_cours/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mes_cours/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Utilisateurs.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Utilisateurs.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin/admin.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/admin.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,10 +96,10 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Mithzal/Projet_WE4A-SI40.git&quot;,
-    &quot;accountId&quot;: &quot;d24a73f6-4398-4c8d-8386-70d1ec62c740&quot;
+    &quot;accountId&quot;: &quot;df0ce600-f9b8-41c9-a5ed-8824455722a8&quot;
   }
 }</component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\php-8.4.4-nts-Win32-vs17-x64\php.exe">
     <include_path>
       <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/deprecation-contracts" />
       <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/dependency-injection" />
@@ -192,6 +195,13 @@
       <path value="$PROJECT_DIR$/vendor/symfony/twig-bridge" />
       <path value="$PROJECT_DIR$/vendor/symfony/translation-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/asset" />
+      <path value="$PROJECT_DIR$/vendor/symfony/type-info" />
+      <path value="$PROJECT_DIR$/vendor/symfony/validator" />
+      <path value="$PROJECT_DIR$/vendor/symfony/property-info" />
+      <path value="$PROJECT_DIR$/vendor/symfony/property-access" />
+      <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu" />
+      <path value="$PROJECT_DIR$/vendor/symfony/form" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
@@ -251,6 +261,9 @@
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="StructureViewState">
+    <option name="selectedTab" value="Twig" />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="8f975514-52ee-4c1a-b8ec-530653c4bb34" name="Changes" comment="" />
@@ -265,12 +278,13 @@
       <workItem from="1744616591029" duration="858000" />
       <workItem from="1744629941196" duration="5218000" />
       <workItem from="1744645745147" duration="3715000" />
-      <workItem from="1744698377143" duration="2828000" />
-      <workItem from="1744723931305" duration="514000" />
-      <workItem from="1744726808961" duration="470000" />
-      <workItem from="1744727419361" duration="1202000" />
-      <workItem from="1744874486135" duration="1887000" />
-      <workItem from="1745050829081" duration="3085000" />
+      <workItem from="1744698377143" duration="2288000" />
+      <workItem from="1745503462302" duration="105000" />
+      <workItem from="1745505796047" duration="81000" />
+      <workItem from="1745506144623" duration="211000" />
+      <workItem from="1745570495083" duration="155000" />
+      <workItem from="1745582412664" duration="9241000" />
+      <workItem from="1745597290849" duration="350000" />
     </task>
     <task id="LOCAL-00001" summary="add symfony files">
       <option name="closed" value="true" />
@@ -384,23 +398,7 @@
       <option name="project" value="LOCAL" />
       <updated>1744649651772</updated>
     </task>
-    <task id="LOCAL-00015" summary="update the javascripts">
-      <option name="closed" value="true" />
-      <created>1744700740049</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1744700740049</updated>
-    </task>
-    <task id="LOCAL-00016" summary="separation for the model mvc">
-      <option name="closed" value="true" />
-      <created>1744876393519</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1744876393519</updated>
-    </task>
-    <option name="localTasksCounter" value="17" />
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -440,9 +438,7 @@
     <MESSAGE value="add accountanagement into symfony" />
     <MESSAGE value="edit base.html.twig with correct routes" />
     <MESSAGE value="add all files in different controller/twig templates&#10;&#10;.js files don't work !" />
-    <MESSAGE value="update the javascripts" />
-    <MESSAGE value="separation for the model mvc" />
-    <option name="LAST_COMMIT_MESSAGE" value="separation for the model mvc" />
+    <option name="LAST_COMMIT_MESSAGE" value="add all files in different controller/twig templates&#10;&#10;.js files don't work !" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
