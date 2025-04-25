@@ -52,7 +52,6 @@ class UEs
     public function setCode(string $Code): static
     {
         $this->Code = $Code;
-
         return $this;
     }
 
@@ -121,4 +120,10 @@ class UEs
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->getTitre();
+    }
 }
+

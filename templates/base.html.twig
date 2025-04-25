@@ -15,7 +15,7 @@
 
 
         <script>
-            const grades = {{ grades|json_encode|raw }};
+            const notes = {{ notes|json_encode|raw }};
         </script>
 
         <script src="{{ asset('Scripts/AccountManagerDropdown.js') }}" defer></script>
@@ -37,7 +37,7 @@
 
     <header class="header">
         <div class="menu">
-            <a href="{{ path('home') }}">
+            <a href="{{ path('app_login') }}">
                 <button class="logo-button">
                     <img src="{{ asset('Images/logo_utbm.png') }}" alt="Logo" class="logo">
                 </button>
@@ -65,7 +65,7 @@
             </a>
 
 
-
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <div class="dropdown_account">
                 <button class="profile-button_right" onclick="toggleDropdown()">
                     <img class="profile_picture" src="{{ asset('Images/no_image.webp') }}" alt="Profile Icon">
@@ -73,10 +73,10 @@
                 <div class="dropdown-content_account" id="profileDropdown">
                     <a href="#" id="profile" onclick="openProfilePopup()">Profil</a>
                     <a href="#" id="grades" onclick="openGradePopup(grades)">Notes</a>
-                    <a href="#" id="logout" onclick="setLoggin(false)">Déconnexion</a>
+                    <a href="{{ path('app_logout') }}" id="logout" >Déconnexion</a>
                 </div>
             </div>
-
+            {% endif %}
 
             <div id="content"></div>
 

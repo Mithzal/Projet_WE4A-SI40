@@ -25,28 +25,24 @@
                 </select>
             </div>
             <div class="courses">
-
-                {% for cours in mesCours %}
-                <div class="course-card" data-last-access={{ cours.lastAccess }}>
-                    <img src="{{ asset(cours.Image) }}" alt={{ cours.ue }}>
-                    <h3>{{ cours.ue }}</h3>
-                    <p>{{cours.Resume}}</p>
-                    <div class="course-footer">
-                        <a href="{{ path('unCours') }}">Accéder</a>
-                        <span class="progress">Progression : {{ cours.progression }}</span>
+                {% for UEs in UEs %}
+                    <div class="course-card hidden">
+                        <img src="{{ asset('Images/math.jpg') }}" alt="{{ UEs.Titre }}">
+                        <h3>{{ UEs.Titre }}</h3>
+                        <p>{{ UEs.code }}</p>
+                        <div class="course-footer">
+                            <a href="#">Accéder</a>
+                            <span class="progress">Progression : 0%</span>
+                        </div>
                     </div>
-                </div>
                 {% endfor %}
-
-
-
             </div>
         </main>
         <aside class="newsfeed">
             <h2>Fil d'actualité</h2>
             <ul>
-                {% for actualite in actualites %}
-                    <li>{{ actualite }}</li>
+                {% for actualites in actualites %}
+                    <li>{{ actualites.titre }}</li>
                 {% endfor %}
             </ul>
         </aside>
