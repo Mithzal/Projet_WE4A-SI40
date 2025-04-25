@@ -37,7 +37,7 @@
 
     <header class="header">
         <div class="menu">
-            <a href="{{ path('home') }}">
+            <a href="{{ path('app_login') }}">
                 <button class="logo-button">
                     <img src="{{ asset('Images/logo_utbm.png') }}" alt="Logo" class="logo">
                 </button>
@@ -73,7 +73,7 @@
                 <div class="dropdown-content_account" id="profileDropdown">
                     <a href="#" id="profile" onclick="openProfilePopup()">Profil</a>
                     <a href="#" id="grades" onclick="openGradePopup(grades)">Notes</a>
-                    <a href="#" id="logout" onclick="setLoggin(false)">Déconnexion</a>
+                    <a href="{{ path('app_logout') }}" id="logout" >Déconnexion</a>
                 </div>
             </div>
 

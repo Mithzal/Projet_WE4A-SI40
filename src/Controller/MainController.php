@@ -5,12 +5,13 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 final class MainController extends AbstractController
 {
 
-    #[Route('/', name:'home')]
-    public function template(): Response
+    #[Route('/', name:'app_login')]
+    public function template(AuthenticationUtils $authenticationUtils): Response
     {
         $FirstName = 'John';
         $LastName = 'Doe';
@@ -35,6 +36,9 @@ final class MainController extends AbstractController
                  [ 'ue' => "Philosophie", 'notes' => ["10/20"] ],
                  [ 'ue' => "Arts Plastiques", 'notes' => ["19/20"] ],
              ];
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
 
         //ces variables sont nécessaire pour les "popups" d'information du profile et des notes
         $data = [
@@ -44,9 +48,17 @@ final class MainController extends AbstractController
             'email' => $email,
             'photoDeProfil' => $photoDeProfil,
             'UEs' => $UEs,
-            'grades' => $grades
+            'grades' => $grades,
+            'last_username' => $lastUsername,
+            'error' => $error,
 
         ];
         return $this->render("index.html.twig", $data);
+    }
+
+    #[Route(path: '/logout', name: 'app_logout')]
+    public function logout(): void
+    {
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

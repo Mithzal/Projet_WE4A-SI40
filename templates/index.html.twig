@@ -16,7 +16,6 @@
 
 
 {% block body %}
-
 <div class="container">
 
     <!-- Bouton pour ouvrir le menu -->
@@ -27,37 +26,40 @@
         <!-- bouton x pour fermer le menu latéral -->
         <button class="close-button" onclick="toggleMenu()">×</button>
         <!-- contenu du menu latéral -->
+        {% block login %}
+            <form id="formulaire_login" method="post" action="{{ path('app_login') }}">
+                {% if error %}
+                    <div class="error" id="errorMessage">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
 
-        <form id="formulaire_login" action="#" method="POST">
-            <h1>Connexion</h1>
-            <div class="error" id="errorMessage"></div>
-            <div>
-                <label for="username">Nom d'utilisateur</label>
+                <h1>Connexion</h1>
+
+                <div>
+                    <label for="username">Email</label>
+                    <br>
+                    <input autofocus type="email" id="username" name="_username" value="{{ last_username }}" placeholder="Email" required autocomplete="email">
+                </div>
                 <br>
-                <input autofocus type="text" id="username" name="username" placeholder="Nom d'utilisateur" required>
-            </div>
-            <br>
-            <div class="password-container">
-                <label for="password">Mot de passe</label>
+                <div class="password-container">
+                    <label for="password">Mot de passe</label>
+                    <br>
+                    <input type="password" id="password" name="_password" placeholder="Mot de passe" required autocomplete="current-password">
+                    <span class="toggle-password" id="togglePassword">👁️</span>
+                </div>
                 <br>
-                <input type="password" id="password" name="password" placeholder="Mot de passe" required>
-                <span class="toggle-password" id="togglePassword">👁️</span>
-            </div>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <div>
+                    <button type="submit" style="width:50%;">Se Connecter</button>
+                </div>
+            </form>
+
             <br>
-            <div>
-                <button type="submit" style="width:50%;">Se Connecter</button>
+            <div style="text-align: center;">
+                <a href="#">Mot de passe oublié ?</a>
             </div>
-        </form>
-
-
-        <br>
-        <div style="text-align: center;">
-            <!--<a href="creation_compte.php">-->Mot de passe oublié ?<!--</a>  A MODIFIER -->
-        </div>
-
-    </div>
-
-
+        {% endblock %}
 
 
 
