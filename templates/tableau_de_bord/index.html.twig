@@ -2,69 +2,38 @@
 
 {% block title %}{{variableTitre}}{% endblock %}
 
-
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('Styles/TableauBord.css') }}">
-
 {% endblock %}
-
 
 {% block javascripts %}
     <script src="{{ asset('Scripts/TableauBord.js') }}" defer></script>
-
 {% endblock %}
-
 
 {% block body %}
     <div class="container">
         <main class="main-content">
             <h1>Tableau de bord</h1>
-
             <div class="section">
                 <div class ="course-controls">
-                    <div class="title">Cours consultés récemment</div>
+                    <h2>Cours consultés récemment</h2>
                     <div class="arrows">
                         <button class="prev" onclick="updateShownCourse()"><</button>
                         <button class="next" onclick="updateShownCourse()">></button>
                     </div>
                 </div>
                 <div class="courses">
-                    <div class="course-card" data-last-access="5">
-                        <img src="{{ asset('Images/math.jpg') }}" alt="Mathématiques">
-                        <h3>Mathématiques</h3>
-                        <p>Introduction aux fonctions et aux dérivées.</p>
-                        <div class="course-footer">
-                            <a href="#">Accéder</a>
-                            <span class="progress">Progression : 75%</span>
+                    {% for UEs in UEs %}
+                        <div class="course-card hidden">
+                            <img src="{{ asset('Images/math.jpg') }}" alt="{{ UEs.Titre }}">
+                            <h3>{{ UEs.Titre }}</h3>
+                            <p>{{ UEs.code }}</p>
+                            <div class="course-footer">
+                                <a href="#">Accéder</a>
+                                <span class="progress">Progression : 0%</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="course-card" data-last-access="5">
-                        <img src="{{ asset('Images/math.jpg') }}" alt="Mathématiques">
-                        <h3>Mathématiques</h3>
-                        <p>Introduction aux fonctions et aux dérivées.</p>
-                        <div class="course-footer">
-                            <a href="#">Accéder</a>
-                            <span class="progress">Progression : 75%</span>
-                        </div>
-                    </div>
-                    <div class="course-card" data-last-access="5">
-                        <img src="{{ asset('Images/math.jpg') }}" alt="Mathématiques">
-                        <h3>Mathématiques</h3>
-                        <p>Introduction aux fonctions et aux dérivées.</p>
-                        <div class="course-footer">
-                            <a href="#">Accéder</a>
-                            <span class="progress">Progression : 75%</span>
-                        </div>
-                    </div>
-                    <div class="course-card" data-last-access="5">
-                        <img src="{{ asset('Images/math.jpg') }}" alt="Mathématiques">
-                        <h3>Mathématiques</h3>
-                        <p>Introduction aux fonctions et aux dérivées.</p>
-                        <div class="course-footer">
-                            <a href="#">Accéder</a>
-                            <span class="progress">Progression : 75%</span>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
 

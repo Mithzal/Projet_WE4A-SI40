@@ -18,6 +18,7 @@
 {% block body %}
 <div class="container">
 
+    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
     <!-- Bouton pour ouvrir le menu -->
     <button class="menu-button" onclick="toggleMenu()">Connexion</button>
 
@@ -55,11 +56,15 @@
                 </div>
             </form>
 
-            <br>
-            <div style="text-align: center;">
-                <a href="#">Mot de passe oublié ?</a>
-            </div>
-        {% endblock %}
+
+        <br>
+        <div style="text-align: center;">
+            <!--<a href="creation_compte.php">-->Mot de passe oublié ?<!--</a>  A MODIFIER -->
+        </div>
+
+    </div>
+    {% endif %}
+
 
 
 
