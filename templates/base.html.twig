@@ -15,7 +15,7 @@
 
 
         <script>
-            const grades = {{ grades|json_encode|raw }};
+            const notes = {{ notes|json_encode|raw }};
         </script>
 
         <script src="{{ asset('Scripts/AccountManagerDropdown.js') }}" defer></script>
@@ -65,7 +65,7 @@
             </a>
 
 
-
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <div class="dropdown_account">
                 <button class="profile-button_right" onclick="toggleDropdown()">
                     <img class="profile_picture" src="{{ asset('Images/no_image.webp') }}" alt="Profile Icon">
@@ -76,7 +76,7 @@
                     <a href="#" id="logout" onclick="setLoggin(false)">Déconnexion</a>
                 </div>
             </div>
-
+            {% endif %}
 
             <div id="content"></div>
 

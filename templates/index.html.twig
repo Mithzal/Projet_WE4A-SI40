@@ -19,6 +19,7 @@
 
 <div class="container">
 
+    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
     <!-- Bouton pour ouvrir le menu -->
     <button class="menu-button" onclick="toggleMenu()">Connexion</button>
 
@@ -56,7 +57,7 @@
         </div>
 
     </div>
-
+    {% endif %}
 
 
 
