@@ -11,9 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
         newsfeed.appendChild(li);
     }
 
-    // Exemple d'ajout de messages dynamiques
-    addNewsMessage("Nouvelle annonce en Anglais");
-
     // Fonctionnalité de recherche de cours
     const searchInput = document.getElementById("search-bar");
     const courseCards = document.querySelectorAll(".course-card");

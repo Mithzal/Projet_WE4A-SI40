@@ -23,11 +23,11 @@
                     </div>
                 </div>
                 <div class="courses">
-                    {% for UEs in UEs %}
+                    {% for ue in UEs %}
                         <div class="course-card hidden">
-                            <img src="{{ asset('Images/math.jpg') }}" alt="{{ UEs.Titre }}">
-                            <h3>{{ UEs.Titre }}</h3>
-                            <p>{{ UEs.code }}</p>
+                            <img src="{{ asset('Images/math.jpg') }}" alt="{{ ue.titre }}">
+                            <h3>{{ ue.titre }}</h3>
+                            <p>{{ ue.code }}</p>
                             <div class="course-footer">
                                 <a href="#">Accéder</a>
                                 <span class="progress">Progression : 0%</span>

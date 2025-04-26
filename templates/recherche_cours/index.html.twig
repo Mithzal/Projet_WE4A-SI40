@@ -22,7 +22,36 @@
                 </select>
             </div>
             <div class="courses" id="course-list">
-                <!-- Les cours seront affichés ici -->
+                {% if UEs is not empty %}
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Teachers</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for ue in UEs %}
+                            <tr>
+                                <td>{{ ue.code }}</td>
+                                <td>{{ ue.titre }}</td>
+                                <td>{{ ue.description }}</td>
+                                <td>
+                                    {% if teachers is not empty %}
+                                        {{ teachers|join(', ') }}
+                                    {% else %}
+                                        No teachers assigned
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No courses available.</p>
+                {% endif %}
             </div>
         </div>
     </div>
