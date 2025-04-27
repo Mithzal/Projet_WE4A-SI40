@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateursRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -36,6 +37,9 @@ class Utilisateurs implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 30)]
     private ?string $Nom = null;
+
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $PhotoProfil = null;
 
     public function getId(): ?int
     {
@@ -132,6 +136,18 @@ class Utilisateurs implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNom(string $Nom): static
     {
         $this->Nom = $Nom;
+
+        return $this;
+    }
+
+    public function getPhotoProfil()
+    {
+        return $this->PhotoProfil;
+    }
+
+    public function setPhotoProfil($PhotoProfil): static
+    {
+        $this->PhotoProfil = $PhotoProfil;
 
         return $this;
     }

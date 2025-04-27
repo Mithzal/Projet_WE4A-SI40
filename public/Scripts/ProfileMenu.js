@@ -28,8 +28,6 @@ function editProfile() {
             <span class="close" onclick="closeProfilePopup()">&times;</span>
             <h2>Modifier les informations de l'utilisateur</h2>
             <form id="editProfileForm">
-                <label for="ProfilePicture">Photo de profil:</label>
-                <input type="file" id="ProfilePicture" name="ProfilePicture"><br><br>
                 <label for="Firstname">Nom:</label>
                 <input type="text" id="Firstname" name="Firstname"><br><br>
                 <label for="Lastname">Prénom:</label>
