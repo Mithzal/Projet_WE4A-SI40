@@ -16,6 +16,25 @@ class NotesRepository extends ServiceEntityRepository
         parent::__construct($registry, Notes::class);
     }
 
+    public function findNotesByUser(int $userId): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        SELECT n.id, n.note, n.coefficient, n.commentaire, n.date, u.titre AS ue_titre
+        FROM notes n
+        INNER JOIN ues u ON n.ue_id_id = u.id
+        WHERE n.user_id_id = :userId
+    ';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery([
+            'userId' => $userId,
+        ]);
+
+        return $resultSet->fetchAllAssociative();
+    }
+
 //    /**
 //     * @return Notes[] Returns an array of Notes objects
 //     */

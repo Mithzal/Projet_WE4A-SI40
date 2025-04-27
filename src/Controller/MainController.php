@@ -27,6 +27,10 @@ final class MainController extends AbstractController
         $notes = $notesRepository->findAll();
         $courses = $contenuRepository->findAll();
 
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+
         //ces variables sont nécessaire pour les "popups" d'information du profile et des notes
         $data = [
             'variableTitre'=> 'Home',
@@ -37,6 +41,8 @@ final class MainController extends AbstractController
             'UEs' => $UEs,
             'notes' => $notes,
             'courses' => $courses,
+            'last_username' => $lastUsername,
+            'error' => $error,
         ];
         return $this->render("index.html.twig", $data);
     }

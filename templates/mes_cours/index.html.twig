@@ -25,25 +25,33 @@
                 </select>
             </div>
             <div class="courses">
-                {% for UEs in UEs %}
-                    <div class="course-card hidden">
-                        <img src="{{ asset('Images/math.jpg') }}" alt="{{ UEs.Titre }}">
-                        <h3>{{ UEs.Titre }}</h3>
-                        <p>{{ UEs.code }}</p>
-                        <div class="course-footer">
-                            <a href="#">Accéder</a>
-                            <span class="progress">Progression : 0%</span>
+                {% if UEs is not empty %}
+                    {% for ue in UEs %}
+                        <div class="course-card hidden">
+                            <img src="{{ asset('Images/math.jpg') }}" alt="{{ ue.titre }}">
+                            <h3>{{ ue.titre }}</h3>
+                            <p>{{ ue.code }}</p>
+                            <div class="course-footer">
+                                <a href="{{ path('Cours', { id: ue.id }) }}">Accéder</a>
+                                <span class="progress">Progression : 0%</span>
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <p>Aucun cours disponible.</p>
+                {% endif %}
             </div>
         </main>
         <aside class="newsfeed">
             <h2>Fil d'actualité</h2>
             <ul>
-                {% for actualites in actualites %}
-                    <li>{{ actualites.titre }}</li>
-                {% endfor %}
+                {% if actualites is not empty %}
+                    {% for actualite in actualites %}
+                        <li><a href="{{ path('Cours', { id: actualite.ue_id }) }}">{{ actualite.titre }}</a></li>
+                    {% endfor %}
+                {% else %}
+                    <li>Aucune actualité disponible.</li>
+                {% endif %}
             </ul>
         </aside>
     </div>
