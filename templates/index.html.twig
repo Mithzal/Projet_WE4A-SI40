@@ -62,8 +62,24 @@
 
                 <br>
                 <div style="text-align: center;">
-                    <!--<a href="creation_compte.php">-->Mot de passe oublié ?<!--</a>  A MODIFIER -->
+                    <a href="#" onclick="openForgotPasswordPopup()">Mot de passe oublié ?</a>
                 </div>
+                <div id="forgotPasswordPopup" class="popup" style="display: none;">
+                    <div class="popup-box">
+                        <span class="close" onclick="closeForgotPasswordPopup()">&times;</span>
+                        <h2>Dommage!</h2>
+                        <p>Tant pis pour vous, il fallait s'en souvenir (ou le noter)...</p>
+                    </div>
+                </div>
+
+                <div id="secondPopup" class="popup" style="display: none;">
+                    <div class="popup-box">
+                        <span class="close" onclick="closeSecondPopup()">&times;</span>
+                        <h2>Encore là ?</h2>
+                        <p>Peut-être devriez-vous contacter l'administrateur pour récupérer votre mot de passe.</p>
+                    </div>
+                </div>
+
                 {% endblock %}
             </div>
         {% endif %}
