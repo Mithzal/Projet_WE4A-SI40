@@ -61,7 +61,7 @@
                 </div>
             </div>
             {% if  current_user  %}
-                {% if current_user.getRoles() == ['ROLE_ADMIN'] or current_user.getRoles() == ['ROLE_PROF_ADMIN'] %}
+                {% if current_user.getRoles() == ['ROLE_ADMIN'] or current_user.getRoles() == ['ROLE_PROF_ADMIN']  %}
                     <a href="{{ path('admin') }}">
                         <button>Administration</button>
                     </a>

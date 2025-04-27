@@ -8,6 +8,7 @@
 
 {% block javascripts %}
     <script src="{{ asset('Scripts/UnCours.js') }}" defer></script>
+    <script src="{{ asset('Scripts/Content.js') }}" defer></script>
 {% endblock %}
 
 
@@ -25,49 +26,75 @@
             </ul>
         </aside>
         <main class="main-content">
-            <h1>Bienvenue au Cours</h1>
+            <h1>{{ course.titre }}</h1>
             <div class="navbar">
                 <button>Cours</button>
+                {% if current_user.getRoles() == ['ROLE_PROF'] %}
                 <button>Participants</button>
                 <button>Notes</button>
+                {% endif %}
             </div>
-            <section id="introduction" class="post message information" data-date="2024-06-01">
-                <div class="information text-content">
-                    <h2>Introduction</h2>
-                    <p>Bienvenue dans ce cours. Vous apprendrez les bases essentielles.</p>
-                </div>
-            </section>
-            <section id="messageimportant" class="post message important" data-date="2024-12-20">
-                <div class="alert-icon">
-                    <div class="circle"></div>
-                    <div class="exclamation">!</div>
-                </div>
-                <div class="important text-content">
-                    <h2>Message important</h2>
-                    <p>Ceci est très important</p>
-                </div>
-            </section>
-            <section id="messageinfo" class="post message information" data-date="2024-09-05">
-                <div class="information text-content">
-                    <h2>Message information</h2>
-                    <p>Ceci est une information</p>
-                </div>
-            </section>
-            <section id="download" class="post depot" data-date="2024-11-15">
-                <div class="download-icon">
-                    <div class="arrow-head"></div>
-                    <div class="bar"></div>
-                </div>
-                <div class="depot text-content">
-                    <h2>Fichiers</h2>
-                    <p>Contenu du troisième module...</p>
-                    <a href="#" class="download">Télécharger le fichier ZIP</a>
-                </div>
-            </section>
-            <section id="quiz" data-date="2024-08-30">
-                <h2>Quiz Final</h2>
-                <p>Testez vos connaissances en passant le quiz final.</p>
-            </section>
+
+
+            {% for contenu in content %}
+                {% if contenu.type == 'quiz' %}
+                    <section id="quiz" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
+                        <h2>{{ contenu.titre }}</h2>
+                        <p>{{ contenu.text }}</p>
+                    </section>
+                {% endif %}
+                {% if contenu.type == 'files' %}
+                    <section id="contenu-{{ contenu.id }}" class="post depot" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
+                        <div class="download-icon">
+                            <div class="arrow-head"></div>
+                            <div class="bar"></div>
+                        </div>
+                        <div class="depot text-content">
+                            {% if current_user.getRoles() == ['ROLE_PROF'] or current_user.getRoles() == ('ROLE_PROF_ADMIN') %}
+                                <div>
+                                    <h2>{{ contenu.titre }}</h2>
+                                    <button  >Modifier</button>
+                                    <button class="delete-content-button" data-id="{{ contenu.id }}">Supprimer</button>
+                                </div>
+                            {% endif %}
+                            <p>{{ contenu.text }}</p>
+                            {% if contenu.fichier %}
+                                <a href="{{ path('telecharger_fichier',{'id': contenu.id}) }}" class="download">Télécharger le fichier</a>
+                            {% else %}
+                                <br>
+                                <p>Fichier non disponible.</p>
+                            {% endif %}
+                        </div>
+                    </section>
+                {% endif %}
+
+                {% if contenu.type == 'information' %}
+                    <section id="messageinfo" class="post message information" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
+                        <div class="information text-content">
+                            <h2>{{ contenu.titre }}</h2>
+                            <p>{{ contenu.text }}</p>
+                        </div>
+                    </section>
+                {% endif %}
+
+                {% if contenu.type == 'important' %}
+                    <section id="messageimportant" class="post message important" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
+                        <div class="alert-icon">
+                            <div class="circle"></div>
+                            <div class="exclamation">!</div>
+                        </div>
+                        <div class="important text-content">
+                            <h2>{{ contenu.titre }}</h2>
+                            <p>{{ contenu.text }}</p>
+                        </div>
+                    </section>
+
+                {% endif %}
+
+
+
+            {% endfor %}
+
         </main>
     </div>
 {% endblock %}

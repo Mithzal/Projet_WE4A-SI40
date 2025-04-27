@@ -32,9 +32,10 @@
                 <button class="tab-button" id="create-user">Créer un utilisateur</button>
                 <ul id="user-list">
                     {% for user in users %}
-                        <li>{{ user.Prenom }} {{ user.Nom }} - {{ user.email }}</li>
-                        <button class="delete-user-button" data-id="{{ user.id }}">Supprimer</button>
-                        <button class="edit-user-button" data-id="{{ user.id }}">Modifier</button>
+                        <li id="user-{{ user.id }}">{{ user.Prenom }} {{ user.Nom }} - {{ user.email }}
+                            <button class="delete-user-button" data-id="{{ user.id }}">Supprimer</button>
+                            <button class="edit-user-button" data-id="{{ user.id }}">Modifier</button>
+                        </li>
                     {% else %}
                         <li>Aucun utilisateur trouvé.</li>
                     {% endfor %}
