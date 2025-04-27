@@ -22,7 +22,7 @@
                 </select>
             </div>
             <div class="courses" id="course-list">
-                {% if UEs is not empty %}
+                {% if UEs_details is not empty %}
                     <table>
                         <thead>
                         <tr>
@@ -33,7 +33,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for ue in UEs %}
+                        {% for ue in UEs_details %}
                             <tr>
                                 <td>{{ ue.code }}</td>
                                 <td>{{ ue.titre }}</td>

@@ -1,66 +1,65 @@
 const initialContent2 = document.getElementById("gradePopup").innerHTML;//on récupère le contenu initial de la popup pour pouvoir l'utiliser plus tard
 
+function openGradePopup(notesData) {
+    console.log("Données de notes reçues:", notesData);
 
-function calculateAverage(notes) {
-    let total = 0;
-    let count = 0;
-    notes.forEach(note => {
-        const [value, max] = note.split('/').map(Number);
-        total += (value / max) * 20; // Convertit la note en base 20
-        count++;
-    });
-    return (total / count).toFixed(2); // Retourne la moyenne arrondie à 2 décimales
-}
+    const popup = document.getElementById("gradePopup");
+    const tbody = popup.querySelector("table tbody");
+    tbody.innerHTML = '';
 
-function openGradePopup(grades) {
-    const gradePopup = document.getElementById("gradePopup");
-    const tableHead = gradePopup.querySelector("table thead tr");
-    const tableBody = gradePopup.querySelector("table tbody");
-    tableHead.innerHTML = "<th>UE</th>"; // Réinitialise les en-têtes de colonnes
-    tableBody.innerHTML = ""; // Réinitialise le contenu du tableau
+    if (notesData && notesData.length > 0) {
+        notesData.forEach(ue => {
+            const row = document.createElement('tr');
 
-    // Détermine le nombre maximum de notes
-    const maxNotes = Math.max(...grades.map(grade => grade.notes.length));
+            // Cellule pour le nom de l'UE
+            const ueCell = document.createElement('td');
+            ueCell.textContent = ue.ue;
+            row.appendChild(ueCell);
 
-    // Génère dynamiquement les en-têtes de colonnes pour les notes
-    for (let i = 1; i <= maxNotes; i++) {
-        const th = document.createElement("th");
-        th.textContent = `Note ${i}`;
-        tableHead.appendChild(th);
+            // Créer une cellule pour chaque note
+            const notesCell = document.createElement('td');
+            if (ue.notes.length > 0) {
+                const notesContainer = document.createElement('div');
+                notesContainer.className = 'notes-container';
+
+                ue.notes.forEach(note => {
+                    const noteElem = document.createElement('td');
+                    noteElem.className = 'note-badge';
+                    noteElem.textContent = note;
+                    notesContainer.appendChild(noteElem);
+                });
+
+                notesCell.appendChild(notesContainer);
+            } else {
+                notesCell.textContent = "Aucune note";
+            }
+            row.appendChild(notesCell);
+
+            // Calcul de la moyenne
+            let moyenne = "N/A";
+            if (ue.notes.length > 0) {
+                const sum = ue.notes.reduce((total, note) => total + parseFloat(note), 0);
+                moyenne = (sum / ue.notes.length).toFixed(2);
+            }
+
+            // Cellule pour la moyenne
+            const moyenneCell = document.createElement('td');
+            moyenneCell.textContent = moyenne;
+            row.appendChild(moyenneCell);
+
+            tbody.appendChild(row);
+        });
+    } else {
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.colSpan = 3;
+        cell.textContent = "Aucune note disponible";
+        cell.style.textAlign = "center";
+        row.appendChild(cell);
+        tbody.appendChild(row);
     }
 
-    // Ajoute l'en-tête de la colonne "Moyenne"
-    const thAverage = document.createElement("th");
-    thAverage.textContent = "Moyenne";
-    tableHead.appendChild(thAverage);
-
-    // Génère dynamiquement les lignes du tableau
-    grades.forEach(grade => {
-        const row = document.createElement("tr");
-        const ueCell = document.createElement("td");
-        ueCell.textContent = grade.ue;
-        row.appendChild(ueCell);
-
-        grade.notes.forEach(note => {
-            const noteCell = document.createElement("td");
-            noteCell.textContent = note;
-            row.appendChild(noteCell);
-        });
-
-        // Ajoute des cellules vides si le nombre de notes est inférieur au maximum
-        for (let i = grade.notes.length; i < maxNotes; i++) {
-            const emptyCell = document.createElement("td");
-            row.appendChild(emptyCell);
-        }
-
-        const averageCell = document.createElement("td");
-        averageCell.textContent = calculateAverage(grade.notes);
-        row.appendChild(averageCell);
-
-        tableBody.appendChild(row);
-    });
-
-    gradePopup.style.display = "block";
+    popup.style.display = "block";
 }
 
 function closeGradePopup() {

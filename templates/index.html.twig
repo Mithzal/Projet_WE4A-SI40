@@ -16,22 +16,26 @@
 
 
 {% block body %}
-    <div class="container">
+
+
+<div class="container">
+    {% if error %}
+        <div class="error" id="errorMessage">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
 
         {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
             <!-- Bouton pour ouvrir le menu -->
             <button class="menu-button" onclick="toggleMenu()">Connexion</button>
 
-            <!-- Menu latéral -->
-            <div id="side-menu" class="side-menu">
-                <!-- bouton x pour fermer le menu latéral -->
-                <button class="close-button" onclick="toggleMenu()">×</button>
-                <!-- contenu du menu latéral -->
-                {% block login %}
-                <form id="formulaire_login" method="post" action="{{ path('app_login') }}">
-                    {% if error %}
-                        <div class="error" id="errorMessage">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
+    <!-- Menu latéral -->
+    <div id="side-menu" class="side-menu">
+        <!-- bouton x pour fermer le menu latéral -->
+        <button class="close-button" onclick="toggleMenu()">×</button>
+        <!-- contenu du menu latéral -->
+        {% block login %}
+
+            <form id="formulaire_login" method="post" action="{{ path('app_login') }}">
+
 
                     <h1>Connexion</h1>
 
