@@ -14,13 +14,13 @@ class UEType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Code', TextType::class, [
+            ->add('code', TextType::class, [
                 'label' => 'Code de l\'UE',
             ])
-            ->add('Titre', TextType::class, [
+            ->add('titre', TextType::class, [
                 'label' => 'Titre de l\'UE',
             ])
-            ->add('Description', TextareaType::class, [
+            ->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'required' => false,
             ]);

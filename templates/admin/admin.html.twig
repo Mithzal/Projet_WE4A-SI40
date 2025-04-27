@@ -43,7 +43,11 @@
                 <button class="tab-button" id="create-ue">Créer une UE</button>
                 <ul id="ue-list">
                     {% for ue in ues %}
-                        <li>{{ ue.titre }}</li>
+                        <li id="ue-{{ ue.id }}">
+                            {{ ue.titre }}
+                            <button class="edit-button" data-id="{{ ue.id }}">Modifier</button>
+                            <button class="delete-button" data-id="{{ ue.id }}">Supprimer</button>
+                        </li>
                     {% else %}
                         <li>Aucune UE trouvée.</li>
                     {% endfor %}
