@@ -27,6 +27,11 @@
         </aside>
         <main class="main-content">
             <h1>{{ course.titre }}</h1>
+            {% if is_granted('ROLE_PROF') or is_granted('ROLE_PROF_ADMIN') %}
+                <div class="action-buttons">
+                    <a href="{{ path('ajouter_contenu', {'id': course.id}) }}" class="btn btn-primary">Ajouter un contenu</a>
+                </div>
+            {% endif %}
             <div class="navbar">
                 <button>Cours</button>
                 {% if current_user.getRoles() == ['ROLE_PROF'] %}
@@ -53,7 +58,7 @@
                             {% if current_user.getRoles() == ['ROLE_PROF'] or current_user.getRoles() == ('ROLE_PROF_ADMIN') %}
                                 <div>
                                     <h2>{{ contenu.titre }}</h2>
-                                    <button  >Modifier</button>
+                                    <button class="edit-content-button" data-id="{{ contenu.id }}" >Modifier</button>
                                     <button class="delete-content-button" data-id="{{ contenu.id }}">Supprimer</button>
                                 </div>
                             {% endif %}

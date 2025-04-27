@@ -12,6 +12,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Form\ContenuType;
+use Symfony\Component\HttpFoundation\Request;
+
+
 
 final class UnCoursController extends AbstractController
 {
@@ -141,6 +145,92 @@ final class UnCoursController extends AbstractController
         $entityManager->flush();
 
         return $this->json(['message' => 'UE supprimée avec succès.'], 200);
+    }
+
+
+
+    #[Route('/cours/{id}/ajouter-contenu', name: 'ajouter_contenu')]
+    public function ajouterContenu(Request $request, int $id, UEsRepository $UEsRepository, EntityManagerInterface $entityManager): Response
+    {
+        // Récupérer l'UE concernée
+        $ue = $UEsRepository->find($id);
+        $currentUser = $this->getUser();
+
+        if (!$ue) {
+            throw $this->createNotFoundException('UE non trouvée');
+        }
+
+        // Créer un nouveau contenu
+        $contenu = new Contenu();
+        $contenu->setUeId($ue);
+        $contenu->setDateCrea(new \DateTime());
+
+        // Créer le formulaire
+        $form = $this->createForm(ContenuType::class, $contenu);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Gestion du fichier si présent
+            $fichierField = $form->get('fichier');
+            if ($fichierField->getData()) {
+                $file = $fichierField->getData();
+                $fileContent = file_get_contents($file->getPathname());
+                $contenu->setFichier($fileContent);
+            }
+
+            // Enregistrer en base de données
+            $entityManager->persist($contenu);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Contenu ajouté avec succès');
+
+            return $this->redirectToRoute('Cours', ['id' => $id]);
+        }
+
+        return $this->render('un_cours/ajouter_contenu.html.twig', [
+            'form' => $form->createView(),
+            'ue' => $ue,
+            'current_user' => $currentUser,
+            'UEs' => [],
+            'notes' => [],
+        ]);
+    }
+    #[Route('/content/edit/{id}', name: 'edit_content')]
+    public function editContent(Request $request, int $id, EntityManagerInterface $entityManager): Response
+    {
+        $contenu = $entityManager->getRepository(Contenu::class)->find($id);
+        $currentUser = $this->getUser();
+
+        if (!$contenu) {
+            throw $this->createNotFoundException('Contenu non trouvé');
+        }
+
+        $form = $this->createForm(ContenuType::class, $contenu);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Gestion du fichier si un nouveau fichier est téléchargé
+            $fichierField = $form->get('fichier');
+            if ($fichierField->getData()) {
+                $file = $fichierField->getData();
+                $fileContent = file_get_contents($file->getPathname());
+                $contenu->setFichier($fileContent);
+            }
+
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Contenu modifié avec succès');
+
+            return $this->redirectToRoute('Cours', ['id' => $contenu->getUeId()->getId()]);
+        }
+
+        return $this->render('un_cours/edit_content.html.twig', [
+            'form' => $form->createView(),
+            'contenu' => $contenu,
+            'current_user' => $currentUser,
+            'UEs' => [],
+            'notes' => [],
+        ]);
     }
 
 }
