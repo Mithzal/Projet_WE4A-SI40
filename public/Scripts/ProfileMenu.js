@@ -1,4 +1,4 @@
-const initialContent = document.getElementById("profilePopup").innerHTML;//on récupère le contenu initial de la popup pour pouvoir l'utiliser plus tard
+const initialContent = document.getElementById("profilePopup").innerHTML; // Contenu initial de la popup
 
 function openProfilePopup() {
     document.getElementById("profilePopup").innerHTML = initialContent;
@@ -22,8 +22,7 @@ function closeProfilePopup() {
     }
 }
 
-
-function editProfile() {//cette fonction vient écraser le contenu de la div avec l'id profilePopup
+function editProfile() {
     document.getElementById("profilePopup").innerHTML = `
         <div class="popup-box">
             <span class="close" onclick="closeProfilePopup()">&times;</span>
@@ -32,24 +31,41 @@ function editProfile() {//cette fonction vient écraser le contenu de la div ave
                 <label for="ProfilePicture">Photo de profil:</label>
                 <input type="file" id="ProfilePicture" name="ProfilePicture"><br><br>
                 <label for="Firstname">Nom:</label>
-                <input type="text" id="Firstname" name="Firstname" value="John"><br><br><!-- Il faudra modifier les values pour que ce soit celle de la bdd -->
-                <label for="Lastname">Prénom</label>
-                <input type="text" id="Lastname" name="Lastname" value="Doe"><br><br>
-                 <button type="button" class="popup-button" onclick="submitProfileForm()">Enregistrer</button>
+                <input type="text" id="Firstname" name="Firstname"><br><br>
+                <label for="Lastname">Prénom:</label>
+                <input type="text" id="Lastname" name="Lastname"><br><br>
+                <label for="Email">Email:</label>
+                <input type="email" id="Email" name="Email"><br><br>
+                <button type="button" class="popup-button" onclick="submitProfileForm()">Enregistrer</button>
             </form>
         </div>
     `;
 }
+
 function submitProfileForm() {
-    var ProfilePicture = document.getElementById("ProfilePicture").value;
-    var Fname = document.getElementById("Firstname").value;
-    var Lname = document.getElementById("Lastname").value;
-    // Ajoutez ici le code pour enregistrer les nouvelles informations dans la bdd
-    alert("Nom: " + Fname + "\nPrénom : "+Lname+ "\nPhoto de profil: " + ProfilePicture);
-    closeProfilePopup();
+    const Fname = document.getElementById("Firstname").value;
+    const Lname = document.getElementById("Lastname").value;
+    const email = document.getElementById("Email").value;
+
+    fetch('/profile/edit', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prenom: Lname, nom: Fname, email: email }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                location.reload(); // Recharge la page directement sans afficher de popup
+            } else {
+                alert(data.error || "Une erreur est survenue.");
+            }
+        })
+        .catch(error => console.error("Erreur :", error));
 }
 
-function editPassWord(){
+function editPassWord() {
     document.getElementById("profilePopup").innerHTML = `
         <div class="popup-box">
             <span class="close" onclick="closeProfilePopup()">&times;</span>
@@ -66,43 +82,26 @@ function editPassWord(){
 }
 
 function submitPassWordForm() {
-    var oldPassword = document.getElementById("oldPassword").value;
-    var newPassword = document.getElementById("newPassword").value;
-    if (oldPassword === "" || newPassword === "") {
-        alert("Veuillez remplir tous les champs.");
-        return;
-    }
-    if (oldPassword === newPassword) {
-        alert("Le nouveau mot de passe doit être différent de l'ancien.");
-        return;
-    }
-    if (newPassword.length < 8) {
-        alert("Le mot de passe doit contenir au moins 8 caractères.");
-        return;
-    }
-    if (!/[A-Z]/.test(newPassword)) {
-        alert("Le mot de passe doit contenir au moins une lettre majuscule.");
-        return;
-    }
-    if (!/[a-z]/.test(newPassword)) {
-        alert("Le mot de passe doit contenir au moins une lettre minuscule.");
-        return;
-    }
-    // if (oldPassword == bdd ) // vérification du mot de passe
-    // {
-    //     alert("Le mot de passe est incorrect.");
-    //     return;
-    // }
+    const oldPassword = document.getElementById("oldPassword").value;
+    const newPassword = document.getElementById("newPassword").value;
 
 
-    // Ajoutez ici le code pour enregistrer les nouvelles informations dans la bdd
-    alert("Ancien mot de passe: " + oldPassword + "\nNouveau mot de passe: " + newPassword);
-    closeProfilePopup();
-}
 
-window.onclick = function(event) {// permet de fermer la popup si on clique en dehors de celle-ci
-    var popup = document.getElementById("profilePopup");//on récupère la popup
-    if (event.target === popup) {//si on clique pas  sur la popup
-        popup.style.display = "none";//on la ferme
-    }
+    fetch('/profile/edit-password', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ oldPassword: oldPassword, password: newPassword }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert(data.message);
+                closeProfilePopup();
+            } else {
+                alert(data.error || "Une erreur est survenue.");
+            }
+        })
+        .catch(error => console.error("Erreur :", error));
 }
