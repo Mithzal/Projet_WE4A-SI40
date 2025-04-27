@@ -87,7 +87,7 @@ final class AdminController extends AbstractController
     }
 
     #[Route('/admin/delete-user/{id}', name: 'admin_delete_user', methods: ['POST'])]
-    public function deleteUser(int $id, EntityManagerInterface $entityManager): Response
+    public function deleteUser(int $id, EntityManagerInterface $entityManager, ): Response
     {
         $user = $entityManager->getRepository(Utilisateurs::class)->find($id);
 
@@ -102,7 +102,7 @@ final class AdminController extends AbstractController
     }
 
     #[Route('/admin/edit-user/{id}', name: 'admin_edit_user')]
-    public function editUser(int $id, Request $request, EntityManagerInterface $entityManager): Response
+    public function editUser(int $id, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = $entityManager->getRepository(Utilisateurs::class)->find($id);
         $notesParUE = [];
@@ -116,6 +116,11 @@ final class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $plainPassword = $form->get('password')->getData();
+            if ($plainPassword) {
+                $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+            }
+
             $entityManager->flush();
 
             if ($request->isXmlHttpRequest()) {
