@@ -60,23 +60,27 @@
                     <a href="https://ae.utbm.fr/">AE</a>
                 </div>
             </div>
-            <a href="{{ path('admin') }}">
-                <button>Administration</button>
-            </a>
+            {% if  current_user  %}
+                {% if current_user.getRoles() == ['ROLE_ADMIN'] or current_user.getRoles() == ['ROLE_PROF_ADMIN'] %}
+                    <a href="{{ path('admin') }}">
+                        <button>Administration</button>
+                    </a>
+                {% endif %}
+            {% endif %}
 
 
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <div class="dropdown_account">
                 <button class="profile-button_right" onclick="toggleDropdown()">
-                    <img class="profile_picture" src="{{ asset(photoDeProfil) }}" alt="Profile Icon">
+                    <img class="profile_picture" src="{{ asset('Images/no_image.webp') }}" alt="Profile Icon">
                 </button>
                 <div class="dropdown-content_account" id="profileDropdown">
                     <a href="#" id="profile" onclick="openProfilePopup()">Profil</a>
-                    <a href="#" id="grades" onclick="openGradePopup(grades)">Notes</a>
+                    <a href="#" id="grades" onclick="openGradePopup(notes)">Notes</a>
                     <a href="{{ path('app_logout') }}" id="logout" >Déconnexion</a>
                 </div>
             </div>
-            {% endif %}
+
 
             <div id="content"></div>
 
@@ -88,9 +92,9 @@
                         <div class="profile">
                             <h2>Informations de l'utilisateur</h2>
                             <p>Photo de profile : </p>
-                            <img class="profile_picture" src="{{ asset(photoDeProfil) }}" alt="Profile Icon">
-                            <p>Nom: {{ FirstName }}, Prénom : {{ Lastname }}</p>
-                            <p>Email: {{email}}</p>
+                            <img class="profile_picture" src="{{ asset('Images/no_image.webp') }}" alt="Profile Icon">
+                            <p>Prénom: {{ current_user.getPrenom() }}, Nom : {{ current_user.getNom() }}</p>
+                            <p>Email: {{current_user.getEmail()}}</p>
 
                         </div>
 
@@ -98,7 +102,7 @@
                             <h2>Mes UEs</h2>
                             <ul>
                                 {% for ue in UEs %}
-                                    <li>{{ ue.titre }}</li>
+                                    <li>{{ ue.ue }}</li>
                                 {% endfor %}
                             </ul>
 
@@ -118,7 +122,9 @@
                         <table>
                             <thead>
                             <tr>
-                                <!-- Ajoutez d'autres en-têtes de colonne si nécessaire -->
+                                <th>UE</th>
+                                <th>Notes</th>
+                                <th>Moyenne</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -128,6 +134,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
 
     </header>

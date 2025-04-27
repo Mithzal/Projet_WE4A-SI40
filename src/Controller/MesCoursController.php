@@ -6,6 +6,7 @@ use App\Repository\ContenuRepository;
 use App\Repository\UEsRepository;
 use App\Repository\NotesRepository;
 use App\Repository\UtilisateursRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class MesCoursController extends AbstractController
 {
     #[Route('/mesCours', name: 'MesCours')]
-    public function index(ContenuRepository $contenuRepository, UEsRepository $UEsRepository, NotesRepository $notesRepository, UtilisateursRepository $utilisateursRepository): Response
+    public function index(ContenuRepository $contenuRepository, UEsRepository $UEsRepository, NotesRepository $notesRepository, UtilisateursRepository $utilisateursRepository, EntityManagerInterface $entityManager): Response
     {
         // Get the currently connected user
         $currentUser = $this->getUser();
@@ -21,27 +22,49 @@ final class MesCoursController extends AbstractController
 
 
         // Fetch data related to the connected user
-        $UEs = $UEsRepository->findCoursesByUser($Utilisateur->getId());
+        $UEsDetails = $UEsRepository->findCoursesByUser($Utilisateur->getId());
         $notes = $notesRepository->findNotesByUser($Utilisateur->getId());
         $actualites = $contenuRepository->findActualitesByUser($Utilisateur->getId());
 
-        // Add user details
-        $FirstName = $Utilisateur->getPrénom();
-        $LastName = $Utilisateur->getNom();
-        $email = $Utilisateur->getEmail();
-        $photoDeProfil = 'Images/no_image.webp';
+        $conn = $entityManager->getConnection();
+        $UEs = [];
+        $sql = 'SELECT UEs.titre
+            FROM UEs
+            INNER JOIN membres_ues_ues ON UEs.id = membres_ues_ues.ues_id
+            INNER JOIN membres_ues ON membres_ues_ues.membres_ues_id = membres_ues.id
+            INNER JOIN membres_ues_utilisateurs ON membres_ues.id = membres_ues_utilisateurs.membres_ues_id
+            INNER JOIN Utilisateurs ON membres_ues_utilisateurs.utilisateurs_id = Utilisateurs.id
+            WHERE Utilisateurs.id = :id
+            ';
+
+        $stmt = $conn->prepare($sql);
+        $result = $stmt->executeQuery(['id' => $currentUser->getId()]);
+
+
+        $rows = $result->fetchAllAssociative();
+
+        foreach ($rows as $row) {
+            $nomUE = $row['titre'];
+
+            if (!isset($UEs[$nomUE])) {
+                $UEs[$nomUE] = [
+                    'ue' => $nomUE
+                ];
+            }
+
+        }
+
 
 
         // Pass the data to the template
         $data = [
             'variableTitre'=> 'Mes Cours',
-            'FirstName' => $FirstName,
-            'Lastname' => $LastName,
-            'email' => $email,
-            'photoDeProfil' => $photoDeProfil,
+            'UEs_details' => $UEsDetails,
             'UEs' => $UEs,
             'notes' => $notes,
             'actualites' => $actualites,
+            'current_user' => $currentUser,
+
         ];
         //dump($data);
         return $this->render('mes_cours/index.html.twig', $data);

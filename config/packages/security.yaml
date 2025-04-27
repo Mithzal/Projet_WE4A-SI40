@@ -38,9 +38,9 @@ security:
         - { path: ^/admin/create-user, roles: [ ROLE_ADMIN, ROLE_PROF_ADMIN ] }
         - { path: ^/admin/create-ue, roles: [ ROLE_ADMIN, ROLE_PROF_ADMIN ] }
 
-        - { path: ^/mesCours, roles: [ ROLE_PROF_ADMIN, ROLE_ELEVE, ROLE_PROF ] }
-        - { path: ^/rechercheCours, roles: [ ROLE_PROF_ADMIN, ROLE_ELEVE, ROLE_PROF ] }
-        - { path: ^/tableauDeBord, roles: [ ROLE_PROF_ADMIN, ROLE_ELEVE, ROLE_PROF ] }
+        - { path: ^/mesCours, roles: [ ROLE_PROF_ADMIN, ROLE_ELEVE, ROLE_PROF, ROLE_ADMIN ] }
+        - { path: ^/rechercheCours, roles: [ ROLE_PROF_ADMIN, ROLE_ELEVE, ROLE_PROF, ROLE_ADMIN ] }
+        - { path: ^/tableauDeBord, roles: [ ROLE_PROF_ADMIN, ROLE_ELEVE, ROLE_PROF, ROLE_ADMIN ] }
 
 when@test:
     security:
