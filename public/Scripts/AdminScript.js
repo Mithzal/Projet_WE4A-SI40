@@ -70,34 +70,46 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Affichage dynamique des formulaires
-    document.getElementById("create-user").addEventListener("click", () => {
-        showForm("user");
-    });
+    document.addEventListener("DOMContentLoaded", () => {
+        // Affichage dynamique des formulaires
+        document.getElementById("create-user").addEventListener("click", () => {
+            showForm("user");
+        });
 
-    document.getElementById("create-ue").addEventListener("click", () => {
-        showForm("ue");
-    });
+        document.getElementById("create-ue").addEventListener("click", () => {
+            showForm("ue");
+        });
 
-    function showForm(type) {
-        const creationZone = document.getElementById("creation-zone");
+        function showForm(type) {
+            const creationZone = document.getElementById("creation-zone");
 
-        fetch(`/admin/create-${type}`)
-            .then(response => response.text())
-            .then(html => {
-                creationZone.innerHTML = html;
+            fetch(`/admin/create-${type}`)
+                .then(response => response.text())
+                .then(html => {
+                    const formContainer = document.createElement("div");
+                    formContainer.classList.add("form-popup"); // Ajoute la classe pour le style
+                    formContainer.innerHTML = html;
 
-                // Ajoutez un bouton pour fermer le formulaire
-                const closeButton = document.createElement("button");
-                closeButton.textContent = "Annuler";
-                closeButton.classList.add("close-form");
-                closeButton.addEventListener("click", () => {
-                    creationZone.innerHTML = ""; // Vide la zone de création
+                    // Ajout d'un bouton de fermeture spécifique
+                    const closeButton = document.createElement("button");
+                    closeButton.textContent = "Fermer";
+                    closeButton.classList.add("close-form");
+                    closeButton.addEventListener("click", () => {
+                        formContainer.remove(); // Supprime uniquement ce formulaire
+                    });
+
+                    formContainer.appendChild(closeButton);
+                    creationZone.appendChild(formContainer); // Ajoute le formulaire sans supprimer les autres
+                })
+                .catch(error => {
+                    console.error("Erreur lors du chargement du formulaire :", error);
                 });
-                creationZone.appendChild(closeButton);
-            })
-            .catch(error => {
-                console.error("Erreur lors du chargement du formulaire :", error);
-            });
+        }
+    });
+    function closeForm(button) {
+        const formContainer = button.closest(".form-popup");
+        if (formContainer) {
+            formContainer.remove(); // Supprime uniquement le formulaire concerné
+        }
     }
 });

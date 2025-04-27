@@ -96,6 +96,13 @@
     margin-top: 10px;
 }
 
+.form-popup .button-group {
+    display: flex;
+    justify-content: flex-end; /* Aligne les boutons à droite */
+    gap: 10px; /* Espacement entre les boutons */
+    margin-top: 10px;
+}
+
 .form-popup .close-form {
     background-color: #e74c3c;
     color: white;

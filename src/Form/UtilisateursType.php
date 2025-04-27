@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Utilisateurs;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -16,25 +17,37 @@ class UtilisateursType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Prenom', TextType::class, [
+            ->add('prenom', TextType::class, [
                 'label' => 'Prénom',
             ])
-            ->add('Nom', TextType::class, [
+            ->add('nom', TextType::class, [
                 'label' => 'Nom',
             ])
-            ->add('Email', EmailType::class, [
+            ->add('email', EmailType::class, [
                 'label' => 'Email',
             ])
-            ->add('MotDePasse', PasswordType::class, [
+            ->add('password', PasswordType::class, [
                 'label' => 'Mot de passe',
             ])
-            ->add('Role', ChoiceType::class, [
+            ->add('roles', ChoiceType::class, [
                 'label' => 'Rôle',
                 'choices' => [
-                    'Administrateur' => 'admin',
-                    'Utilisateur' => 'user',
+                    'Administrateur' => 'ROLE_ADMIN',
+                    'Utilisateur' => 'ROLE_USER',
+                    'Professeur' => 'ROLE_PROF',
+                    'Professeur/Administrateur' => 'ROLE_PROF_ADMIN',
                 ],
+                'multiple' => false, // Une seule option peut être sélectionnée
+                'expanded' => false, // Affiche un menu déroulant
             ]);
+
+        // Transformer les données pour le champ "roles"
+        $builder->get('roles')->addModelTransformer(new CallbackTransformer(
+        // Transforme un tableau en chaîne (pour le formulaire)
+            fn ($rolesArray) => $rolesArray[0] ?? null,
+            // Transforme une chaîne en tableau (pour l'entité)
+            fn ($roleString) => [$roleString]
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver): void

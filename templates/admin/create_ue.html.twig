@@ -1,11 +1,14 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Créer une UE{% endblock %}
-
 {% block body %}
-    <h1>Créer une UE</h1>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit">Créer</button>
-    {{ form_end(form) }}
+    <link rel="stylesheet" href="{{ asset('Styles/Admin.css') }}">
+    <div class="form-popup">
+        <h3>Créer une UE</h3>
+        {{ form_start(form, { 'action': path('admin_create_user'), 'attr': { 'class': 'form-popup-stack' } }) }}
+        {{ form_widget(form) }}
+        <div class="button-group">
+            <button type="submit" class="sub-button">Créer</button>
+            <button type="button" class="close-form" onclick="closeForm(this)">Annuler</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+    <script src="{{ asset('Scripts/AdminScript.js') }}"></script>
 {% endblock %}

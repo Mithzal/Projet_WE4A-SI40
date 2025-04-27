@@ -7,6 +7,8 @@ use App\Entity\UEs;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\UtilisateursType;
@@ -26,13 +28,6 @@ final class AdminController extends AbstractController
         $LastName = 'Doe';
         $email = 'johndoe@example.com';
         $photoDeProfil = 'Images/no_image.webp'; // URL de la photo de profil
-        $UEs = [
-            'PHP',
-            'Symfony',
-            'HTML',
-            'CSS',
-            'JavaScript',
-        ];
         $grades = [
             [ 'ue' => "Mathématique", 'notes' => ["15/20", "16/20", "17/20", "5/20", "80/100"] ],
             [ 'ue' => "Physique", 'notes' => ["12/20"] ],
@@ -53,43 +48,45 @@ final class AdminController extends AbstractController
             'Lastname' => $LastName,
             'email' => $email,
             'photoDeProfil' => $photoDeProfil,
-            'UEs' => $UEs,
-            'grades' => $grades
+            'UEs' => $ues,
+            'notes' => $grades
         ];
 
         return $this->render('admin/admin.html.twig', $data);
     }
 
     #[Route('/admin/create-user', name: 'admin_create_user')]
-    public function createUser(Request $request, EntityManagerInterface $entityManager): Response
+    public function createUser(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = new Utilisateurs();
         $form = $this->createForm(UtilisateursType::class, $user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $plainPassword = $form->get('password')->getData();
+            $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+
             $entityManager->persist($user);
             $entityManager->flush();
 
             if ($request->isXmlHttpRequest()) {
-                return new Response('Utilisateur créé avec succès !', 200);
+                return $this->json(['success' => true, 'message' => 'Utilisateur créé avec succès !'], 200);
             }
 
             $this->addFlash('success', 'Utilisateur créé avec succès !');
             return $this->redirectToRoute('admin');
         }
 
-        $data = [
+        if ($request->isXmlHttpRequest()) {
+            return $this->json(['success' => false, 'message' => 'Erreur lors de la validation du formulaire.'], 400);
+        }
+
+        return $this->render('admin/create_user.html.twig', [
             'form' => $form->createView(),
             'variableTitre' => 'Créer un utilisateur',
-            'FirstName' => 'John',
-            'Lastname' => 'Doe',
-            'email' => 'johndoe@example.com',
-            'photoDeProfil' => 'Images/no_image.webp',
-        ];
-
-        return $this->render('admin/create_user.html.twig', $data);
+        ]);
     }
+
 
     #[Route('/admin/create-ue', name: 'admin_create_ue')]
     public function createUE(Request $request, EntityManagerInterface $entityManager): Response
@@ -103,20 +100,20 @@ final class AdminController extends AbstractController
             $entityManager->flush();
 
             if ($request->isXmlHttpRequest()) {
-                return new Response('UE créée avec succès !', 200);
+                return $this->json(['message' => 'UE créée avec succès !'], 200);
             }
 
             $this->addFlash('success', 'UE créée avec succès !');
             return $this->redirectToRoute('admin');
         }
 
+        if ($request->isXmlHttpRequest()) {
+            return $this->json(['message' => 'Erreur lors de la validation du formulaire.'], 400);
+        }
+
         $data = [
             'form' => $form->createView(),
             'variableTitre' => 'Créer une UE',
-            'FirstName' => 'John',
-            'Lastname' => 'Doe',
-            'email' => 'johndoe@example.com',
-            'photoDeProfil' => 'Images/no_image.webp',
         ];
 
         return $this->render('admin/create_ue.html.twig', $data);

@@ -15,7 +15,7 @@
 
 
         <script>
-            const notes = {{ notes|json_encode|raw }};
+            const notes = {{ notes is defined ? notes|json_encode|raw : '[]' }};
         </script>
 
         <script src="{{ asset('Scripts/AccountManagerDropdown.js') }}" defer></script>
@@ -131,8 +131,6 @@
         </div>
 
     </header>
-
-
 
     {% block body %}{% endblock %}
     </body>

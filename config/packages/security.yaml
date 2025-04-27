@@ -35,7 +35,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin, roles: [ROLE_ADMIN, ROLE_PROF_ADMIN] }
-
+        - { path: ^/admin/create-user, roles: [ ROLE_ADMIN, ROLE_PROF_ADMIN ] }
+        - { path: ^/admin/create-ue, roles: [ ROLE_ADMIN, ROLE_PROF_ADMIN ] }
 
         - { path: ^/mesCours, roles: [ ROLE_PROF_ADMIN, ROLE_ELEVE, ROLE_PROF ] }
         - { path: ^/rechercheCours, roles: [ ROLE_PROF_ADMIN, ROLE_ELEVE, ROLE_PROF ] }
