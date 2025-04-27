@@ -45,9 +45,16 @@
                 {% if contenu.type == 'quiz' %}
                     <section id="quiz" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
                         <h2>{{ contenu.titre }}</h2>
+                        {% if current_user.getRoles() == ['ROLE_PROF'] or current_user.getRoles() == ('ROLE_PROF_ADMIN') %}
+                            <div>
+                                <button class="edit-content-button" data-id="{{ contenu.id }}" >Modifier</button>
+                                <button class="delete-content-button" data-id="{{ contenu.id }}">Supprimer</button>
+                            </div>
+                        {% endif %}
                         <p>{{ contenu.text }}</p>
                     </section>
                 {% endif %}
+
                 {% if contenu.type == 'files' %}
                     <section id="contenu-{{ contenu.id }}" class="post depot" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
                         <div class="download-icon">
@@ -77,6 +84,12 @@
                     <section id="messageinfo" class="post message information" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
                         <div class="information text-content">
                             <h2>{{ contenu.titre }}</h2>
+                            {% if current_user.getRoles() == ['ROLE_PROF'] or current_user.getRoles() == ('ROLE_PROF_ADMIN') %}
+                                <div>
+                                    <button class="edit-content-button" data-id="{{ contenu.id }}" >Modifier</button>
+                                    <button class="delete-content-button" data-id="{{ contenu.id }}">Supprimer</button>
+                                </div>
+                            {% endif %}
                             <p>{{ contenu.text }}</p>
                         </div>
                     </section>
@@ -90,6 +103,12 @@
                         </div>
                         <div class="important text-content">
                             <h2>{{ contenu.titre }}</h2>
+                            {% if current_user.getRoles() == ['ROLE_PROF'] or current_user.getRoles() == ('ROLE_PROF_ADMIN') %}
+                                <div>
+                                    <button class="edit-content-button" data-id="{{ contenu.id }}" >Modifier</button>
+                                    <button class="delete-content-button" data-id="{{ contenu.id }}">Supprimer</button>
+                                </div>
+                            {% endif %}
                             <p>{{ contenu.text }}</p>
                         </div>
                     </section>
