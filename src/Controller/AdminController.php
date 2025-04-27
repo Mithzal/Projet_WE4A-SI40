@@ -23,23 +23,13 @@ final class AdminController extends AbstractController
         // Récupérer les utilisateurs et les UE depuis la base de données
         $users = $entityManager->getRepository(Utilisateurs::class)->findAll();
         $ues = $entityManager->getRepository(UEs::class)->findAll();
-
+        $notesParUE = [];
+        $UEs = [];
         $FirstName = 'John';
         $LastName = 'Doe';
         $email = 'johndoe@example.com';
         $photoDeProfil = 'Images/no_image.webp'; // URL de la photo de profil
-        $grades = [
-            [ 'ue' => "Mathématique", 'notes' => ["15/20", "16/20", "17/20", "5/20", "80/100"] ],
-            [ 'ue' => "Physique", 'notes' => ["12/20"] ],
-            [ 'ue' => "Anglais", 'notes' => ["18/20", "17/20", "19/20"] ],
-            [ 'ue' => "Informatique", 'notes' => ["20/20", "19/20", "18/20"] ],
-            [ 'ue' => "Chimie", 'notes' => ["14/20", "15/20"] ],
-            [ 'ue' => "Biologie", 'notes' => ["16/20", "17/20"] ],
-            [ 'ue' => "Histoire", 'notes' => ["13/20"] ],
-            [ 'ue' => "Géographie", 'notes' => ["12/20", "11/20"] ],
-            [ 'ue' => "Philosophie", 'notes' => ["10/20"] ],
-            [ 'ue' => "Arts Plastiques", 'notes' => ["19/20"] ],
-        ];
+
         $data = [
             'variableTitre' => 'Administration',
             'users' => $users,
@@ -48,16 +38,22 @@ final class AdminController extends AbstractController
             'Lastname' => $LastName,
             'email' => $email,
             'photoDeProfil' => $photoDeProfil,
-            'UEs' => $ues,
-            'notes' => $grades
+            'UEs' => $UEs,
+            'notes' => $notesParUE,
+            'current_user' => $this->getUser(),
         ];
 
         return $this->render('admin/admin.html.twig', $data);
     }
 
+
+    //GESTION DES UTILISATEURS
+
     #[Route('/admin/create-user', name: 'admin_create_user')]
     public function createUser(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
     {
+        $notesParUE = [];
+        $UEs = [];
         $user = new Utilisateurs();
         $form = $this->createForm(UtilisateursType::class, $user);
 
@@ -84,13 +80,77 @@ final class AdminController extends AbstractController
         return $this->render('admin/create_user.html.twig', [
             'form' => $form->createView(),
             'variableTitre' => 'Créer un utilisateur',
+            'current_user' => $this->getUser(),
+            'notes' => $notesParUE,
+            'UEs' => $UEs,
+        ]);
+    }
+
+    #[Route('/admin/delete-user/{id}', name: 'admin_delete_user', methods: ['POST'])]
+    public function deleteUser(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $user = $entityManager->getRepository(Utilisateurs::class)->find($id);
+
+        if (!$user) {
+            return $this->json(['message' => 'Utilisateur non trouvé.'], 404);
+        }
+
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        return $this->json(['message' => 'Utilisateur supprimé avec succès.'], 200);
+    }
+
+    #[Route('/admin/edit-user/{id}', name: 'admin_edit_user')]
+    public function editUser(int $id, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = $entityManager->getRepository(Utilisateurs::class)->find($id);
+        $notesParUE = [];
+        $UEs = [];
+
+        if (!$user) {
+            throw $this->createNotFoundException('Utilisateur non trouvé.');
+        }
+
+        $form = $this->createForm(UtilisateursType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            if ($request->isXmlHttpRequest()) {
+                return $this->json(['message' => 'Utilisateur modifié avec succès !'], 200);
+            }
+
+            $this->addFlash('success', 'Utilisateur modifié avec succès !');
+            return $this->redirectToRoute('admin');
+        }
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('admin/edit_user.html.twig', [
+                'form' => $form->createView(),
+                'user' => $user,
+            ]);
+        }
+
+        return $this->render('admin/edit_user.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user,
+            'variableTitre' => 'Modifier un utilisateur',
+            'current_user' => $this->getUser(),
+            'notes' => $notesParUE,
+            'UEs' => $UEs,
         ]);
     }
 
 
+    //GESTION DES UES
+
     #[Route('/admin/create-ue', name: 'admin_create_ue')]
     public function createUE(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $notesParUE = [];
+        $UEs = [];
         $ue = new UEs();
         $form = $this->createForm(UEType::class, $ue);
 
@@ -114,8 +174,68 @@ final class AdminController extends AbstractController
         $data = [
             'form' => $form->createView(),
             'variableTitre' => 'Créer une UE',
+            'current_user' => $this->getUser(),
+            'notes' => $notesParUE,
+            'UEs' => $UEs,
         ];
 
         return $this->render('admin/create_ue.html.twig', $data);
+    }
+
+    #[Route('/admin/delete-ue/{id}', name: 'admin_delete_ue', methods: ['POST'])]
+    public function deleteUE(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $ue = $entityManager->getRepository(UEs::class)->find($id);
+
+        if (!$ue) {
+            return $this->json(['message' => 'UE non trouvée.'], 404);
+        }
+
+        $entityManager->remove($ue);
+        $entityManager->flush();
+
+        return $this->json(['message' => 'UE supprimée avec succès.'], 200);
+    }
+
+    #[Route('/admin/edit-ue/{id}', name: 'admin_edit_ue')]
+    public function editUE(int $id, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $ue = $entityManager->getRepository(UEs::class)->find($id);
+        $notesParUE = [];
+        $UEs = [];
+
+        if (!$ue) {
+            throw $this->createNotFoundException('UE non trouvée.');
+        }
+
+        $form = $this->createForm(UEType::class, $ue);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            if ($request->isXmlHttpRequest()) {
+                return $this->json(['message' => 'UE modifiée avec succès !'], 200);
+            }
+
+            $this->addFlash('success', 'UE modifiée avec succès !');
+            return $this->redirectToRoute('admin');
+        }
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('admin/edit_ue.html.twig', [
+                'form' => $form->createView(),
+                'ue' => $ue,
+            ]);
+        }
+
+        return $this->render('admin/edit_ue.html.twig', [
+            'form' => $form->createView(),
+            'ue' => $ue,
+            'variableTitre' => 'Modifier une UE',
+            'current_user' => $this->getUser(),
+            'notes' => $notesParUE,
+            'UEs' => $UEs,
+        ]);
     }
 }

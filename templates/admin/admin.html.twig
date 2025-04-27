@@ -18,7 +18,7 @@
 
 {% block body %}
 
-    <h1 style="padding-top: 50px;">Page d'administration (non définitive)</h1>
+    <h1 style="padding-top: 50px;">Page d'administration</h1>
 
     <main>
         <section id="catalogue">
@@ -33,6 +33,8 @@
                 <ul id="user-list">
                     {% for user in users %}
                         <li>{{ user.Prenom }} {{ user.Nom }} - {{ user.email }}</li>
+                        <button class="delete-user-button" data-id="{{ user.id }}">Supprimer</button>
+                        <button class="edit-user-button" data-id="{{ user.id }}">Modifier</button>
                     {% else %}
                         <li>Aucun utilisateur trouvé.</li>
                     {% endfor %}
@@ -44,9 +46,9 @@
                 <ul id="ue-list">
                     {% for ue in ues %}
                         <li id="ue-{{ ue.id }}">
-                            {{ ue.titre }}
-                            <button class="edit-button" data-id="{{ ue.id }}">Modifier</button>
-                            <button class="delete-button" data-id="{{ ue.id }}">Supprimer</button>
+                            {{ ue.code }}
+                            <button class="edit-ue-button" data-id="{{ ue.id }}">Modifier</button>
+                            <button class="delete-ue-button" data-id="{{ ue.id }}">Supprimer</button>
                         </li>
                     {% else %}
                         <li>Aucune UE trouvée.</li>

@@ -13,103 +13,152 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Suppression via AJAX avec confirmation
-    document.addEventListener("click", (event) => {
-        if (event.target.classList.contains("delete-button")) {
-            const id = event.target.getAttribute("data-id");
-            const type = event.target.getAttribute("data-type"); // 'user' ou 'ue'
+    // Gestion des boutons de création
+    document.getElementById("create-user").addEventListener("click", () => {
+        showForm("user");
+    });
 
-            if (confirm(`Voulez-vous vraiment supprimer cet élément (${type}) ?`)) {
-                fetch(`/delete-${type}`, {
+    document.getElementById("create-ue").addEventListener("click", () => {
+        showForm("ue");
+    });
+
+    function showForm(type) {
+        const creationZone = document.getElementById("creation-zone");
+
+        fetch(`/admin/create-${type}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erreur lors du chargement du formulaire.");
+                }
+                return response.text();
+            })
+            .then(html => {
+                creationZone.innerHTML = html; // Charge directement le formulaire
+            })
+            .catch(error => {
+                console.error("Erreur lors du chargement du formulaire :", error);
+            });
+    }
+
+    // Suppression des utilisateurs via AJAX
+    document.addEventListener("click", (event) => {
+        if (event.target.classList.contains("delete-user-button")) {
+            const userId = event.target.getAttribute("data-id");
+
+            if (confirm("Voulez-vous vraiment supprimer cet utilisateur ?")) {
+                fetch(`/admin/delete-user/${userId}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ id }),
                 })
                     .then(response => {
-                        if (response.ok) {
-                            alert(`${type} supprimé avec succès.`);
-                            // Supprimer l'élément de la liste sans recharger la page
-                            document.querySelector(`#${type}-${id}`).remove();
-                        } else {
-                            alert(`Erreur lors de la suppression du ${type}.`);
+                        if (!response.ok) {
+                            return response.json().then(err => {
+                                throw new Error(err.message || "Erreur lors de la suppression.");
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        alert(data.message);
+                        const userElement = document.querySelector(`#user-${userId}`);
+                        if (userElement) {
+                            userElement.remove();
                         }
                     })
                     .catch(error => {
                         console.error("Erreur AJAX :", error);
-                        alert("Une erreur est survenue.");
+                        alert(error.message || "Une erreur est survenue.");
                     });
             }
         }
     });
 
-    document.addEventListener("submit", (event) => {
-        if (event.target.tagName === "FORM") {
-            event.preventDefault();
+    // Suppression des UEs via AJAX
+    document.addEventListener("click", (event) => {
+        if (event.target.classList.contains("delete-ue-button")) {
+            const ueId = event.target.getAttribute("data-id");
 
-            const form = event.target;
-            const formData = new FormData(form);
-
-            fetch(form.action, {
-                method: form.method,
-                body: formData,
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert("Formulaire soumis avec succès !");
-                        document.getElementById("creation-zone").innerHTML = ""; // Vide la zone de création
-                    } else {
-                        alert("Erreur lors de la soumission du formulaire.");
-                    }
+            if (confirm("Voulez-vous vraiment supprimer cette UE ?")) {
+                fetch(`/admin/delete-ue/${ueId}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
                 })
-                .catch(error => {
-                    console.error("Erreur lors de la soumission :", error);
-                    alert("Une erreur est survenue.");
-                });
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(err => {
+                                throw new Error(err.message || "Erreur lors de la suppression.");
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        alert(data.message);
+                        const ueElement = document.querySelector(`#ue-${ueId}`);
+                        if (ueElement) {
+                            ueElement.remove();
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erreur AJAX :", error);
+                        alert(error.message || "Une erreur est survenue.");
+                    });
+            }
         }
     });
 
-    document.addEventListener("DOMContentLoaded", () => {
-        // Affichage dynamique des formulaires
-        document.getElementById("create-user").addEventListener("click", () => {
-            showForm("user");
-        });
-
-        document.getElementById("create-ue").addEventListener("click", () => {
-            showForm("ue");
-        });
-
-        function showForm(type) {
+    // Modification des utilisateurs via AJAX
+    document.addEventListener("click", (event) => {
+        if (event.target.classList.contains("edit-user-button")) {
+            const userId = event.target.getAttribute("data-id");
             const creationZone = document.getElementById("creation-zone");
 
-            fetch(`/admin/create-${type}`)
-                .then(response => response.text())
+            fetch(`/admin/edit-user/${userId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Erreur lors du chargement du formulaire.");
+                    }
+                    return response.text();
+                })
                 .then(html => {
-                    const formContainer = document.createElement("div");
-                    formContainer.classList.add("form-popup"); // Ajoute la classe pour le style
-                    formContainer.innerHTML = html;
-
-                    // Ajout d'un bouton de fermeture spécifique
-                    const closeButton = document.createElement("button");
-                    closeButton.textContent = "Fermer";
-                    closeButton.classList.add("close-form");
-                    closeButton.addEventListener("click", () => {
-                        formContainer.remove(); // Supprime uniquement ce formulaire
-                    });
-
-                    formContainer.appendChild(closeButton);
-                    creationZone.appendChild(formContainer); // Ajoute le formulaire sans supprimer les autres
+                    creationZone.innerHTML = html; // Charge directement le formulaire
                 })
                 .catch(error => {
                     console.error("Erreur lors du chargement du formulaire :", error);
                 });
         }
     });
-    function closeForm(button) {
-        const formContainer = button.closest(".form-popup");
-        if (formContainer) {
-            formContainer.remove(); // Supprime uniquement le formulaire concerné
+
+    // Modification des UEs via AJAX
+    document.addEventListener("click", (event) => {
+        if (event.target.classList.contains("edit-ue-button")) {
+            const ueId = event.target.getAttribute("data-id");
+            const creationZone = document.getElementById("creation-zone");
+
+            fetch(`/admin/edit-ue/${ueId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Erreur lors du chargement du formulaire.");
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    creationZone.innerHTML = html; // Charge directement le formulaire
+                })
+                .catch(error => {
+                    console.error("Erreur lors du chargement du formulaire :", error);
+                });
         }
-    }
+    });
 });
+
+// Fonction pour fermer un formulaire
+function closeForm(button) {
+    const formPopup = button.closest(".form-popup");
+    if (formPopup) {
+        formPopup.remove();
+    }
+}

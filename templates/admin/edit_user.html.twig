@@ -1,11 +1,11 @@
 {% block body %}
     <link rel="stylesheet" href="{{ asset('Styles/Admin.css') }}">
     <div class="form-popup">
-        <h3>Créer un utilisateur</h3>
-        {{ form_start(form, { 'action': path('admin_create_user'), 'attr': { 'class': 'form-popup-stack' } }) }}
+        <h3>Modifier un utilisateur</h3>
+        {{ form_start(form, { 'action': path('admin_edit_user', { 'id': user.id }), 'attr': { 'class': 'form-popup-stack' } }) }}
         {{ form_widget(form) }}
         <div class="button-group">
-            <button type="submit" class="sub-button">Créer</button>
+            <button type="submit" class="sub-button">Modifier</button>
             <button type="button" class="close-form" onclick="closeForm(this)">Annuler</button>
         </div>
         {{ form_end(form) }}
