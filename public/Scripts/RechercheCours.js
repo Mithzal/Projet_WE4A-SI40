@@ -1,53 +1,71 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const courses = [
-        { name: 'Cours 1', date: '2023-01-01' },
-        { name: 'Cours 2', date: '2023-02-01' },
-        { name: 'Cours 3', date: '2023-03-01' },
-        { name: 'Cours 4', date: '2023-04-01' },
-        { name: 'Cours 5', date: '2023-05-01' },
-        { name: 'Cours 6', date: '2023-06-01' },
-        { name: 'Cours 7', date: '2023-07-01' },
-        { name: 'Cours 8', date: '2023-08-01' },
-        { name: 'Cours 9', date: '2023-09-01' },
-        { name: 'Cours 10', date: '2023-10-01' }
-    ];
-
     const courseList = document.getElementById('course-list');
     const searchBar = document.getElementById('search-bar');
     const sortCourses = document.getElementById('sort-courses');
 
+    // Fonction pour récupérer les cours via l'API
+    function fetchCourses(query) {
+        fetch(`/rechercheCoursAjax?query=${encodeURIComponent(query)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur réseau lors de la récupération des cours');
+                }
+                return response.json();
+            })
+            .then(courses => {
+                if (Array.isArray(courses)) {
+                    sortAndDisplayCourses(courses);
+                } else {
+                    console.error('Format de données inattendu :', courses);
+                }
+            })
+            .catch(error => console.error('Erreur lors de la récupération des cours :', error));
+    }
+
+    // Fonction pour afficher les cours
     function displayCourses(courses) {
         courseList.innerHTML = '';
         courses.forEach(course => {
-            const courseCard = document.createElement('div');
-            courseCard.className = 'course-card';
-            courseCard.innerHTML = `
-                        <h3>${course.name}</h3>
-                        <p>Date: ${course.date}</p>
-                    `;
-            courseList.appendChild(courseCard);
+            const { titre, description, code } = course;
+            if (titre && description && code) {
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.innerHTML = `
+                    <h3>${titre}</h3>
+                    <p>Description : ${description}</p>
+                    <p>Code: ${code}</p>
+                `;
+                courseList.appendChild(courseCard);
+            } else {
+                console.warn('Données de cours incomplètes :', course);
+            }
         });
     }
 
-    function sortAndFilterCourses() {
-        const searchTerm = searchBar.value.toLowerCase();
+    // Fonction pour trier et afficher les cours
+    function sortAndDisplayCourses(courses) {
         const sortBy = sortCourses.value;
 
-        let filteredCourses = courses.filter(course =>
-            course.name.toLowerCase().includes(searchTerm)
-        );
-
         if (sortBy === 'name') {
-            filteredCourses.sort((a, b) => a.name.localeCompare(b.name));
-        } else if (sortBy === 'date') {
-            filteredCourses.sort((a, b) => new Date(a.date) - new Date(b.date));
+            courses.sort((a, b) => a.titre.localeCompare(b.titre));
+        } else if (sortBy === 'code') {
+            courses.sort((a, b) => a.code.localeCompare(b.code));
         }
 
-        displayCourses(filteredCourses);
+        displayCourses(courses);
     }
 
-    searchBar.addEventListener('input', sortAndFilterCourses);
-    sortCourses.addEventListener('change', sortAndFilterCourses);
+    // Gestion des événements
+    searchBar.addEventListener('input', function() {
+        const query = searchBar.value;
+        fetchCourses(query);
+    });
 
-    displayCourses(courses);
+    sortCourses.addEventListener('change', function() {
+        const query = searchBar.value;
+        fetchCourses(query);
+    });
+
+    // Chargement initial (vide)
+    fetchCourses('');
 });
