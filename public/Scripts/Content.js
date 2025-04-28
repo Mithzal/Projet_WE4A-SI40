@@ -1,9 +1,9 @@
-// Suppression du content via AJAX
 document.addEventListener("click", (event) => {
+    // Gestion du bouton de suppression
     if (event.target.classList.contains("delete-content-button")) {
         const contentId = event.target.getAttribute("data-id");
 
-        if (confirm("Voulez-vous vraiment supprimer cette UE ?")) {
+        if (confirm("Voulez-vous vraiment supprimer ce contenu ?")) {
             fetch(`/content/delete/${contentId}`, {
                 method: "POST",
                 headers: {
@@ -30,5 +30,11 @@ document.addEventListener("click", (event) => {
                     alert(error.message || "Une erreur est survenue.");
                 });
         }
+    }
+
+    // Gestion du bouton d'édition
+    if (event.target.classList.contains("edit-content-button")) {
+        const contentId = event.target.getAttribute("data-id");
+        window.location.href = `/content/edit/${contentId}`;
     }
 });

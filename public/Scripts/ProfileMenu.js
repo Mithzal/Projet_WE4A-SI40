@@ -32,8 +32,7 @@ function editProfile() {
                 <input type="text" id="Firstname" name="Firstname"><br><br>
                 <label for="Lastname">Prénom:</label>
                 <input type="text" id="Lastname" name="Lastname"><br><br>
-                <label for="Email">Email:</label>
-                <input type="email" id="Email" name="Email"><br><br>
+                
                 <button type="button" class="popup-button" onclick="submitProfileForm()">Enregistrer</button>
             </form>
         </div>
