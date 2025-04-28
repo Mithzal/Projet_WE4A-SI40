@@ -132,6 +132,31 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // Gestion des boutons "Attribuer"
+    document.addEventListener('DOMContentLoaded', function() {
+        // Gestion des boutons d'assignation
+        document.querySelectorAll('.assign-ue-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const ueId = this.dataset.id;
+
+                // Charger le formulaire d'assignation via AJAX
+                fetch(`/admin/assign-ue/${ueId}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('creation-zone').innerHTML = html;
+                        document.getElementById('creation-zone').style.display = 'block';
+                    })
+                    .catch(error => console.error('Erreur:', error));
+            });
+        });
+    });
+
+
     // Modification des UEs via AJAX
     document.addEventListener("click", (event) => {
         if (event.target.classList.contains("edit-ue-button")) {

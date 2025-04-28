@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\MembresUEs;
 use App\Entity\Utilisateurs;
 use App\Entity\UEs;
+use App\Form\AssignUeType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -241,6 +243,30 @@ final class AdminController extends AbstractController
             'current_user' => $this->getUser(),
             'notes' => $notesParUE,
             'UEs' => $UEs,
+        ]);
+    }
+
+    #[Route('/admin/assign-ue-user', name: 'admin_assign_ue_user')]
+    public function assignUeUser(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $membreUE = new MembresUEs();
+        $form = $this->createForm(AssignUeType::class, $membreUE);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($membreUE);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Utilisateurs assignés avec succès aux UEs !');
+            return $this->redirectToRoute('admin');
+        }
+
+        return $this->render('admin/assign_ue_user.html.twig', [
+            'form' => $form->createView(),
+            'variableTitre' => 'Assigner des utilisateurs à des UEs',
+            'current_user' => $this->getUser(),
+            'UEs' => [],
+            'notes' => [],
         ]);
     }
 }

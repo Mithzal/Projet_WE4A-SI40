@@ -1,0 +1,89 @@
+{# templates/admin/assign_ue_user.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Assigner des utilisateurs à des UEs{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Assignation d'utilisateurs aux UEs</h1>
+
+        {{ form_start(form, {'attr': {'class': 'mt-4'}}) }}
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Sélection des utilisateurs</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group mb-3">
+                </div>
+                <div class="user-list">
+                    {{ form_widget(form.user_id) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Sélection des UEs</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group mb-3">
+                </div>
+                <div class="ue-list">
+                    {{ form_widget(form.ue_id) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Rôle dans l'UE</h5>
+            </div>
+            <div class="card-body">
+                {{ form_widget(form.Role_uv) }}
+            </div>
+        </div>
+
+        <div class="form-actions mt-4 d-flex justify-content-between">
+            <a href="{{ path('admin') }}" class="btn btn-secondary">Retour</a>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fonction de recherche pour les utilisateurs
+            const userSearch = document.getElementById('user-search');
+            userSearch.addEventListener('input', function() {
+                const searchTerm = userSearch.value.toLowerCase();
+                const userOptions = document.querySelectorAll('.user-list label');
+
+                userOptions.forEach(option => {
+                    const userName = option.textContent.toLowerCase();
+                    if (userName.includes(searchTerm)) {
+                        option.closest('div').style.display = '';
+                    } else {
+                        option.closest('div').style.display = 'none';
+                    }
+                });
+            });
+
+            // Fonction de recherche pour les UEs
+            const ueSearch = document.getElementById('ue-search');
+            ueSearch.addEventListener('input', function() {
+                const searchTerm = ueSearch.value.toLowerCase();
+                const ueOptions = document.querySelectorAll('.ue-list label');
+
+                ueOptions.forEach(option => {
+                    const ueName = option.textContent.toLowerCase();
+                    if (ueName.includes(searchTerm)) {
+                        option.closest('div').style.display = '';
+                    } else {
+                        option.closest('div').style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -41,6 +41,7 @@ security:
         - { path: ^/mesCours, roles: [ ROLE_PROF_ADMIN, ROLE_ELEVE, ROLE_PROF, ROLE_ADMIN ] }
         - { path: ^/rechercheCours, roles: [ ROLE_PROF_ADMIN, ROLE_ELEVE, ROLE_PROF, ROLE_ADMIN ] }
         - { path: ^/tableauDeBord, roles: [ ROLE_PROF_ADMIN, ROLE_ELEVE, ROLE_PROF, ROLE_ADMIN ] }
+        - { path: ^/unCours, roles: [ ROLE_PROF_ADMIN, ROLE_ELEVE, ROLE_PROF, ROLE_ADMIN ] }
 
 when@test:
     security:

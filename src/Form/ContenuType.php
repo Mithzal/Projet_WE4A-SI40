@@ -26,9 +26,10 @@ class ContenuType extends AbstractType
             ->add('type', ChoiceType::class, [
                 'label' => 'Type de contenu',
                 'choices' => [
-                    'Texte' => 'text',
+                    'quiz' => 'quiz',
                     'Fichier' => 'files',
-                    'Quiz' => 'quiz',
+                    'Warning' => 'important',
+                    'Information' => 'information',
                 ],
             ])
             ->add('fichier', FileType::class, [
