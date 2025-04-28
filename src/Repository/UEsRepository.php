@@ -34,6 +34,27 @@ class UEsRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
+    public function findTeachersByCourses(): array
+    {
+        $connection = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        SELECT u.id AS course_id, u.titre AS course_title, GROUP_CONCAT(CONCAT(t.prenom, " ", t.nom) SEPARATOR ", ") AS teachers
+        FROM ues u
+        INNER JOIN membres_ues_ues mue ON mue.ues_id = u.id
+        INNER JOIN membres_ues mu ON mu.id = mue.membres_ues_id
+        INNER JOIN membres_ues_utilisateurs muu ON muu.membres_ues_id = mu.id
+        INNER JOIN utilisateurs t ON muu.utilisateurs_id = t.id
+        WHERE mu.role_uv = "enseignant"
+        GROUP BY u.id
+    ';
+
+        $stmt = $connection->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        return $resultSet->fetchAllAssociative();
+    }
+
     //    /**
     //     * @return UEs[] Returns an array of UEs objects
     //     */

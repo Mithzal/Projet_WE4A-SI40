@@ -56,3 +56,29 @@ a:hover {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
+/* table in recherche cours */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 15px; /* Add padding for more space */
+    text-align: left;
+    border: 1px solid #ddd; /* Add borders for better separation */
+}
+
+table th {
+    background-color: #f4f4f4; /* Light background for headers */
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Alternate row colors for better readability */
+}
+
+table tr:hover {
+    background-color: #f1f1f1; /* Highlight row on hover */
+}

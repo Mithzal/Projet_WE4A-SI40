@@ -23,6 +23,8 @@ final class RechercheCoursController extends AbstractController
         $Utilisateur = $utilisateursRepository->find($currentUser->getId());
         $UEsDetail = $UEsRepository->findAll();
 
+        $teachersByCourse = $UEsRepository->findTeachersByCourses();
+
         $notesParUE = [];
         $UEs = [];
 
@@ -79,29 +81,9 @@ final class RechercheCoursController extends AbstractController
             'UEs_details' => $UEsDetail,
             'UEs' => $UEs,
             'notes' => array_values($notesParUE),
-            'teachers' => '',
+            'teachersByCourse' => $teachersByCourse,
             'current_user' => $currentUser,
         ];
         return $this->render('recherche_cours/index.html.twig', $data);
-    }
-
-    #[Route('/rechercheCoursAjax', name: 'RechercheCoursAjax', methods: ['GET'])]
-    public function searchCourses(UEsRepository $UEsRepository, EntityManagerInterface $entityManager): Response
-    {
-        $searchTerm = $_GET['query'] ?? '';
-
-        $conn = $entityManager->getConnection();
-        $sql = '
-            SELECT titre, description, code
-            FROM UEs
-            WHERE titre LIKE :searchTerm
-               OR description LIKE :searchTerm
-               OR code LIKE :searchTerm
-        ';
-        $stmt = $conn->prepare($sql);
-        $result = $stmt->executeQuery(['searchTerm' => '%' . $searchTerm . '%']);
-        $courses = $result->fetchAllAssociative();
-
-        return $this->json($courses);
     }
 }

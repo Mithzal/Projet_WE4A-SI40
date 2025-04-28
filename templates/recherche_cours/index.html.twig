@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('Scripts/RechercheCours.js') }}" defer></script>
 {% endblock %}
 
 {% block body %}
@@ -18,7 +19,7 @@
                 <input type="text" id="search-bar" placeholder="Rechercher un cours...">
                 <label for="sort-courses"></label><select id="sort-courses">
                     <option value="name">Trier par nom</option>
-                    <option value="date">Trier par date</option>
+                    <option value="date">Trier par code</option>
                 </select>
             </div>
             <div class="courses" id="course-list">
@@ -32,19 +33,20 @@
                             <th>Teachers</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id = "table-row">
                         {% for ue in UEs_details %}
                             <tr>
                                 <td>{{ ue.code }}</td>
-                                <td>{{ ue.titre }}</td>
+                                <td><a href="{{ path('Cours', { id: ue.id }) }}">{{ ue.titre }}</a></td>
                                 <td>{{ ue.description }}</td>
                                 <td>
-                                    {% if teachers is not empty %}
-                                        {{ teachers|join(', ') }}
-                                    {% else %}
-                                        No teachers assigned
-                                    {% endif %}
-                                </td>
+                                    {% set courseTeachers = '' %}
+                                    {% for teacher in teachersByCourse %}
+                                        {% if teacher.course_id == ue.id %}
+                                            {% set courseTeachers = teacher.teachers %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {{ courseTeachers != '' ? courseTeachers : 'No teachers assigned' }}                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
