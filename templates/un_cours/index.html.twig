@@ -33,17 +33,17 @@
                 </div>
             {% endif %}
             <div class="navbar">
-                <button>Cours</button>
+                <button class="active">Cours</button>
+                <a href="{{ path('cours_participants', {'id': course.id}) }}"><button>Participants</button></a>
                 {% if current_user.getRoles() == ['ROLE_PROF'] %}
-                <button>Participants</button>
-                <button>Notes</button>
+                    <button>Notes</button>
                 {% endif %}
             </div>
 
 
             {% for contenu in content %}
                 {% if contenu.type == 'quiz' %}
-                    <section id="quiz" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
+                    <section id="contenu-{{ contenu.id }}" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
                         <h2>{{ contenu.titre }}</h2>
                         {% if current_user.getRoles() == ['ROLE_PROF'] or current_user.getRoles() == ('ROLE_PROF_ADMIN') %}
                             <div>
@@ -81,7 +81,7 @@
                 {% endif %}
 
                 {% if contenu.type == 'information' %}
-                    <section id="messageinfo" class="post message information" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
+                    <section id="contenu-{{ contenu.id }}" class="post message information" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
                         <div class="information text-content">
                             <h2>{{ contenu.titre }}</h2>
                             {% if current_user.getRoles() == ['ROLE_PROF'] or current_user.getRoles() == ('ROLE_PROF_ADMIN') %}
@@ -96,7 +96,7 @@
                 {% endif %}
 
                 {% if contenu.type == 'important' %}
-                    <section id="messageimportant" class="post message important" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
+                    <section id="contenu-{{ contenu.id }}" class="post message important" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
                         <div class="alert-icon">
                             <div class="circle"></div>
                             <div class="exclamation">!</div>

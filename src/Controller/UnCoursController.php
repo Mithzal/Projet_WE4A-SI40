@@ -235,5 +235,50 @@ final class UnCoursController extends AbstractController
             'notes' => [],
         ]);
     }
+    #[Route('/cours/{id}/participants', name: 'cours_participants')]
+    public function participants(int $id, UEsRepository $UEsRepository, EntityManagerInterface $entityManager): Response
+    {
+        $ue = $UEsRepository->find($id);
+
+        if (!$ue) {
+            throw $this->createNotFoundException('UE non trouvée');
+        }
+
+        // Récupérer tous les utilisateurs assignés à cette UE via la table de liaison
+        $conn = $entityManager->getConnection();
+        $sql = '
+    SELECT u.*, m.role_uv
+    FROM Utilisateurs u
+    JOIN membres_ues_utilisateurs mu ON u.id = mu.utilisateurs_id
+    JOIN membres_ues m ON mu.membres_ues_id = m.id
+    JOIN membres_ues_ues mue ON m.id = mue.membres_ues_id
+    WHERE mue.ues_id = :ueId
+    ';
+
+        $stmt = $conn->prepare($sql);
+        $result = $stmt->executeQuery(['ueId' => $id]);
+        $participants = $result->fetchAllAssociative();
+
+        // Séparer les professeurs et les étudiants
+        $professeurs = [];
+        $etudiants = [];
+
+        foreach ($participants as $participant) {
+            if ('enseignant' === $participant['role_uv']) {
+                $professeurs[] = $participant;
+            } else {
+                $etudiants[] = $participant;
+            }
+        }
+
+        return $this->render('un_cours/participants.html.twig', [
+            'ue' => $ue,
+            'professeurs' => $professeurs,
+            'etudiants' => $etudiants,
+            'current_user' => $this->getUser(),
+            'UEs' => [],
+            'notes' => [],
+        ]);
+    }
 
 }
