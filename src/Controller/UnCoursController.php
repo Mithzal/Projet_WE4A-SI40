@@ -119,9 +119,12 @@ final class UnCoursController extends AbstractController
         // Gérer le nom du fichier (avec le titre du contenu)
         $filename = $contenu->getTitre();
         // Vous pouvez ajouter une extension basée sur le type de contenu si nécessaire
-        if (!str_contains($filename, '.')) {
-            $filename .= '.pdf'; // Extension par défaut, à adapter selon vos besoins
-        }
+
+
+       //solution provisoire de stockage, le code commenté sert à ajouter l'extension dans le nom, pour une ouverture plus facile
+        //if (!str_contains($filename, '.')) {
+          //  $filename .= '.pdf'; // Extension par défaut, à adapter selon vos besoins
+       // }
 
         // Définir les en-têtes pour forcer le téléchargement
         $response->headers->set('Content-Type', 'application/octet-stream');
