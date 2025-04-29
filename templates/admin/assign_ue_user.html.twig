@@ -2,6 +2,11 @@
 
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    <link rel="stylesheet" href="{{ asset('Styles/assign_ue_user.css') }}">
+
+{% endblock %}
+
 {% block title %}Assigner des utilisateurs à des UEs{% endblock %}
 
 {% block body %}

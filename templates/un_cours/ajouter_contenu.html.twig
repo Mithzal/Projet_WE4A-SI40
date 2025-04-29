@@ -2,6 +2,12 @@
 
 {% block title %}Ajouter un contenu{% endblock %}
 
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('Styles/ajouter_contenu.css') }}">
+{% endblock %}
+
 {% block body %}
     <div class="container mt-4">
         <h1>Ajouter un contenu à {{ ue.titre }}</h1>

@@ -27,7 +27,7 @@
         </aside>
         <main class="main-content">
             <h1>{{ course.titre }}</h1>
-            {% if is_granted('ROLE_PROF') or is_granted('ROLE_PROF_ADMIN') %}
+            {% if is_granted('ROLE_PROF') or is_granted('ROLE_PROF_ADMIN') or is_granted('ROLE_ADMIN') %}
                 <div class="action-buttons">
                     <a href="{{ path('ajouter_contenu', {'id': course.id}) }}" class="btn btn-primary">Ajouter un contenu</a>
                 </div>
