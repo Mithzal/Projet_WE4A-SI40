@@ -101,6 +101,7 @@ final class UnCoursController extends AbstractController
         ];
         return $this->render('un_cours/index.html.twig', $data);
     }
+
     #[Route('/cours/fichier/{id}', name: 'telecharger_fichier')]
     public function telechargerFichier(int $id, ContenuRepository $contenuRepository): Response
     {
@@ -122,9 +123,9 @@ final class UnCoursController extends AbstractController
 
 
        //solution provisoire de stockage, le code commenté sert à ajouter l'extension dans le nom, pour une ouverture plus facile
-        //if (!str_contains($filename, '.')) {
-          //  $filename .= '.pdf'; // Extension par défaut, à adapter selon vos besoins
-       // }
+        if (!str_contains($filename, '.')) {
+            $filename .= '.zip'; // Extension par défaut, à adapter selon vos besoins
+        }
 
         // Définir les en-têtes pour forcer le téléchargement
         $response->headers->set('Content-Type', 'application/octet-stream');
@@ -132,8 +133,6 @@ final class UnCoursController extends AbstractController
 
         return $response;
     }
-
-
 
     #[Route('/content/delete/{id}', name: 'delete_content', methods: ['POST'])]
     public function deleteContent(int $id, EntityManagerInterface $entityManager): Response
@@ -149,7 +148,6 @@ final class UnCoursController extends AbstractController
 
         return $this->json(['message' => 'UE supprimée avec succès.'], 200);
     }
-
 
 
     #[Route('/cours/{id}/ajouter-contenu', name: 'ajouter_contenu')]
@@ -198,6 +196,7 @@ final class UnCoursController extends AbstractController
             'notes' => [],
         ]);
     }
+
     #[Route('/content/edit/{id}', name: 'edit_content')]
     public function editContent(Request $request, int $id, EntityManagerInterface $entityManager): Response
     {

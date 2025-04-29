@@ -42,14 +42,13 @@ function editProfile() {
 function submitProfileForm() {
     const Fname = document.getElementById("Firstname").value;
     const Lname = document.getElementById("Lastname").value;
-    const email = document.getElementById("Email").value;
 
     fetch('/profile/edit', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prenom: Lname, nom: Fname, email: email }),
+        body: JSON.stringify({ prenom: Lname, nom: Fname }),
     })
         .then(response => response.json())
         .then(data => {

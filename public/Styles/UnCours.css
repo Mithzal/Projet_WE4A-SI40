@@ -9,7 +9,11 @@ body {
     display: flex;
     width: 100%;
 }
-
+a {
+    text-decoration: none;
+}a:hover {
+     text-decoration: none;
+ }
 .sidebar {
     width: 250px;
     background: white;

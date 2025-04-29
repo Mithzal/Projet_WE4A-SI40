@@ -33,7 +33,7 @@ class ContenuType extends AbstractType
                 ],
             ])
             ->add('fichier', FileType::class, [
-                'label' => 'Fichier (PDF, Word, etc.)',
+                'label' => 'Fichier ZIP',
                 'required' => false,
                 'mapped' => false,
             ]);

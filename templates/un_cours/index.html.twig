@@ -34,7 +34,7 @@
             {% endif %}
             <div class="navbar">
                 <button class="active">Cours</button>
-                <a href="{{ path('cours_participants', {'id': course.id}) }}"><button>Participants</button></a>
+                <button><a class="active" href="{{ path('cours_participants', {'id': course.id}) }}">Participants</a></button>
                 {% if current_user.getRoles() == ['ROLE_PROF'] %}
                     <button>Notes</button>
                 {% endif %}
