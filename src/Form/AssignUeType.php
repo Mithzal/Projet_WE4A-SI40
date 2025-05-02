@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\MembresUEs;
-use App\Entity\UEs;
+use App\Entity\Membres;
+use App\Entity\Ues;
 use App\Entity\Utilisateurs;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -34,7 +34,7 @@ class AssignUeType extends AbstractType
                 'label' => 'UEs',
                 'required' => true,
             ])
-            ->add('Role_uv', ChoiceType::class, [
+            ->add('role', ChoiceType::class, [
                 'choices' => [
                     'Élève' => 'eleve',
                     'Enseignant' => 'enseignant',
@@ -48,7 +48,7 @@ class AssignUeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => MembresUEs::class,
+            // Supprimez la ligne data_class
         ]);
     }
 }

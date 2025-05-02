@@ -14,24 +14,23 @@ class Contenu
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $Titre = null;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Ues $ue = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Type = null;
+    private ?string $titre = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $Fichier;
+    private $fichier;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_crea = null;
 
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?UEs $ue_id = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $text = null;
 
     public function getId(): ?int
@@ -39,44 +38,53 @@ class Contenu
         return $this->id;
     }
 
-    public function getTitre(): ?string
+    public function getUe(): ?Ues
     {
-        return $this->Titre;
+        return $this->ue;
     }
 
-    public function setTitre(string $Titre): static
+    public function setUe(?Ues $ue): static
     {
-        $this->Titre = $Titre;
+        $this->ue = $ue;
+
+        return $this;
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(string $titre): static
+    {
+        $this->titre = $titre;
 
         return $this;
     }
 
     public function getType(): ?string
     {
-        return $this->Type;
+        return $this->type;
     }
 
-    public function setType(string $Type): static
+    public function setType(string $type): static
     {
-        $this->Type = $Type;
+        $this->type = $type;
 
         return $this;
     }
 
     public function getFichier()
     {
-        return $this->Fichier;
+        return $this->fichier;
     }
 
-    public function setFichier($Fichier): static
+    public function setFichier($fichier): static
     {
-        $this->Fichier = $Fichier;
+        $this->fichier = $fichier;
 
         return $this;
     }
-
-
-
 
     public function getDateCrea(): ?\DateTimeInterface
     {
@@ -90,24 +98,12 @@ class Contenu
         return $this;
     }
 
-    public function getUeId(): ?UEs
-    {
-        return $this->ue_id;
-    }
-
-    public function setUeId(?UEs $ue_id): static
-    {
-        $this->ue_id = $ue_id;
-
-        return $this;
-    }
-
     public function getText(): ?string
     {
         return $this->text;
     }
 
-    public function setText(?string $text): static
+    public function setText(string $text): static
     {
         $this->text = $text;
 

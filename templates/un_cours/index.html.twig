@@ -70,7 +70,7 @@
                                 </div>
                             {% endif %}
                             <p>{{ contenu.text }}</p>
-                            {% if contenu.fichier %}
+                            {% if contenu.fichier != NULL %}
                                 <a href="{{ path('telecharger_fichier',{'id': contenu.id}) }}" class="download">Télécharger le fichier</a>
                             {% else %}
                                 <br>

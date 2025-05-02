@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Repository\ContenuRepository;
-use App\Repository\NotesRepository;
-use App\Repository\UEsRepository;
+use App\Entity\Utilisateurs;
+use App\Entity\Membres;
+use App\Entity\Ues;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,8 +34,8 @@ final class MainController extends AbstractController
             $sql = '
         SELECT notes.note, ues.titre AS nom_UE
             FROM notes
-            INNER JOIN UEs ON notes.UE_id_id = UEs.id
-            INNER JOIN Utilisateurs ON notes.user_id_id = Utilisateurs.id
+            INNER JOIN UEs ON notes.UE_id = UEs.id
+            INNER JOIN Utilisateurs ON notes.user_id = Utilisateurs.id
             WHERE Utilisateurs.id = :id
                            ';
             $stmt = $conn->prepare($sql);
@@ -61,10 +61,8 @@ final class MainController extends AbstractController
             // Fetch all courses from the database
             $sql = 'SELECT UEs.titre
             FROM UEs
-            INNER JOIN membres_ues_ues ON UEs.id = membres_ues_ues.ues_id
-            INNER JOIN membres_ues ON membres_ues_ues.membres_ues_id = membres_ues.id
-            INNER JOIN membres_ues_utilisateurs ON membres_ues.id = membres_ues_utilisateurs.membres_ues_id
-            INNER JOIN Utilisateurs ON membres_ues_utilisateurs.utilisateurs_id = Utilisateurs.id
+            INNER JOIN membres ON UEs.id = membres.ue_id
+            INNER JOIN Utilisateurs ON membres.user_id = Utilisateurs.id
             WHERE Utilisateurs.id = :id
             ';
 

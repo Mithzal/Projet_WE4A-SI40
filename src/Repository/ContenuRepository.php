@@ -15,7 +15,6 @@ class ContenuRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Contenu::class);
     }
-
     public function findActualitesByUser(int $userId, int $limit = 10): array
     {
         $conn = $this->getEntityManager()->getConnection();
@@ -23,11 +22,9 @@ class ContenuRepository extends ServiceEntityRepository
         $sql = '
         SELECT c.id, c.titre, c.type, c.date_crea, u.id AS ue_id, u.titre AS ue_titre
         FROM contenu c
-        INNER JOIN ues u ON c.ue_id_id = u.id
-        INNER JOIN membres_ues_ues mue ON mue.ues_id = u.id
-        INNER JOIN membres_ues mu ON mu.id = mue.membres_ues_id
-        INNER JOIN membres_ues_utilisateurs muu ON muu.membres_ues_id = mu.id
-        WHERE muu.utilisateurs_id = :userId
+        INNER JOIN ues u ON c.ue_id = u.id
+        INNER JOIN membres m ON m.ue_id = u.id
+        WHERE m.user_id = :userId
         ORDER BY c.date_crea DESC
         LIMIT ' . (int) $limit;
 

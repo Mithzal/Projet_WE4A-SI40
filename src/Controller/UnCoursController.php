@@ -3,11 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Contenu;
-use App\Entity\UEs;
 use App\Repository\ContenuRepository;
-use App\Repository\NotesRepository;
-use App\Repository\UEsRepository;
-use App\Repository\UtilisateursRepository;
+use App\Repository\UesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,10 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
 final class UnCoursController extends AbstractController
 {
     #[Route('/cours/{id}', name: 'Cours')]
-    public function index(int $id, ContenuRepository $contenuRepository, UEsRepository $UEsRepository, EntityManagerInterface $entityManager): Response
+    public function index(int $id, ContenuRepository $contenuRepository, UesRepository $UesRepository, EntityManagerInterface $entityManager): Response
     {
-        $course = $UEsRepository->find($id);
-        $content = $contenuRepository->findBy(['ue_id' => $id]);
+        $course = $UesRepository->find($id);
+        $content = $contenuRepository->findBy(['ue' => $id]);
 
         // Get the currently connected user
         $currentUser = $this->getUser();
@@ -39,8 +36,8 @@ final class UnCoursController extends AbstractController
             $sql = '
         SELECT notes.note, ues.titre AS nom_UE
             FROM notes
-            INNER JOIN UEs ON notes.UE_id_id = UEs.id
-            INNER JOIN Utilisateurs ON notes.user_id_id = Utilisateurs.id
+            INNER JOIN ues ON notes.UE_id = UEs.id
+            INNER JOIN Utilisateurs ON notes.user_id = Utilisateurs.id
             WHERE Utilisateurs.id = :id
                            ';
             $stmt = $conn->prepare($sql);
@@ -64,12 +61,10 @@ final class UnCoursController extends AbstractController
             }
 
             // Fetch all courses from the database
-            $sql = 'SELECT UEs.titre
-            FROM UEs
-            INNER JOIN membres_ues_ues ON UEs.id = membres_ues_ues.ues_id
-            INNER JOIN membres_ues ON membres_ues_ues.membres_ues_id = membres_ues.id
-            INNER JOIN membres_ues_utilisateurs ON membres_ues.id = membres_ues_utilisateurs.membres_ues_id
-            INNER JOIN Utilisateurs ON membres_ues_utilisateurs.utilisateurs_id = Utilisateurs.id
+            $sql = 'SELECT ues.titre
+            FROM ues
+            INNER JOIN membres ON membres.ue_id = ues.id
+            INNER JOIN Utilisateurs ON membres.user_id = Utilisateurs.id
             WHERE Utilisateurs.id = :id
             ';
 
@@ -151,10 +146,10 @@ final class UnCoursController extends AbstractController
 
 
     #[Route('/cours/{id}/ajouter-contenu', name: 'ajouter_contenu')]
-    public function ajouterContenu(Request $request, int $id, UEsRepository $UEsRepository, EntityManagerInterface $entityManager): Response
+    public function ajouterContenu(Request $request, int $id, UesRepository $UesRepository, EntityManagerInterface $entityManager): Response
     {
         // Récupérer l'UE concernée
-        $ue = $UEsRepository->find($id);
+        $ue = $UesRepository->find($id);
         $currentUser = $this->getUser();
 
         if (!$ue) {
@@ -163,7 +158,7 @@ final class UnCoursController extends AbstractController
 
         // Créer un nouveau contenu
         $contenu = new Contenu();
-        $contenu->setUeId($ue);
+        $contenu->setUe($ue);
         $contenu->setDateCrea(new \DateTime());
 
         // Créer le formulaire
@@ -223,7 +218,7 @@ final class UnCoursController extends AbstractController
 
             $this->addFlash('success', 'Contenu modifié avec succès');
 
-            return $this->redirectToRoute('Cours', ['id' => $contenu->getUeId()->getId()]);
+            return $this->redirectToRoute('Cours', ['id' => $contenu->getUe()->getId()]);
         }
 
         return $this->render('un_cours/edit_content.html.twig', [
@@ -235,9 +230,9 @@ final class UnCoursController extends AbstractController
         ]);
     }
     #[Route('/cours/{id}/participants', name: 'cours_participants')]
-    public function participants(int $id, UEsRepository $UEsRepository, EntityManagerInterface $entityManager): Response
+    public function participants(int $id, UesRepository $UesRepository, EntityManagerInterface $entityManager): Response
     {
-        $ue = $UEsRepository->find($id);
+        $ue = $UesRepository->find($id);
 
         if (!$ue) {
             throw $this->createNotFoundException('UE non trouvée');
@@ -246,13 +241,11 @@ final class UnCoursController extends AbstractController
         // Récupérer tous les utilisateurs assignés à cette UE via la table de liaison
         $conn = $entityManager->getConnection();
         $sql = '
-    SELECT u.*, m.role_uv
-    FROM Utilisateurs u
-    JOIN membres_ues_utilisateurs mu ON u.id = mu.utilisateurs_id
-    JOIN membres_ues m ON mu.membres_ues_id = m.id
-    JOIN membres_ues_ues mue ON m.id = mue.membres_ues_id
-    WHERE mue.ues_id = :ueId
-    ';
+            SELECT u.*, m.role
+            FROM Utilisateurs u
+            JOIN membres m ON u.id = m.user_id
+            WHERE m.ue_id = :ueId
+        ';
 
         $stmt = $conn->prepare($sql);
         $result = $stmt->executeQuery(['ueId' => $id]);
@@ -263,7 +256,7 @@ final class UnCoursController extends AbstractController
         $etudiants = [];
 
         foreach ($participants as $participant) {
-            if ('enseignant' === $participant['role_uv']) {
+            if ('enseignant' === $participant['role']) {
                 $professeurs[] = $participant;
             } else {
                 $etudiants[] = $participant;

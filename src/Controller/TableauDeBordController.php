@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ContenuRepository;
-use App\Repository\UEsRepository;
+use App\Repository\UesRepository;
 use App\Repository\NotesRepository;
 use App\Repository\UtilisateursRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,14 +14,14 @@ use Symfony\Component\Routing\Attribute\Route;
 final class TableauDeBordController extends AbstractController
 {
     #[Route('/tableauDeBord', name: 'TableauDeBord')]
-    public function index(ContenuRepository $contenuRepository, UEsRepository $UEsRepository, NotesRepository $notesRepository, UtilisateursRepository $utilisateursRepository, EntityManagerInterface $entityManager): Response
+    public function index(ContenuRepository $contenuRepository, UesRepository $UesRepository, NotesRepository $notesRepository, UtilisateursRepository $utilisateursRepository, EntityManagerInterface $entityManager): Response
     {
         // Get the currently connected user
         $currentUser = $this->getUser();
         $Utilisateur = $utilisateursRepository->find($currentUser->getId());
 
         // Fetch data related to the connected user
-        $UEsDetails = $UEsRepository->findCoursesByUser($Utilisateur->getId());
+        $UEsDetails = $UesRepository->findCoursesByUser($Utilisateur->getId());
 
         $notesParUE = [];
         $UEs = [];
@@ -34,8 +34,8 @@ final class TableauDeBordController extends AbstractController
             $sql = '
         SELECT notes.note, ues.titre AS nom_UE
             FROM notes
-            INNER JOIN UEs ON notes.UE_id_id = UEs.id
-            INNER JOIN Utilisateurs ON notes.user_id_id = Utilisateurs.id
+            INNER JOIN UEs ON notes.UE_id = UEs.id
+            INNER JOIN Utilisateurs ON notes.user_id = Utilisateurs.id
             WHERE Utilisateurs.id = :id
                            ';
             $stmt = $conn->prepare($sql);
@@ -61,10 +61,8 @@ final class TableauDeBordController extends AbstractController
             // Fetch all courses from the database
             $sql = 'SELECT UEs.titre
             FROM UEs
-            INNER JOIN membres_ues_ues ON UEs.id = membres_ues_ues.ues_id
-            INNER JOIN membres_ues ON membres_ues_ues.membres_ues_id = membres_ues.id
-            INNER JOIN membres_ues_utilisateurs ON membres_ues.id = membres_ues_utilisateurs.membres_ues_id
-            INNER JOIN Utilisateurs ON membres_ues_utilisateurs.utilisateurs_id = Utilisateurs.id
+            INNER JOIN membres ON UEs.id = membres.ue_id
+            INNER JOIN Utilisateurs ON membres.user_id = Utilisateurs.id
             WHERE Utilisateurs.id = :id
             ';
 

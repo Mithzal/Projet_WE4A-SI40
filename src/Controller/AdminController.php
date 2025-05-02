@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\MembresUEs;
+use App\Entity\Membres;
 use App\Entity\Utilisateurs;
-use App\Entity\UEs;
+use App\Entity\Ues;
 use App\Form\AssignUeType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -249,14 +249,27 @@ final class AdminController extends AbstractController
     #[Route('/admin/assign-ue-user', name: 'admin_assign_ue_user')]
     public function assignUeUser(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $membreUE = new MembresUEs();
-        $form = $this->createForm(AssignUeType::class, $membreUE);
+        $form = $this->createForm(AssignUeType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($membreUE);
-            $entityManager->flush();
+            $data = $form->getData();
+            $users = $data['user_id'] ?? [];
+            $ues = $data['ue_id'] ?? [];
+            $role = $data['role'] ?? 'eleve';
 
+            // Créer une entrée pour chaque combinaison utilisateur-UE
+            foreach ($users as $user) {
+                foreach ($ues as $ue) {
+                    $membreUE = new Membres();
+                    $membreUE->setUser($user);
+                    $membreUE->setUe($ue);
+                    $membreUE->setRole($role);
+                    $entityManager->persist($membreUE);
+                }
+            }
+
+            $entityManager->flush();
             $this->addFlash('success', 'Utilisateurs assignés avec succès aux UEs !');
             return $this->redirectToRoute('admin');
         }

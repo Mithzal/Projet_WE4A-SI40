@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\UEsRepository;
+use App\Repository\UesRepository;
 use App\Repository\NotesRepository;
 use App\Repository\UtilisateursRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -56,10 +56,8 @@ final class RechercheCoursController extends AbstractController
             $sql = '
                 SELECT UEs.titre
                 FROM UEs
-                INNER JOIN membres_ues_ues ON UEs.id = membres_ues_ues.ues_id
-                INNER JOIN membres_ues ON membres_ues_ues.membres_ues_id = membres_ues.id
-                INNER JOIN membres_ues_utilisateurs ON membres_ues.id = membres_ues_utilisateurs.membres_ues_id
-                INNER JOIN Utilisateurs ON membres_ues_utilisateurs.utilisateurs_id = Utilisateurs.id
+                INNER JOIN membres ON UEs.id = membres.ue_id
+                INNER JOIN Utilisateurs ON membres.user_id = Utilisateurs.id
                 WHERE Utilisateurs.id = :id
             ';
             $stmt = $conn->prepare($sql);

@@ -2,19 +2,20 @@
 
 namespace App\Repository;
 
-use App\Entity\UEs;
+use App\Entity\Ues;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<UEs>
+ * @extends ServiceEntityRepository<Ues>
  */
-class UEsRepository extends ServiceEntityRepository
+class UesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, UEs::class);
+        parent::__construct($registry, Ues::class);
     }
+
     public function findCoursesByUser(int $userId): array
     {
         $connection = $this->getEntityManager()->getConnection();
@@ -22,10 +23,8 @@ class UEsRepository extends ServiceEntityRepository
         $sql = '
         SELECT u.id, u.code, u.titre, u.description
         FROM ues u
-        INNER JOIN membres_ues_ues mue ON mue.ues_id = u.id
-        INNER JOIN membres_ues mu ON mu.id = mue.membres_ues_id
-        INNER JOIN membres_ues_utilisateurs muu ON muu.membres_ues_id = mu.id
-        WHERE muu.utilisateurs_id = :userId
+        INNER JOIN membres m ON m.ue_id = u.id
+        WHERE m.user_id = :userId
     ';
 
         $stmt = $connection->prepare($sql);
@@ -41,11 +40,9 @@ class UEsRepository extends ServiceEntityRepository
         $sql = '
         SELECT u.id AS course_id, u.titre AS course_title, GROUP_CONCAT(CONCAT(t.prenom, " ", t.nom) SEPARATOR ", ") AS teachers
         FROM ues u
-        INNER JOIN membres_ues_ues mue ON mue.ues_id = u.id
-        INNER JOIN membres_ues mu ON mu.id = mue.membres_ues_id
-        INNER JOIN membres_ues_utilisateurs muu ON muu.membres_ues_id = mu.id
-        INNER JOIN utilisateurs t ON muu.utilisateurs_id = t.id
-        WHERE mu.role_uv = "enseignant"
+        INNER JOIN membres m ON m.ue_id = u.id
+        INNER JOIN utilisateurs t ON m.user_id = t.id
+        WHERE m.role = "enseignant"
         GROUP BY u.id
     ';
 
@@ -56,7 +53,7 @@ class UEsRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return UEs[] Returns an array of UEs objects
+    //     * @return Ues[] Returns an array of Ues objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -70,7 +67,7 @@ class UEsRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?UEs
+    //    public function findOneBySomeField($value): ?Ues
     //    {
     //        return $this->createQueryBuilder('u')
     //            ->andWhere('u.exampleField = :val')
@@ -79,4 +76,5 @@ class UEsRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
 }

@@ -14,13 +14,13 @@ class Notes
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'notes')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Utilisateurs $user_id = null;
+    private ?utilisateurs $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'notes')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?UEs $ue_id = null;
+    private ?ues $ue = null;
 
     #[ORM\Column]
     private ?float $note = null;
@@ -28,7 +28,7 @@ class Notes
     #[ORM\Column]
     private ?int $coefficient = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $commentaire = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -39,26 +39,26 @@ class Notes
         return $this->id;
     }
 
-    public function getUserId(): ?Utilisateurs
+    public function getUser(): ?utilisateurs
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?Utilisateurs $user_id): static
+    public function setUser(?utilisateurs $user): static
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getUeId(): ?UEs
+    public function getUe(): ?ues
     {
-        return $this->ue_id;
+        return $this->ue;
     }
 
-    public function setUeId(?UEs $ue_id): static
+    public function setUe(?ues $ue): static
     {
-        $this->ue_id = $ue_id;
+        $this->ue = $ue;
 
         return $this;
     }
@@ -92,7 +92,7 @@ class Notes
         return $this->commentaire;
     }
 
-    public function setCommentaire(string $commentaire): static
+    public function setCommentaire(?string $commentaire): static
     {
         $this->commentaire = $commentaire;
 
