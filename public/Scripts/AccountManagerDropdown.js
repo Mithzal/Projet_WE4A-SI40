@@ -7,7 +7,7 @@ function toggleDropdown() {
     }
 }
 
-function setLoggin(value){//pas sur que ça fonctionne
-    $_SESSION['loggedin'] = value;
-
-}
+// function setLoggin(value){//pas sur que ça fonctionne
+//     $_SESSION['loggedin'] = value;
+//
+// }
