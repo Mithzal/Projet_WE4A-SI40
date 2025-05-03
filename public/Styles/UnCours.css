@@ -55,7 +55,7 @@ a {
     border: none;
     padding: 10px;
     cursor: pointer;
-    z-index: 1000;
+    z-index: 500;
     transition: left 0.3s ease;
 }
 

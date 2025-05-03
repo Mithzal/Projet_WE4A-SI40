@@ -1,3 +1,23 @@
+body {
+    background: #E0ECF9;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    color: #34495e;
+}
+main {
+    border-radius: 10px;
+    background: #FFFFFF;
+    padding: 20px;
+    flex-grow: 1;
+    margin: 2%;
+    margin-top: 6%;
+}
+
+h1{
+    padding: 0.5%;
+    border-bottom: 2px solid #E8E8E8;
+}
+
 .tab-button {
     background-color: #3498db;
     padding: 10px 20px;
@@ -65,7 +85,7 @@ a.tab-button {
 .tabs {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 2%;
 }
 
 #catalogue {
@@ -156,4 +176,5 @@ a.tab-button {
 .form-popup .sub-button:hover {
     background-color: #2980b9;
 }
+
 

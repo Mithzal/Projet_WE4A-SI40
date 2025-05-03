@@ -23,7 +23,7 @@ class AssignUeType extends AbstractType
                 },
                 'multiple' => true,
                 'expanded' => true,
-                'label' => 'Utilisateurs',
+                'label' => false,
                 'required' => true,
             ])
             ->add('ue_id', EntityType::class, [
@@ -31,7 +31,7 @@ class AssignUeType extends AbstractType
                 'choice_label' => 'titre',
                 'multiple' => true,
                 'expanded' => true,
-                'label' => 'UEs',
+                'label' => false,
                 'required' => true,
             ])
             ->add('role', ChoiceType::class, [
