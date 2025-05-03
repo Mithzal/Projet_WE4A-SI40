@@ -34,6 +34,41 @@ class NotesRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
+    /**
+     * Fetches notes for a user and groups them by UE title.
+     *
+     * @param int $userId The ID of the user.
+     * @return array An array where keys are UE titles and values contain UE info and notes.
+     */
+    public function findNotesGroupedByUeForUser(int $userId): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+            SELECT n.note, u.titre AS nom_UE
+            FROM notes n
+            INNER JOIN ues u ON n.ue_id = u.id
+            WHERE n.user_id = :userId
+        ';
+        $stmt = $conn->prepare($sql);
+        $result = $stmt->executeQuery(['userId' => $userId]);
+        $rows = $result->fetchAllAssociative();
+
+        $notesParUE = [];
+        foreach ($rows as $row) {
+            $nomUE = $row['nom_UE'];
+            if (!isset($notesParUE[$nomUE])) {
+                $notesParUE[$nomUE] = [
+                    'ue' => $nomUE,
+                    'notes' => []
+                ];
+            }
+            $notesParUE[$nomUE]['notes'][] = (string)$row['note'];
+        }
+
+        // Return values only, indexed numerically, as expected by the controller
+        return array_values($notesParUE);
+    }
+
 //    /**
 //     * @return Notes[] Returns an array of Notes objects
 //     */

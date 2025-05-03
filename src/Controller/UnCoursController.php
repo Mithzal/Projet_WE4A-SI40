@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Contenu;
 use App\Repository\ContenuRepository;
+use App\Repository\NotesRepository;
 use App\Repository\UesRepository;
+use App\Repository\UtilisateursRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,77 +19,24 @@ use Symfony\Component\HttpFoundation\Request;
 final class UnCoursController extends AbstractController
 {
     #[Route('/cours/{id}', name: 'Cours')]
-    public function index(int $id, ContenuRepository $contenuRepository, UesRepository $UesRepository, EntityManagerInterface $entityManager): Response
+    public function index(int $id, ContenuRepository $contenuRepository, UesRepository $uesRepository, NotesRepository $notesRepository, EntityManagerInterface $entityManager): Response
     {
-        $course = $UesRepository->find($id);
+        $course = $uesRepository->find($id);
         $content = $contenuRepository->findBy(['ue' => $id]);
-
-        // Get the currently connected user
         $currentUser = $this->getUser();
 
         // Fetch data related to the connected user
         $notesParUE = [];
         $UEs = [];
 
-        if($currentUser) {
-            $conn = $entityManager->getConnection();
-
-
-            $sql = '
-        SELECT notes.note, ues.titre AS nom_UE
-            FROM notes
-            INNER JOIN ues ON notes.UE_id = UEs.id
-            INNER JOIN Utilisateurs ON notes.user_id = Utilisateurs.id
-            WHERE Utilisateurs.id = :id
-                           ';
-            $stmt = $conn->prepare($sql);
-            $result = $stmt->executeQuery(['id' => $currentUser->getId()]);
-
-
-            $rows = $result->fetchAllAssociative();
-
-            foreach ($rows as $row) {
-                $nomUE = $row['nom_UE'];
-
-                if (!isset($notesParUE[$nomUE])) {
-                    $notesParUE[$nomUE] = [
-                        'ue' => $nomUE,
-                        'notes' => []
-                    ];
-                }
-
-                // Format simplifié sans coefficient
-                $notesParUE[$nomUE]['notes'][] = (string)$row['note'];
-            }
-
-            // Fetch all courses from the database
-            $sql = 'SELECT ues.titre
-            FROM ues
-            INNER JOIN membres ON membres.ue_id = ues.id
-            INNER JOIN Utilisateurs ON membres.user_id = Utilisateurs.id
-            WHERE Utilisateurs.id = :id
-            ';
-
-            $stmt = $conn->prepare($sql);
-            $result = $stmt->executeQuery(['id' => $currentUser->getId()]);
-
-
-            $rows = $result->fetchAllAssociative();
-
-            foreach ($rows as $row) {
-                $nomUE = $row['titre'];
-
-                if (!isset($UEs[$nomUE])) {
-                    $UEs[$nomUE] = [
-                        'ue' => $nomUE
-                    ];
-                }
-            }
+        if ($currentUser) {
+            // Use repository methods instead of raw SQL
+            $notesParUE = $notesRepository->findNotesGroupedByUeForUser($currentUser->getId());
+            $UEs = $uesRepository->findUserMemberUes($currentUser->getId());
         }
 
         $data = [
-            'variableTitre'=> 'Recherche Cours',
-
+            'variableTitre' => $course ? $course->getTitre() : 'Cours',
             'UEs' => $UEs,
             'course' => $course,
             'notes' => $notesParUE,
@@ -230,31 +179,21 @@ final class UnCoursController extends AbstractController
         ]);
     }
     #[Route('/cours/{id}/participants', name: 'cours_participants')]
-    public function participants(int $id, UesRepository $UesRepository, EntityManagerInterface $entityManager): Response
+    public function participants(int $id, UesRepository $uesRepository, NotesRepository $notesRepository, UtilisateursRepository $utilisateursRepository, EntityManagerInterface $entityManager): Response
     {
-        $ue = $UesRepository->find($id);
+        $ue = $uesRepository->find($id);
+        $currentUser = $this->getUser();
 
         if (!$ue) {
             throw $this->createNotFoundException('UE non trouvée');
         }
 
         // Récupérer tous les utilisateurs assignés à cette UE via la table de liaison
-        $conn = $entityManager->getConnection();
-        $sql = '
-            SELECT u.*, m.role
-            FROM Utilisateurs u
-            JOIN membres m ON u.id = m.user_id
-            WHERE m.ue_id = :ueId
-        ';
-
-        $stmt = $conn->prepare($sql);
-        $result = $stmt->executeQuery(['ueId' => $id]);
-        $participants = $result->fetchAllAssociative();
+        $participants = $utilisateursRepository->findParticipantsByUe($id);
 
         // Séparer les professeurs et les étudiants
         $professeurs = [];
         $etudiants = [];
-
         foreach ($participants as $participant) {
             if ('enseignant' === $participant['role']) {
                 $professeurs[] = $participant;
@@ -267,9 +206,7 @@ final class UnCoursController extends AbstractController
             'ue' => $ue,
             'professeurs' => $professeurs,
             'etudiants' => $etudiants,
-            'current_user' => $this->getUser(),
-            'UEs' => [],
-            'notes' => [],
+            'current_user' => $currentUser,
         ]);
     }
 

@@ -16,12 +16,43 @@ class UesRepository extends ServiceEntityRepository
         parent::__construct($registry, Ues::class);
     }
 
+    /**
+     * Fetches the UEs a specific user is a member of.
+     *
+     * @param int $userId The ID of the user.
+     * @return array An array structured with UE titles as keys.
+     */
+    public function findUserMemberUes(int $userId): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+            SELECT u.titre
+            FROM ues u
+            INNER JOIN membres m ON u.id = m.ue_id
+            WHERE m.user_id = :userId
+        '; // Simplified join assuming user_id is directly on membres table
+
+        $stmt = $conn->prepare($sql);
+        $result = $stmt->executeQuery(['userId' => $userId]);
+        $rows = $result->fetchAllAssociative();
+
+        $UEs = [];
+        foreach ($rows as $row) {
+            $nomUE = $row['titre'];
+            if (!isset($UEs[$nomUE])) {
+                $UEs[$nomUE] = [
+                    'ue' => $nomUE
+                ];
+            }
+        }
+        return $UEs;
+    }
     public function findCoursesByUser(int $userId): array
     {
         $connection = $this->getEntityManager()->getConnection();
 
         $sql = '
-        SELECT u.id, u.code, u.titre, u.description
+        SELECT u.id, u.code, u.titre, u.description, u.illustration
         FROM ues u
         INNER JOIN membres m ON m.ue_id = u.id
         WHERE m.user_id = :userId

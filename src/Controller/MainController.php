@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\NotesRepository;
+use App\Repository\UesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,78 +17,24 @@ final class MainController extends AbstractController
 {
 
     #[Route('/', name:'app_login')]
-    public function template(AuthenticationUtils $authenticationUtils, EntityManagerInterface $entityManager): Response
+    public function template(UesRepository $uesRepository, AuthenticationUtils $authenticationUtils, NotesRepository $notesRepository): Response
     {
-
         $currentUser = $this->getUser();
 
+        $ues = [];
         $notesParUE = [];
-        $UEs = [];
 
-
-        if($currentUser) {
-            $conn = $entityManager->getConnection();
-
-
-            $sql = '
-        SELECT notes.note, ues.titre AS nom_UE
-            FROM notes
-            INNER JOIN UEs ON notes.UE_id = UEs.id
-            INNER JOIN Utilisateurs ON notes.user_id = Utilisateurs.id
-            WHERE Utilisateurs.id = :id
-                           ';
-            $stmt = $conn->prepare($sql);
-            $result = $stmt->executeQuery(['id' => $currentUser->getId()]);
-
-
-            $rows = $result->fetchAllAssociative();
-
-            foreach ($rows as $row) {
-                $nomUE = $row['nom_UE'];
-
-                if (!isset($notesParUE[$nomUE])) {
-                    $notesParUE[$nomUE] = [
-                        'ue' => $nomUE,
-                        'notes' => []
-                    ];
-                }
-
-                // Format simplifié sans coefficient
-                $notesParUE[$nomUE]['notes'][] = (string)$row['note'];
-            }
-
-            // Fetch all courses from the database
-            $sql = 'SELECT UEs.titre
-            FROM UEs
-            INNER JOIN membres ON UEs.id = membres.ue_id
-            INNER JOIN Utilisateurs ON membres.user_id = Utilisateurs.id
-            WHERE Utilisateurs.id = :id
-            ';
-
-            $stmt = $conn->prepare($sql);
-            $result = $stmt->executeQuery(['id' => $currentUser->getId()]);
-
-
-            $rows = $result->fetchAllAssociative();
-
-            foreach ($rows as $row) {
-                $nomUE = $row['titre'];
-
-                if (!isset($UEs[$nomUE])) {
-                    $UEs[$nomUE] = [
-                        'ue' => $nomUE
-                    ];
-                }
-            }
+        if ($currentUser) {
+            $ues = $uesRepository->findUserMemberUes($currentUser->getId());
+            $notesParUE = $notesRepository->findNotesGroupedByUeForUser($currentUser->getId());
         }
+
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-
-        //ces variables sont nécessaires pour les "popups" d'information du profile et des notes
         $data = [
-            'variableTitre'=> 'Home',
-            'UEs' => $UEs,
+            'variableTitre' => 'Home',
+            'UEs' => $ues,
             'notes' => array_values($notesParUE),
             'last_username' => $lastUsername,
             'error' => $error,

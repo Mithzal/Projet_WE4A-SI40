@@ -29,18 +29,12 @@ final class AdminController extends AbstractController
         $ues = $entityManager->getRepository(UEs::class)->findAll();
         $notesParUE = [];
         $UEs = [];
-        $FirstName = 'John';
-        $LastName = 'Doe';
-        $email = 'johndoe@example.com';
         $photoDeProfil = 'Images/no_image.webp'; // URL de la photo de profil
 
         $data = [
             'variableTitre' => 'Administration',
             'users' => $users,
             'ues' => $ues,
-            'FirstName' => $FirstName,
-            'Lastname' => $LastName,
-            'email' => $email,
             'photoDeProfil' => $photoDeProfil,
             'UEs' => $UEs,
             'notes' => $notesParUE,

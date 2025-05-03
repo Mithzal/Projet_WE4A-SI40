@@ -25,7 +25,7 @@
                 <div class="courses">
                     {% for ue in UEs_details %}
                         <div class="course-card hidden">
-                            <img src="{{ asset('Images/math.jpg') }}" alt="{{ ue.titre }}">
+                            <img src="{{ asset(ue.illustration) }}" alt="{{ ue.titre }}">
                             <h3>{{ ue.titre }}</h3>
                             <p>{{ ue.code }}</p>
                             <div class="course-footer">
