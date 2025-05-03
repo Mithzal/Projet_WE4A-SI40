@@ -15,12 +15,9 @@ final class RechercheCoursController extends AbstractController
     #[Route('/rechercheCours', name: 'RechercheCours')]
     public function index(
         UEsRepository $UEsRepository,
-        NotesRepository $notesRepository,
-        UtilisateursRepository $utilisateursRepository,
         EntityManagerInterface $entityManager
     ): Response {
         $currentUser = $this->getUser();
-        $Utilisateur = $utilisateursRepository->find($currentUser->getId());
         $UEsDetail = $UEsRepository->findAll();
 
         $teachersByCourse = $UEsRepository->findTeachersByCourses();

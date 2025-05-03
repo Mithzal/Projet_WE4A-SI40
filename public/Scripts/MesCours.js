@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const newsfeed = document.querySelector(".newsfeed ul");
-    const maxMessages = 10;
+    // const newsfeed = document.querySelector(".newsfeed ul");
+    // const maxMessages = 10;
 
-    function addNewsMessage(message) {
-        if (newsfeed.children.length >= maxMessages) {
-            newsfeed.removeChild(newsfeed.firstChild);
-        }
-        const li = document.createElement("li");
-        li.textContent = message;
-        newsfeed.appendChild(li);
-    }
+    // function addNewsMessage(message) {
+    //     if (newsfeed.children.length >= maxMessages) {
+    //         newsfeed.removeChild(newsfeed.firstChild);
+    //     }
+    //     const li = document.createElement("li");
+    //     li.textContent = message;
+    //     newsfeed.appendChild(li);
+    // }
 
     // Fonctionnalité de recherche de cours
     const searchInput = document.getElementById("search-bar");

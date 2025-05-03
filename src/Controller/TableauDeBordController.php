@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class TableauDeBordController extends AbstractController
 {
     #[Route('/tableauDeBord', name: 'TableauDeBord')]
-    public function index(ContenuRepository $contenuRepository, UesRepository $UesRepository, NotesRepository $notesRepository, UtilisateursRepository $utilisateursRepository, EntityManagerInterface $entityManager): Response
+    public function index(UesRepository $UesRepository, UtilisateursRepository $utilisateursRepository, EntityManagerInterface $entityManager): Response
     {
         // Get the currently connected user
         $currentUser = $this->getUser();

@@ -33,7 +33,7 @@ class UtilisateursType extends AbstractType
                 'label' => 'Rôle',
                 'choices' => [
                     'Administrateur' => 'ROLE_ADMIN',
-                    'Utilisateur' => 'ROLE_USER',
+                    'Eleve' => 'ROLE_ELEVE',
                     'Professeur' => 'ROLE_PROF',
                     'Professeur/Administrateur' => 'ROLE_PROF_ADMIN',
                 ],
