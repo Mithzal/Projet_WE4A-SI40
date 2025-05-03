@@ -8,11 +8,13 @@ use App\Entity\Ues;
 use App\Form\AssignUeType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Form\UtilisateursType;
 use App\Form\UEType;
 
@@ -154,7 +156,7 @@ final class AdminController extends AbstractController
     //GESTION DES UES
 
     #[Route('/admin/create-ue', name: 'admin_create_ue')]
-    public function createUE(Request $request, EntityManagerInterface $entityManager): Response
+    public function createUE(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $notesParUE = [];
         $UEs = [];
@@ -163,6 +165,24 @@ final class AdminController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                    $ue->setIllustration($newFilename);
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'Erreur lors de l\'upload de l\'image.');
+                    return $this->redirectToRoute('admin');
+                }
+            }
             $entityManager->persist($ue);
             $entityManager->flush();
 

@@ -23,6 +23,10 @@ class UEType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'required' => false,
+            ])
+            ->add('illustration', TextType::class, [
+                'label' => 'Illustration',
+                'required' => false,
             ]);
     }
 
