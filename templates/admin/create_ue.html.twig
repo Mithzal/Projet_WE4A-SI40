@@ -1,14 +1,24 @@
 {% block body %}
+    <!-- Inclusion d'une feuille de style spécifique pour l'administration -->
     <link rel="stylesheet" href="{{ asset('Styles/Admin.css') }}">
+
+    <!-- Conteneur principal pour le formulaire de création d'une UE -->
     <div class="form-popup">
         <h3>Créer une UE</h3>
+        <!-- Début du formulaire Symfony -->
         {{ form_start(form, { 'action': path('admin_create_ue'), 'attr': { 'class': 'form-popup-stack' } }) }}
+        <!-- Affichage des champs du formulaire -->
         {{ form_widget(form) }}
         <div class="button-group">
+            <!-- Bouton pour soumettre le formulaire -->
             <button type="submit" class="sub-button">Créer</button>
+            <!-- Bouton pour annuler et fermer le formulaire -->
             <button type="button" class="close-form" onclick="closeForm(this)">Annuler</button>
         </div>
+        <!-- Fin du formulaire Symfony -->
         {{ form_end(form) }}
     </div>
+
+    <!-- Inclusion d'un script JavaScript spécifique -->
     <script src="{{ asset('Scripts/AdminScript.js') }}"></script>
 {% endblock %}
