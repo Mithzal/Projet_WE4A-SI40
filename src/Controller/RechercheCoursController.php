@@ -12,17 +12,23 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class RechercheCoursController extends AbstractController
 {
+    /**
+     * Affiche la page de recherche de cours avec la liste des cours, enseignants et notes de l'utilisateur.
+     */
     #[Route('/rechercheCours', name: 'RechercheCours')]
     public function index(UesRepository $uesRepository, NotesRepository $notesRepository): Response {
+        // Récupère l'utilisateur courant
         $currentUser = $this->getUser();
+
+        // Récupère tous les cours et les enseignants associés
         $UEsDetail = $uesRepository->findAll();
         $teachersByCourse = $uesRepository->findTeachersByCourses();
 
         $notesParUE = [];
         $UEs = [];
 
+        // Si l'utilisateur est connecté, récupère ses notes et ses UEs
         if ($currentUser) {
-            // Use repository methods to fetch data
             $notesParUE = $notesRepository->findNotesGroupedByUeForUser($currentUser->getId());
             $UEs = $uesRepository->findUserMemberUes($currentUser->getId());
         }
@@ -35,6 +41,8 @@ final class RechercheCoursController extends AbstractController
             'teachersByCourse' => $teachersByCourse,
             'current_user' => $currentUser,
         ];
+        // Affiche la vue de recherche de cours
         return $this->render('recherche_cours/index.html.twig', $data);
     }
 }
+

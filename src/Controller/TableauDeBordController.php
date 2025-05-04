@@ -12,14 +12,21 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class TableauDeBordController extends AbstractController
 {
+    /**
+     * Affiche le tableau de bord de l'utilisateur connecté avec ses cours et notes.
+     */
     #[Route('/tableauDeBord', name: 'TableauDeBord')]
-    public function index(UesRepository $UesRepository, UtilisateursRepository $utilisateursRepository, NotesRepository $notesRepository): Response
+    public function index(
+        UesRepository $UesRepository,
+        UtilisateursRepository $utilisateursRepository,
+        NotesRepository $notesRepository
+    ): Response
     {
-        // Get the currently connected user
+        // Récupère l'utilisateur courant
         $currentUser = $this->getUser();
         $utilisateur = $utilisateursRepository->find($currentUser->getId());
 
-        // Fetch data related to the connected user
+        // Récupère les cours, notes et UEs de l'utilisateur
         $uesDetails = $UesRepository->findCoursesByUser($utilisateur->getId());
         $notesParUE = $notesRepository->findNotesGroupedByUeForUser($utilisateur->getId());
         $ues = $UesRepository->findUserMemberUes($utilisateur->getId());
@@ -31,7 +38,8 @@ final class TableauDeBordController extends AbstractController
             'current_user' => $currentUser,
             'UEs' => $ues,
         ];
-        // dump($data);
+        // Affiche la vue du tableau de bord
         return $this->render('tableau_de_bord/index.html.twig', $data);
     }
 }
+

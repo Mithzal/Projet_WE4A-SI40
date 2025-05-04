@@ -13,11 +13,23 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class MesCoursController extends AbstractController
 {
+    /**
+     * Affiche la liste des cours auxquels l'utilisateur participe, avec actualités et notes.
+     */
     #[Route('/mesCours', name: 'MesCours')]
-    public function index(ContenuRepository $contenuRepository, UesRepository $uesRepository, UEsRepository $UEsRepository, NotesRepository $notesRepository, UtilisateursRepository $utilisateursRepository, EntityManagerInterface $entityManager): Response
+    public function index(
+        ContenuRepository $contenuRepository,
+        UesRepository $uesRepository,
+        UEsRepository $UEsRepository,
+        NotesRepository $notesRepository,
+        UtilisateursRepository $utilisateursRepository,
+        EntityManagerInterface $entityManager
+    ): Response
     {
+        // Récupère l'utilisateur courant
         $currentUser = $this->getUser();
 
+        // Récupère les informations liées à l'utilisateur
         $utilisateur = $utilisateursRepository->find($currentUser->getId());
         $uesDetails = $uesRepository->findCoursesByUser($utilisateur->getId());
         $notes = $notesRepository->findNotesByUser($utilisateur->getId());
@@ -33,6 +45,8 @@ final class MesCoursController extends AbstractController
             'current_user' => $currentUser,
         ];
 
+        // Affiche la vue des cours de l'utilisateur
         return $this->render('mes_cours/index.html.twig', $data);
     }
 }
+

@@ -14,23 +14,30 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Form\ContenuType;
 use Symfony\Component\HttpFoundation\Request;
 
-
-
 final class UnCoursController extends AbstractController
 {
+    /**
+     * Affiche la page d'un cours avec ses contenus, notes et informations utilisateur.
+     */
     #[Route('/cours/{id}', name: 'Cours')]
-    public function index(int $id, ContenuRepository $contenuRepository, UesRepository $uesRepository, NotesRepository $notesRepository, EntityManagerInterface $entityManager): Response
+    public function index(
+        int $id,
+        ContenuRepository $contenuRepository,
+        UesRepository $uesRepository,
+        NotesRepository $notesRepository,
+        EntityManagerInterface $entityManager
+    ): Response
     {
+        // Récupère le cours et ses contenus associés
         $course = $uesRepository->find($id);
         $content = $contenuRepository->findBy(['ue' => $id]);
         $currentUser = $this->getUser();
 
-        // Fetch data related to the connected user
         $notesParUE = [];
         $UEs = [];
 
+        // Si l'utilisateur est connecté, récupère ses notes et ses UEs
         if ($currentUser) {
-            // Use repository methods instead of raw SQL
             $notesParUE = $notesRepository->findNotesGroupedByUeForUser($currentUser->getId());
             $UEs = $uesRepository->findUserMemberUes($currentUser->getId());
         }
@@ -43,61 +50,71 @@ final class UnCoursController extends AbstractController
             'current_user' => $currentUser,
             'content' => $content,
         ];
+        // Affiche la vue du cours
         return $this->render('un_cours/index.html.twig', $data);
     }
 
+    /**
+     * Permet de télécharger un fichier stocké en BLOB dans la base de données.
+     */
     #[Route('/cours/fichier/{id}', name: 'telecharger_fichier')]
     public function telechargerFichier(int $id, ContenuRepository $contenuRepository): Response
     {
+        // Récupère le contenu/fichier à partir de l'id
         $contenu = $contenuRepository->find($id);
 
         if (!$contenu || !$contenu->getFichier()) {
             throw $this->createNotFoundException('Le fichier demandé n\'existe pas');
         }
 
-        // Récupérer le contenu du BLOB
+        // Convertit le BLOB en contenu téléchargeable
         $fileContent = stream_get_contents($contenu->getFichier());
-
-        // Créer la réponse
         $response = new Response($fileContent);
 
-        // Gérer le nom du fichier (avec le titre du contenu)
         $filename = $contenu->getTitre();
-        // Vous pouvez ajouter une extension basée sur le type de contenu si nécessaire
-
-
-       //solution provisoire de stockage, le code commenté sert à ajouter l'extension dans le nom, pour une ouverture plus facile
+        // Ajoute une extension par défaut si absente
         if (!str_contains($filename, '.')) {
-            $filename .= '.zip'; // Extension par défaut, à adapter selon vos besoins
+            $filename .= '.zip';
         }
 
-        // Définir les en-têtes pour forcer le téléchargement
         $response->headers->set('Content-Type', 'application/octet-stream');
         $response->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '"');
 
         return $response;
     }
 
+    /**
+     * Supprime un contenu via une requête POST, retourne un message JSON.
+     */
     #[Route('/content/delete/{id}', name: 'delete_content', methods: ['POST'])]
     public function deleteContent(int $id, EntityManagerInterface $entityManager): Response
     {
+        // Recherche le contenu à supprimer
         $content = $entityManager->getRepository(Contenu::class)->find($id);
 
         if (!$content) {
             return $this->json(['message' => 'UE non trouvée.'], 404);
         }
 
+        // Suppression du contenu
         $entityManager->remove($content);
         $entityManager->flush();
 
         return $this->json(['message' => 'UE supprimée avec succès.'], 200);
     }
 
-
+    /**
+     * Ajoute un contenu à un cours (upload de fichier, gestion du formulaire).
+     */
     #[Route('/cours/{id}/ajouter-contenu', name: 'ajouter_contenu')]
-    public function ajouterContenu(Request $request, int $id, UesRepository $UesRepository, EntityManagerInterface $entityManager): Response
+    public function ajouterContenu(
+        Request $request,
+        int $id,
+        UesRepository $UesRepository,
+        EntityManagerInterface $entityManager
+    ): Response
     {
-        // Récupérer l'UE concernée
+        // Récupère l'UE cible
         $ue = $UesRepository->find($id);
         $currentUser = $this->getUser();
 
@@ -105,17 +122,17 @@ final class UnCoursController extends AbstractController
             throw $this->createNotFoundException('UE non trouvée');
         }
 
-        // Créer un nouveau contenu
+        // Prépare un nouvel objet Contenu
         $contenu = new Contenu();
         $contenu->setUe($ue);
         $contenu->setDateCrea(new \DateTime());
 
-        // Créer le formulaire
+        // Création et gestion du formulaire
         $form = $this->createForm(ContenuType::class, $contenu);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Gestion du fichier si présent
+            // Gestion du fichier uploadé
             $fichierField = $form->get('fichier');
             if ($fichierField->getData()) {
                 $file = $fichierField->getData();
@@ -123,7 +140,7 @@ final class UnCoursController extends AbstractController
                 $contenu->setFichier($fileContent);
             }
 
-            // Enregistrer en base de données
+            // Sauvegarde du contenu en base
             $entityManager->persist($contenu);
             $entityManager->flush();
 
@@ -132,6 +149,7 @@ final class UnCoursController extends AbstractController
             return $this->redirectToRoute('Cours', ['id' => $id]);
         }
 
+        // Affiche le formulaire d'ajout de contenu
         return $this->render('un_cours/ajouter_contenu.html.twig', [
             'form' => $form->createView(),
             'ue' => $ue,
@@ -141,9 +159,17 @@ final class UnCoursController extends AbstractController
         ]);
     }
 
+    /**
+     * Modifie un contenu existant (édition via formulaire, gestion conditionnelle du fichier).
+     */
     #[Route('/content/edit/{id}', name: 'edit_content')]
-    public function editContent(Request $request, int $id, EntityManagerInterface $entityManager): Response
+    public function editContent(
+        Request $request,
+        int $id,
+        EntityManagerInterface $entityManager
+    ): Response
     {
+        // Recherche le contenu à modifier
         $contenu = $entityManager->getRepository(Contenu::class)->find($id);
         $currentUser = $this->getUser();
 
@@ -151,11 +177,12 @@ final class UnCoursController extends AbstractController
             throw $this->createNotFoundException('Contenu non trouvé');
         }
 
+        // Création et gestion du formulaire
         $form = $this->createForm(ContenuType::class, $contenu);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Gestion du fichier si un nouveau fichier est téléchargé
+            // Si un nouveau fichier est uploadé, on le remplace
             $fichierField = $form->get('fichier');
             if ($fichierField->getData()) {
                 $file = $fichierField->getData();
@@ -163,6 +190,7 @@ final class UnCoursController extends AbstractController
                 $contenu->setFichier($fileContent);
             }
 
+            // Mise à jour en base
             $entityManager->flush();
 
             $this->addFlash('success', 'Contenu modifié avec succès');
@@ -170,6 +198,7 @@ final class UnCoursController extends AbstractController
             return $this->redirectToRoute('Cours', ['id' => $contenu->getUe()->getId()]);
         }
 
+        // Affiche le formulaire d'édition de contenu
         return $this->render('un_cours/edit_content.html.twig', [
             'form' => $form->createView(),
             'contenu' => $contenu,
@@ -178,9 +207,20 @@ final class UnCoursController extends AbstractController
             'notes' => [],
         ]);
     }
+
+    /**
+     * Affiche la liste des participants d'un cours, séparés par rôle (enseignant/étudiant).
+     */
     #[Route('/cours/{id}/participants', name: 'cours_participants')]
-    public function participants(int $id, UesRepository $uesRepository, NotesRepository $notesRepository, UtilisateursRepository $utilisateursRepository, EntityManagerInterface $entityManager): Response
+    public function participants(
+        int $id,
+        UesRepository $uesRepository,
+        NotesRepository $notesRepository,
+        UtilisateursRepository $utilisateursRepository,
+        EntityManagerInterface $entityManager
+    ): Response
     {
+        // Récupère l'UE et l'utilisateur courant
         $ue = $uesRepository->find($id);
         $currentUser = $this->getUser();
 
@@ -188,10 +228,10 @@ final class UnCoursController extends AbstractController
             throw $this->createNotFoundException('UE non trouvée');
         }
 
-        // Récupérer tous les utilisateurs assignés à cette UE via la table de liaison
+        // Récupère tous les participants du cours
         $participants = $utilisateursRepository->findParticipantsByUe($id);
 
-        // Séparer les professeurs et les étudiants
+        // Sépare les participants selon leur rôle
         $professeurs = [];
         $etudiants = [];
         foreach ($participants as $participant) {
@@ -202,6 +242,7 @@ final class UnCoursController extends AbstractController
             }
         }
 
+        // Affiche la vue des participants
         return $this->render('un_cours/participants.html.twig', [
             'ue' => $ue,
             'professeurs' => $professeurs,
@@ -209,5 +250,5 @@ final class UnCoursController extends AbstractController
             'current_user' => $currentUser,
         ]);
     }
-
 }
+
