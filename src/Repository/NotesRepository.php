@@ -15,6 +15,10 @@ class NotesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Notes::class);
     }
+
+    /**
+     * Récupère toutes les notes d'un utilisateur avec les informations de l'UE.
+     */
     public function findNotesByUser(int $userId): array
     {
         $conn = $this->getEntityManager()->getConnection();
@@ -35,10 +39,11 @@ class NotesRepository extends ServiceEntityRepository
     }
 
     /**
-     * Fetches notes for a user and groups them by UE title.
+     * Récupère les notes d'un utilisateur et les regroupe par UE.
+     * Retourne un tableau où chaque entrée contient le nom de l'UE et la liste des notes associées.
      *
-     * @param int $userId The ID of the user.
-     * @return array An array where keys are UE titles and values contain UE info and notes.
+     * @param int $userId L'identifiant de l'utilisateur
+     * @return array      Notes regroupées par UE
      */
     public function findNotesGroupedByUeForUser(int $userId): array
     {
@@ -94,3 +99,4 @@ class NotesRepository extends ServiceEntityRepository
 //        ;
 //    }
 }
+

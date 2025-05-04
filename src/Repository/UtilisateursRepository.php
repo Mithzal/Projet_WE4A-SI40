@@ -17,10 +17,8 @@ class UtilisateursRepository extends ServiceEntityRepository
     }
 
     /**
-     * Fetches participants (users) for a specific UE along with their roles.
-     *
-     * @param int $ueId The ID of the UE.
-     * @return array An array of participants, each containing user data and their role.
+     * Récupère les participants (utilisateurs) d'une UE donnée avec leur rôle.
+     * Retourne un tableau contenant les informations utilisateur et leur rôle dans l'UE.
      */
     public function findParticipantsByUe(int $ueId): array
     {
@@ -36,6 +34,7 @@ class UtilisateursRepository extends ServiceEntityRepository
         $result = $stmt->executeQuery(['ueId' => $ueId]);
         return $result->fetchAllAssociative();
     }
+    
     //    /**
     //     * @return Utilisateurs[] Returns an array of Utilisateurs objects
     //     */
@@ -61,3 +60,4 @@ class UtilisateursRepository extends ServiceEntityRepository
     //        ;
     //    }
 }
+

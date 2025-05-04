@@ -15,6 +15,11 @@ class ContenuRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Contenu::class);
     }
+
+    /**
+     * Récupère les actualités (contenus) des UEs dont l'utilisateur est membre.
+     * Retourne les derniers contenus liés à l'utilisateur, triés par date de création.
+     */
     public function findActualitesByUser(int $userId, int $limit = 10): array
     {
         $conn = $this->getEntityManager()->getConnection();
@@ -61,3 +66,4 @@ class ContenuRepository extends ServiceEntityRepository
     //        ;
     //    }
 }
+

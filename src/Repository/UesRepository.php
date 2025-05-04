@@ -17,10 +17,8 @@ class UesRepository extends ServiceEntityRepository
     }
 
     /**
-     * Fetches the UEs a specific user is a member of.
-     *
-     * @param int $userId The ID of the user.
-     * @return array An array structured with UE titles as keys.
+     * Récupère les UEs dont l'utilisateur est membre.
+     * Retourne un tableau associatif des titres d'UE.
      */
     public function findUserMemberUes(int $userId): array
     {
@@ -47,6 +45,13 @@ class UesRepository extends ServiceEntityRepository
         }
         return $UEs;
     }
+
+    /**
+     * Récupère les cours (UEs) auxquels l'utilisateur participe avec leurs détails.
+     *
+     * @param int $userId L'identifiant de l'utilisateur
+     * @return array      Liste des cours (id, code, titre, description, illustration)
+     */
     public function findCoursesByUser(int $userId): array
     {
         $connection = $this->getEntityManager()->getConnection();
@@ -64,6 +69,12 @@ class UesRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
+    /**
+     * Récupère la liste des enseignants pour chaque cours (UE).
+     * Retourne un tableau avec l'id du cours, le titre et la liste des enseignants concaténés.
+     *
+     * @return array Liste des cours avec enseignants
+     */
     public function findTeachersByCourses(): array
     {
         $connection = $this->getEntityManager()->getConnection();
@@ -109,3 +120,4 @@ class UesRepository extends ServiceEntityRepository
     //    }
 
 }
+
