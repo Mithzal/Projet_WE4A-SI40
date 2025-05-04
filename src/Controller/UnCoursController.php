@@ -244,7 +244,7 @@ final class UnCoursController extends AbstractController
 
         // Affiche la vue des participants
         return $this->render('un_cours/participants.html.twig', [
-            'ue' => $ue,
+            'UEs' => $ue,
             'professeurs' => $professeurs,
             'etudiants' => $etudiants,
             'current_user' => $currentUser,

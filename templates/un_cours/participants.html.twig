@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Participants - {{ ue.titre }}{% endblock %}
+{% block title %}Participants - {{ UEs.titre }}{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('Styles/UnCours.css') }}">
@@ -52,9 +52,9 @@
 
 {% block body %}
     <div class="participants-container">
-        <h1>Participants - {{ ue.titre }}</h1>
+        <h1>Participants - {{ UEs.titre }}</h1>
 
-        <a href="{{ path('Cours', {'id': ue.id}) }}" class="back-button">Retour au cours</a>
+        <a href="{{ path('Cours', {'id': UEs.id}) }}" class="back-button">Retour au cours</a>
 
         <div class="navbar">
             <button>Cours</button>
