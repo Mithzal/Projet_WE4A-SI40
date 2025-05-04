@@ -159,7 +159,7 @@ final class AdminController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form->get('image')->getData();
+            $imageFile = $form->get('illustration')->getData();
 
             if ($imageFile) {
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);

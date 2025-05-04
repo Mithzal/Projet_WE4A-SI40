@@ -26,7 +26,7 @@ class UesRepository extends ServiceEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = '
-            SELECT u.titre
+            SELECT u.titre, u.illustration
             FROM ues u
             INNER JOIN membres m ON u.id = m.ue_id
             WHERE m.user_id = :userId

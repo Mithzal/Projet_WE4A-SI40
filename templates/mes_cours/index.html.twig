@@ -28,7 +28,8 @@
                 {% if UEs_details is not empty %}
                     {% for ue in UEs_details %}
                         <div class="course-card hidden">
-                            <img src="{{ asset('Images/math.jpg') }}" alt="{{ ue.titre }}">
+                            <!-- Affiche l'image avec gestion de fallback -->
+                            <img src="/uploads/images/{{ ue.illustration }}" alt="Image de {{ ue.titre }}" style="max-height: 200px;">
                             <h3>{{ ue.titre }}</h3>
                             <p>{{ ue.code }}</p>
                             <div class="course-footer">
@@ -42,6 +43,7 @@
                 {% endif %}
             </div>
         </main>
+
         <aside class="newsfeed">
             <h2>Fil d'actualité</h2>
             <ul>
