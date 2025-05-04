@@ -1,23 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ variableTitre }}{% endblock %}
+{% block title %}
+    <!-- Titre de la page Mes Cours -->
+    {{ variableTitre }}
+{% endblock %}
 
 {% block stylesheets %}
+    <!-- Feuille de style spécifique à la page Mes Cours -->
     <link rel="stylesheet" href="{{ asset('Styles/MesCours.css') }}">
 {% endblock %}
 
 {% block javascripts %}
+    <!-- Script JS pour les interactions sur la page Mes Cours -->
     <script src="{{ asset('Scripts/MesCours.js') }}" defer></script>
-
-
 {% endblock %}
-
 
 {% block body %}
     <div class="container">
         <main class="main-content">
             <h1>Mes Cours</h1>
             <div class="course-controls">
+                <!-- Barre de recherche et tri des cours -->
                 <input type="text" id="search-bar" placeholder="Rechercher un cours...">
                 <select id="sort-courses">
                     <option value="name">Trier par nom</option>
@@ -26,9 +29,10 @@
             </div>
             <div class="courses">
                 {% if UEs_details is not empty %}
+                    <!-- Affichage des cartes de cours de l'utilisateur -->
                     {% for ue in UEs_details %}
                         <div class="course-card hidden">
-                            <!-- Affiche l'image avec gestion de fallback -->
+                            <!-- Affiche l'image du cours avec gestion de fallback -->
                             <img src="/uploads/images/{{ ue.illustration }}" alt="Image de {{ ue.titre }}" style="max-height: 200px;">
                             <h3>{{ ue.titre }}</h3>
                             <p>{{ ue.code }}</p>
@@ -39,6 +43,7 @@
                         </div>
                     {% endfor %}
                 {% else %}
+                    <!-- Message si aucun cours n'est disponible -->
                     <p>Aucun cours disponible.</p>
                 {% endif %}
             </div>
@@ -48,16 +53,17 @@
             <h2>Fil d'actualité</h2>
             <ul>
                 {% if actualites is not empty %}
+                    <!-- Affichage des actualités liées aux cours -->
                     {% for actualite in actualites %}
-                        <li><a href="{{ path('Cours', { id: actualite.ue_id }) }}">{{ actualite.titre }}</a></li>
+                        <li>
+                            <a href="{{ path('Cours', { id: actualite.ue_id }) }}">{{ actualite.titre }}</a>
+                        </li>
                     {% endfor %}
                 {% else %}
+                    <!-- Message si aucune actualité n'est disponible -->
                     <li>Aucune actualité disponible.</li>
                 {% endif %}
             </ul>
         </aside>
     </div>
-
 {% endblock %}
-
-

@@ -1,12 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{variableTitre}}{% endblock %}
+{% block title %}
+    <!-- Titre de la page de tableau de bord -->
+    {{ variableTitre }}
+{% endblock %}
 
 {% block stylesheets %}
+    <!-- Feuille de style spécifique au tableau de bord -->
     <link rel="stylesheet" href="{{ asset('Styles/TableauBord.css') }}">
 {% endblock %}
 
 {% block javascripts %}
+    <!-- Script JS pour les interactions du tableau de bord -->
     <script src="{{ asset('Scripts/TableauBord.js') }}" defer></script>
 {% endblock %}
 
@@ -15,14 +20,18 @@
         <main class="main-content">
             <h1>Tableau de bord</h1>
             <div class="section">
-                <div class ="course-controls">
+                <div class="course-controls">
                     <h2>Cours consultés récemment</h2>
-{#                    <div class="arrows">#}
-{#                        <button class="prev" onclick="updateShownCourse()"><</button>#}
-{#                        <button class="next" onclick="updateShownCourse()">></button>#}
-{#                    </div>#}
+                    {# 
+                        Flèches de navigation pour faire défiler les cours récemment consultés
+                        <div class="arrows">
+                            <button class="prev" onclick="updateShownCourse()"><</button>
+                            <button class="next" onclick="updateShownCourse()">></button>
+                        </div>
+                    #}
                 </div>
                 <div class="courses">
+                    <!-- Affichage des cartes de cours récemment consultés -->
                     {% for ue in UEs_details %}
                         <div class="course-card hidden">
                             <img src="/uploads/images/{{ ue.illustration }}" alt="Image de {{ ue.titre }}" style="max-height: 200px;">
@@ -39,14 +48,14 @@
 
             <div class="section">
                 <h2>Cours favoris</h2>
+                <!-- Zone pour afficher les cours favoris (statique pour l'instant) -->
                 <div class="favorites">Aucun cours marqué comme favori</div>
             </div>
             <div class="calendar-section">
                 <h2>Calendar</h2>
+                <!-- Calendrier interactif (sera rempli par JS) -->
                 <div id="calendar"></div>
-            </div>
             </div>
         </main>
     </div>
 {% endblock %}
-

@@ -1,13 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{variableTitre}}{% endblock %}
+{% block title %}
+    <!-- Titre de la page de recherche de cours -->
+    {{ variableTitre }}
+{% endblock %}
 
 {% block stylesheets %}
+    <!-- Feuille de style spécifique à la recherche de cours -->
     <link rel="stylesheet" href="{{ asset('Styles/style-accueil.css') }}">
-
 {% endblock %}
 
 {% block javascripts %}
+    <!-- Script JS pour la recherche et le tri des cours -->
     <script src="{{ asset('Scripts/RechercheCours.js') }}" defer></script>
 {% endblock %}
 
@@ -16,14 +20,17 @@
         <div class="main-content">
             <h1>Recherche de Cours</h1>
             <div class="course-controls">
+                <!-- Barre de recherche et tri des cours -->
                 <input type="text" id="search-bar" placeholder="Rechercher un cours...">
-                <label for="sort-courses"></label><select id="sort-courses">
+                <label for="sort-courses"></label>
+                <select id="sort-courses">
                     <option value="name">Trier par nom</option>
                     <option value="date">Trier par code</option>
                 </select>
             </div>
             <div class="courses" id="course-list">
                 {% if UEs_details is not empty %}
+                    <!-- Tableau listant tous les cours disponibles -->
                     <table>
                         <thead>
                         <tr>
@@ -33,30 +40,34 @@
                             <th>Teachers</th>
                         </tr>
                         </thead>
-                        <tbody id = "table-row">
+                        <tbody id="table-row">
                         {% for ue in UEs_details %}
                             <tr>
                                 <td>{{ ue.code }}</td>
-                                <td><a href="{{ path('Cours', { id: ue.id }) }}">{{ ue.titre }}</a></td>
+                                <td>
+                                    <!-- Lien vers la page du cours -->
+                                    <a href="{{ path('Cours', { id: ue.id }) }}">{{ ue.titre }}</a>
+                                </td>
                                 <td>{{ ue.description }}</td>
                                 <td>
+                                    <!-- Affichage des enseignants du cours -->
                                     {% set courseTeachers = '' %}
                                     {% for teacher in teachersByCourse %}
                                         {% if teacher.course_id == ue.id %}
                                             {% set courseTeachers = teacher.teachers %}
                                         {% endif %}
                                     {% endfor %}
-                                    {{ courseTeachers != '' ? courseTeachers : 'No teachers assigned' }}                                </td>
+                                    {{ courseTeachers != '' ? courseTeachers : 'No teachers assigned' }}
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                 {% else %}
+                    <!-- Message si aucun cours n'est disponible -->
                     <p>No courses available.</p>
                 {% endif %}
             </div>
         </div>
     </div>
 {% endblock %}
-
-
