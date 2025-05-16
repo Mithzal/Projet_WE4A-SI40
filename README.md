@@ -1,3 +1,3 @@
 # Projet_web
-
-Read me de la branche main
+Je suis le read me de la branche symfonyUpdate !
+Je vais servir à passer en symfony sans casser la branche main

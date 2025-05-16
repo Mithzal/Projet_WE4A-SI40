@@ -1,0 +1,21 @@
+{% block body %}
+    <!-- Inclusion d'une feuille de style spécifique pour l'administration -->
+    <link rel="stylesheet" href="{{ asset('Styles/Admin.css') }}">
+
+    <!-- Conteneur principal pour le formulaire de modification d'un utilisateur -->
+    <div class="form-popup">
+        <h3>Modifier un utilisateur</h3>
+        <!-- Début du formulaire Symfony -->
+        {{ form_start(form, { 'action': path('admin_edit_user', { 'id': user.id }), 'attr': { 'class': 'form-popup-stack' } }) }}
+        <!-- Affichage des champs du formulaire -->
+        {{ form_widget(form) }}
+        <div class="button-group">
+            <!-- Bouton pour soumettre le formulaire -->
+            <button type="submit" class="sub-button">Modifier</button>
+            <!-- Bouton pour annuler et fermer le formulaire -->
+            <button type="button" class="close-form" onclick="closeForm(this)">Annuler</button>
+        </div>
+        <!-- Fin du formulaire Symfony -->
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
