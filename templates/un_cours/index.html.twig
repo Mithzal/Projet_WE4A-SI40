@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{variableTitre}}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('Styles/UnCours.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('Scripts/UnCours.js') }}" defer></script>
+    <script src="{{ asset('Scripts/Content.js') }}" defer></script>
+{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        <aside class="sidebar hidden">
+            <h2>Menu du Cours</h2>
+            <ul>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#messageimportant">Message important</a></li>
+                <li><a href="#messageinfo">Message information</a></li>
+                <li><a href="#download">Fichier</a></li>
+                <li><a href="#quiz">Quiz Final</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <h1>{{ course.titre }}</h1>
+            {% if is_granted('ROLE_PROF') or is_granted('ROLE_PROF_ADMIN') or is_granted('ROLE_ADMIN') %}
+                <div class="action-buttons">
+                    <a href="{{ path('ajouter_contenu', {'id': course.id}) }}" class="btn btn-primary">Ajouter un contenu</a>
+                </div>
+            {% endif %}
+            <div class="navbar">
+                <button class="active">Cours</button>
+                <button><a class="active" href="{{ path('cours_participants', {'id': course.id}) }}">Participants</a></button>
+                {% if current_user.getRoles() == ['ROLE_PROF'] %}
+                    <button>Notes</button>
+                {% endif %}
+            </div>
+
+
+            {% for contenu in content %}
+                {% if contenu.type == 'quiz' %}
+                    <section id="contenu-{{ contenu.id }}" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
+                        <h2>{{ contenu.titre }}</h2>
+                        {% if current_user.getRoles() == ['ROLE_PROF'] or current_user.getRoles() == ('ROLE_PROF_ADMIN') %}
+                            <div>
+                                <button class="edit-content-button" data-id="{{ contenu.id }}" >Modifier</button>
+                                <button class="delete-content-button" data-id="{{ contenu.id }}">Supprimer</button>
+                            </div>
+                        {% endif %}
+                        <p>{{ contenu.text }}</p>
+                    </section>
+                {% endif %}
+
+                {% if contenu.type == 'files' %}
+                    <section id="contenu-{{ contenu.id }}" class="post depot" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
+                        <div class="download-icon">
+                            <div class="arrow-head"></div>
+                            <div class="bar"></div>
+                        </div>
+                        <div class="depot text-content">
+                            {% if current_user.getRoles() == ['ROLE_PROF'] or current_user.getRoles() == ('ROLE_PROF_ADMIN') %}
+                                <div>
+                                    <h2>{{ contenu.titre }}</h2>
+                                    <button class="edit-content-button" data-id="{{ contenu.id }}" >Modifier</button>
+                                    <button class="delete-content-button" data-id="{{ contenu.id }}">Supprimer</button>
+                                </div>
+                            {% endif %}
+                            <p>{{ contenu.text }}</p>
+                            {% if contenu.fichier != NULL %}
+                                <a href="{{ path('telecharger_fichier',{'id': contenu.id}) }}" class="download">Télécharger le fichier</a>
+                            {% else %}
+                                <br>
+                                <p>Fichier non disponible.</p>
+                            {% endif %}
+                        </div>
+                    </section>
+                {% endif %}
+
+                {% if contenu.type == 'information' %}
+                    <section id="contenu-{{ contenu.id }}" class="post message information" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
+                        <div class="information text-content">
+                            <h2>{{ contenu.titre }}</h2>
+                            {% if current_user.getRoles() == ['ROLE_PROF'] or current_user.getRoles() == ('ROLE_PROF_ADMIN') %}
+                                <div>
+                                    <button class="edit-content-button" data-id="{{ contenu.id }}" >Modifier</button>
+                                    <button class="delete-content-button" data-id="{{ contenu.id }}">Supprimer</button>
+                                </div>
+                            {% endif %}
+                            <p>{{ contenu.text }}</p>
+                        </div>
+                    </section>
+                {% endif %}
+
+                {% if contenu.type == 'important' %}
+                    <section id="contenu-{{ contenu.id }}" class="post message important" data-date={{ contenu.getDateCrea()|date('Y-m-d') }}>
+                        <div class="alert-icon">
+                            <div class="circle"></div>
+                            <div class="exclamation">!</div>
+                        </div>
+                        <div class="important text-content">
+                            <h2>{{ contenu.titre }}</h2>
+                            {% if current_user.getRoles() == ['ROLE_PROF'] or current_user.getRoles() == ('ROLE_PROF_ADMIN') %}
+                                <div>
+                                    <button class="edit-content-button" data-id="{{ contenu.id }}" >Modifier</button>
+                                    <button class="delete-content-button" data-id="{{ contenu.id }}">Supprimer</button>
+                                </div>
+                            {% endif %}
+                            <p>{{ contenu.text }}</p>
+                        </div>
+                    </section>
+
+                {% endif %}
+
+
+
+            {% endfor %}
+
+        </main>
+    </div>
+{% endblock %}
+

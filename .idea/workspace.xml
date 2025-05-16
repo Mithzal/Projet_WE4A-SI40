@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8f975514-52ee-4c1a-b8ec-530653c4bb34" name="Changes" comment="add all files in different controller/twig templates&#10;&#10;.js files don't work !">
+      <change afterPath="$PROJECT_DIR$/templates/admin/create_ue.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/admin/create_user.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/Scripts/AdminScript.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Scripts/AdminScript.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Utilisateurs.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Utilisateurs.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin/admin.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/admin.html.twig" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="main" />
+                <branch-info repo="$PROJECT_DIR$/projet_web_symf" source="main" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="SymfonyUpdate" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="SymfonyUpdate" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="SYNC" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {}
+}</component>
+  <component name="GitHubPullRequestState">{
+  &quot;prStates&quot;: [
+    {
+      &quot;id&quot;: {
+        &quot;id&quot;: &quot;PR_kwDOOFQ19M6Rzayn&quot;,
+        &quot;number&quot;: 1
+      },
+      &quot;lastSeen&quot;: 1744267776264
+    },
+    {
+      &quot;id&quot;: {
+        &quot;id&quot;: &quot;PR_kwDOOFQ19M6Sb_60&quot;,
+        &quot;number&quot;: 2
+      },
+      &quot;lastSeen&quot;: 1744615170994
+    }
+  ]
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Mithzal/Projet_WE4A-SI40.git&quot;,
+    &quot;accountId&quot;: &quot;df0ce600-f9b8-41c9-a5ed-8824455722a8&quot;
+  }
+}</component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\php-8.4.4-nts-Win32-vs17-x64\php.exe">
+    <include_path>
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/dependency-injection" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/dotenv" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/framework-bundle" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/flex" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/maker-bundle" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/polyfill-php83" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/runtime" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/routing" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/composer" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/cache-contracts" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/cache" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/projet_we4a/vendor/symfony/config" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/migrations" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-bundle" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/collections" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/persistence" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-migrations-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/stopwatch" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php84" />
+      <path value="$PROJECT_DIR$/vendor/symfony/doctrine-bridge" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/cache" />
+      <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/vendor/symfony/config" />
+      <path value="$PROJECT_DIR$/vendor/symfony/cache-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dependency-injection" />
+      <path value="$PROJECT_DIR$/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dotenv" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/flex" />
+      <path value="$PROJECT_DIR$/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/vendor/symfony/framework-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/maker-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php83" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/symfony/routing" />
+      <path value="$PROJECT_DIR$/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/runtime" />
+      <path value="$PROJECT_DIR$/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/sql-formatter" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/orm" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/vendor/twig/extra-bundle" />
+      <path value="$PROJECT_DIR$/vendor/twig/twig" />
+      <path value="$PROJECT_DIR$/vendor/symfony/twig-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/twig-bridge" />
+      <path value="$PROJECT_DIR$/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/asset" />
+      <path value="$PROJECT_DIR$/vendor/symfony/type-info" />
+      <path value="$PROJECT_DIR$/vendor/symfony/validator" />
+      <path value="$PROJECT_DIR$/vendor/symfony/property-info" />
+      <path value="$PROJECT_DIR$/vendor/symfony/property-access" />
+      <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu" />
+      <path value="$PROJECT_DIR$/vendor/symfony/form" />
+    </include_path>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2vWf85HL4PQ0BHlwm0qtDfMtYOq" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;SymfonyUpdate&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/marti/Documents/Cours/Info2/WE4A/projet_web/public/Scripts&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;IntelliLang.Configuration&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\PhpStorm 2024.3.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\marti\Documents\Cours\Info2\WE4A\projet_web\public\Scripts" />
+      <recent name="C:\Users\marti\Documents\Cours\Info2\WE4A\projet_web\public\Images" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\marti\Documents\Cours\Info2\WE4A\projet_web\public\Styles" />
+      <recent name="C:\Users\marti\Documents\Cours\Info2\WE4A\projet_web\public\Images" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ComposerRunConfigurationType" factoryName="Composer Script">
+      <option name="pathToComposerJson" value="$PROJECT_DIR$/projet_we4a/composer.json" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PS-243.26053.13" />
+        <option value="bundled-php-predefined-a98d8de5180a-1ec7b7818973-com.jetbrains.php.sharedIndexes-PS-243.26053.13" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="StructureViewState">
+    <option name="selectedTab" value="Twig" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8f975514-52ee-4c1a-b8ec-530653c4bb34" name="Changes" comment="" />
+      <created>1744265588064</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744265588064</updated>
+      <workItem from="1744265589318" duration="3006000" />
+      <workItem from="1744268788031" duration="42000" />
+      <workItem from="1744383382758" duration="382000" />
+      <workItem from="1744611110292" duration="4956000" />
+      <workItem from="1744616591029" duration="858000" />
+      <workItem from="1744629941196" duration="5218000" />
+      <workItem from="1744645745147" duration="3715000" />
+      <workItem from="1744698377143" duration="2288000" />
+      <workItem from="1745503462302" duration="105000" />
+      <workItem from="1745505796047" duration="81000" />
+      <workItem from="1745506144623" duration="211000" />
+      <workItem from="1745570495083" duration="155000" />
+      <workItem from="1745582412664" duration="9241000" />
+      <workItem from="1745597290849" duration="350000" />
+    </task>
+    <task id="LOCAL-00001" summary="add symfony files">
+      <option name="closed" value="true" />
+      <created>1744267245880</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1744267245880</updated>
+    </task>
+    <task id="LOCAL-00002" summary="add symfony files">
+      <option name="closed" value="true" />
+      <created>1744267342326</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1744267342326</updated>
+    </task>
+    <task id="LOCAL-00003" summary="add symfony files">
+      <option name="closed" value="true" />
+      <created>1744267638523</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1744267638524</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add symfony files">
+      <option name="closed" value="true" />
+      <created>1744268407228</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1744268407228</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add symfony files from the didactitial">
+      <option name="closed" value="true" />
+      <created>1744612515201</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1744612515201</updated>
+    </task>
+    <task id="LOCAL-00006" summary="add symfony files from the didactitial">
+      <option name="closed" value="true" />
+      <created>1744613271722</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1744613271722</updated>
+    </task>
+    <task id="LOCAL-00007" summary="add symfony files from the didactitial">
+      <option name="closed" value="true" />
+      <created>1744614119207</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1744614119207</updated>
+    </task>
+    <task id="LOCAL-00008" summary="add symfony files from the didactitial">
+      <option name="closed" value="true" />
+      <created>1744614161483</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1744614161483</updated>
+    </task>
+    <task id="LOCAL-00009" summary="add symfony files from the didactitial">
+      <option name="closed" value="true" />
+      <created>1744614778844</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1744614778844</updated>
+    </task>
+    <task id="LOCAL-00010" summary="je push des fichiers qu'il faudrait pas ?">
+      <option name="closed" value="true" />
+      <created>1744615642021</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1744615642021</updated>
+    </task>
+    <task id="LOCAL-00011" summary="add header into symfony">
+      <option name="closed" value="true" />
+      <created>1744617443870</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1744617443871</updated>
+    </task>
+    <task id="LOCAL-00012" summary="add accountanagement into symfony">
+      <option name="closed" value="true" />
+      <created>1744633017165</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1744633017165</updated>
+    </task>
+    <task id="LOCAL-00013" summary="edit base.html.twig with correct routes">
+      <option name="closed" value="true" />
+      <created>1744635941725</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1744635941725</updated>
+    </task>
+    <task id="LOCAL-00014" summary="add all files in different controller/twig templates&#10;&#10;.js files don't work !">
+      <option name="closed" value="true" />
+      <created>1744649651772</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1744649651772</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/SymfonyUpdate" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/projet_we4a" />
+    </ignored-roots>
+    <MESSAGE value="add symfony files" />
+    <MESSAGE value="add symfony files from the didactitial" />
+    <MESSAGE value="je push des fichiers qu'il faudrait pas ?" />
+    <MESSAGE value="add header into symfony" />
+    <MESSAGE value="add accountanagement into symfony" />
+    <MESSAGE value="edit base.html.twig with correct routes" />
+    <MESSAGE value="add all files in different controller/twig templates&#10;&#10;.js files don't work !" />
+    <option name="LAST_COMMIT_MESSAGE" value="add all files in different controller/twig templates&#10;&#10;.js files don't work !" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
