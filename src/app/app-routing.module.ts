@@ -6,13 +6,14 @@ import { AssignUeUserComponent } from './assign-ue-user/assign-ue-user.component
 import {MesCoursComponent} from "./mes-cours/mes-cours.component";
 import {TableauDeBordComponent} from "./tableau-de-bord/tableau-de-bord.component";
 import {ProfileComponent} from "./profile/profile.component";
+import {AdminPageComponent} from "./admin-page/admin-page.component";
 
 
 const routes : Routes =[
   {path :"", component : HomeComponent},
   {path :"recherche", component : RechercheCoursComponent },
   { path: 'assign-ue-user', component: AssignUeUserComponent },
-
+  {path: "admin-page", component: AdminPageComponent},
   {path :"recherche", component : RechercheCoursComponent },
   {path :"mes-cours", component : MesCoursComponent },
   {path :"tableau-de-bord", component : TableauDeBordComponent },
