@@ -11,6 +11,7 @@ import { RechercheCoursComponent } from './recherche-cours/recherche-cours.compo
 import { MesCoursComponent } from './mes-cours/mes-cours.component';
 import { TableauDeBordComponent } from './tableau-de-bord/tableau-de-bord.component';
 import { ProfileComponent } from './profile/profile.component';
+import { CourseCardComponent } from './course-card/course-card.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UeListComponent } from './ue-list/ue-list.component';
 import { AssignUeUserComponent } from './assign-ue-user/assign-ue-user.component';
@@ -25,6 +26,7 @@ import { AssignUeUserComponent } from './assign-ue-user/assign-ue-user.component
     MesCoursComponent,
     TableauDeBordComponent,
     ProfileComponent,
+    CourseCardComponent,
     UserListComponent,
     UeListComponent,
     AssignUeUserComponent
