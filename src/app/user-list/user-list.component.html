@@ -1,0 +1,10 @@
+<h3>Liste des utilisateurs</h3>
+<button class="tab-button" id="create-user">Créer un utilisateur</button>
+<ul id="user-list">
+  <li *ngFor="let user of users" [attr.id]="'user-' + user.id">
+    {{ user.Prenom }} {{ user.Nom }} - {{ user.email }}
+    <button class="delete-user-button" (click)="deleteUser(user.id)">Supprimer</button>
+    <button class="edit-user-button" (click)="editUser(user.id)">Modifier</button>
+  </li>
+  <li *ngIf="users.length === 0">Aucun utilisateur trouvé.</li>
+</ul>

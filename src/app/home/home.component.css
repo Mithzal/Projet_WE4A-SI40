@@ -3,19 +3,20 @@ body {
   display: flex;
   background-color: #E0ECF9;
   margin: 0;
-  min-height: 100vh; /* S'assure que le body prend toute la hauteur */
+  /*min-height: 100vh;*/ /* S'assure que le body prend toute la hauteur */
+  padding-bottom: 20px;
   flex-direction: column; /* Pour que le contenu s'empile verticalement */
 }
 
 .container {
   display: flex;
   width: 96%;
-  margin-top: 3%; /* Supprime l'espace blanc en haut */
+  margin-top: 2%; /* Supprime l'espace blanc en haut */
   margin-left: 2%;
   margin-right: 2%;
   padding-top: 24px; /* Ajoute un léger padding si besoin */
   padding-bottom: 40px; /* Ajoute de l'espace en bas */
-  min-height: 90vh; /* S'assure que le contenu prend la hauteur */
+  /*min-height: 90vh;*/ /* S'assure que le contenu prend la hauteur */
 }
 
 .main-content {

@@ -1,0 +1,18 @@
+<main>
+  <h1>{{ title }}</h1>
+  <section id="catalogue">
+    <h2>Catalogue</h2>
+    <div class="tabs">
+      <button class="tab-button" (click)="selectTab('users')">Utilisateurs</button>
+      <button class="tab-button" (click)="selectTab('ues')">UE</button>
+      <button class="tab-button" (click)="selectTab('assign')">Assigner des utilisateurs</button>
+    </div>
+
+
+    <div id="creation-zone">
+      <app-user-list *ngIf="selectedTab === 'users'"></app-user-list>
+      <app-ue-list *ngIf="selectedTab === 'ues'"></app-ue-list>
+      <app-assign-ue-user *ngIf="selectedTab === 'assign'"></app-assign-ue-user>
+    </div>
+  </section>
+</main>

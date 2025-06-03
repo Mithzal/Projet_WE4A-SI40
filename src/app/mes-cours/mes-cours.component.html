@@ -1,1 +1,65 @@
-<p>mes-cours works!</p>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mes Cours</title>
+  <link rel="stylesheet" href="mes-cours.component.css">
+  <!-- <script src="Scripts/MesCours.js" defer></script> -->
+</head>
+<body>
+
+<div class="container">
+  <main class="main-content">
+    <h1>Mes Cours</h1>
+
+    <div class="course-controls">
+      <input type="text" id="search-bar" placeholder="Rechercher un cours...">
+      <select id="sort-courses">
+        <option value="name">Trier par nom</option>
+        <option value="date">Trier par dernier accès</option>
+      </select>
+    </div>
+
+    <div class="courses">
+      <!-- Exemple de carte de cours (à dupliquer pour chaque UE) -->
+      <div class="course-card hidden">
+        <img src="/uploads/images/exemple-image.jpg" alt="Image de Introduction à l'informatique" style="max-height: 200px;">
+        <h3>Introduction à l'informatique</h3>
+        <p>INF101</p>
+        <div class="course-footer">
+          <a href="/cours/1">Accéder</a>
+          <span class="progress">Progression : 0%</span>
+        </div>
+      </div>
+
+      <div class="course-card hidden">
+        <img src="/uploads/images/math.jpg" alt="Image de Mathématiques" style="max-height: 200px;">
+        <h3>Mathématiques</h3>
+        <p>MATH201</p>
+        <div class="course-footer">
+          <a href="/cours/2">Accéder</a>
+          <span class="progress">Progression : 0%</span>
+        </div>
+      </div>
+
+      <!-- Si aucun cours disponible -->
+      <!-- <p>Aucun cours disponible.</p> -->
+    </div>
+  </main>
+
+  <aside class="newsfeed">
+    <h2>Fil d'actualité</h2>
+    <ul>
+      <!-- Exemple d’actualité -->
+      <li><a href="/cours/1">Nouveau chapitre disponible dans INF101</a></li>
+      <li><a href="/cours/2">Examen blanc disponible pour MATH201</a></li>
+
+      <!-- Si aucune actualité -->
+      <!-- <li>Aucune actualité disponible.</li> -->
+    </ul>
+  </aside>
+</div>
+
+</body>
+</html>
+
