@@ -1,5 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-/* Dans votre fichier CSS principal */
+
 main-content, app-root > * > *:not(app-nav-bar) {
-  margin-top: 80px; /* Ajustez selon la hauteur de votre navbar */
-}
+  margin-top: 4%; }/* Ajustez selon la hauteur de votre navbar*/
+
