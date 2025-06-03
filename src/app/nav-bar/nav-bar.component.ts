@@ -7,6 +7,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
 
+
+  toggleDropdown() {
+    const dropdown = document.getElementById('profileDropdown');
+    if (dropdown) {
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+  }
+  openProfilePopup() {
+    const popup = document.getElementById('profilePopup');
+    if (popup) {
+      popup.style.display = 'block';
+    }
+  }
+  // Pour fermer la popup de profil
+  closeProfilePopup() {
+    const popup = document.getElementById('profilePopup');
+    if (popup) {
+      popup.style.display = 'none';
+    }
+  }
+  openGradePopup() {
+    const popup = document.getElementById('gradePopup');
+    if (popup) {
+      popup.style.display = 'block';
+    }
+  }
+
+  closeGradePopup() {
+    const popup = document.getElementById('gradePopup');
+    if (popup) {
+      popup.style.display = 'none';
+    }
+  }
   constructor() { }
 
   ngOnInit(): void {
