@@ -10,10 +10,10 @@
     <a routerLink="/recherche">
       <button>Recherche de Cours</button>
     </a>
-    <a href="">
+    <a routerLink="/mes-cours">
       <button>Mes cours</button>
     </a>
-    <a href="">
+    <a routerLink="/tableau-de-bord">
       <button>Tableau de bord</button>
     </a>
     <!-- Menu déroulant pour les sites externes de l'UTBM -->
@@ -36,8 +36,8 @@
       <button class="profile-button_right" onclick="toggleDropdown()">
         <img class="profile_picture" src="assets/no_image.webp" alt="Profile Icon">
       </button>
-      <div class="dropdown-content_account" id="profileDropdown">
-        <a href="#" id="profile" onclick="openProfilePopup()">Profil</a>
+      <div class="dropdown-content_account" id="profileDropdown" >
+        <a  id="profile" onclick="openProfilePopup()">Profil</a>
         <a href="#" id="grades" onclick="openGradePopup(notes)">Notes</a>
         <a href="" id="logout" >Déconnexion</a>
       </div>
