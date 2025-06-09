@@ -5,7 +5,7 @@ Ce dossier contient le serveur d'API pour le projet WE4A-SI40.
 
 ## Prérequis
 
-- Accès à la base de données (vérifiez la configuration dans le code)
+- Accès à la base de données (vérifiez la configuration dans le .env)
 
 ## Démarrage du serveur
 
@@ -30,26 +30,31 @@ Pour interroger l'API, utilisez un outil comme Postman ou `curl`.
 **Exemple :**
 
 ```
-GET http://localhost/Projet_WE4A-SI40/API_server/users
+GET http://localhost/Projet_WE4A-SI40/API_server/logs
 ```
 
 **Réponse attendue :**
 ```json
 [
   {
-    "id": 1,
-    "name": "Alice"
-  },
-  "..."
+    "level": "info",
+    "message": "Utilisateur connecté",
+    "source": "auth-service",
+    "timestamp": "2023-10-01T12:00:00Z",
+    "metadata": {
+      "userId": "123456",
+      "browser": "Chrome"
+    }
+  }
 ]
 ```
 
 ### Endpoints disponibles
 
-- `/users` : Liste des utilisateurs
-- `/users/{id}` : Détail d'un utilisateur
-- `/login` : Authentification
-- (Ajoutez ici la liste complète des endpoints selon votre projet)
+- GET '/logs' : Récupère toutes les logs du système.
+- POST '/logs' : Crée une nouvelle log. Les paramètres sont passés dans le corps de la requête au format JSON.
+- PUT '/logs/{id}' : Met à jour une log existante. Les paramètres à modifier sont passés dans le corps de la requête.
+- DELETE '/logs/{id}' : Supprime une log existante.
 
 ## Fonctionnement interne
 
@@ -58,9 +63,11 @@ GET http://localhost/Projet_WE4A-SI40/API_server/users
 3. Le contrôleur associé traite la requête et interagit avec les modèles si besoin.
 4. Une réponse JSON est renvoyée au client.
 
-## Conseils
+## Pour ajouter un nouvel endpoint
 
-- Modifiez la configuration de la base de données dans `config/database.php` si besoin.
-- Pour ajouter un nouvel endpoint, créez un fichier dans `controllers/` et référencez-le dans `routes/`. Et créez le modèle associé dans `models/`.
+- créez un fichier dans `controllers/` 
+- Référencez-le dans `routes/`
+- Créez le modèle associé dans `models/`
+- Ajouter l'utilisation de la route dans server.js
 
 

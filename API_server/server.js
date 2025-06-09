@@ -13,9 +13,6 @@ app.use(express.json())
 require('./config/database');
 
 app.use(cors());
-//app.use(bodyParser.urlencoded({ extended: true }));
-
-//routes
 
 app.use('/api/logs', logsRouter);
 
