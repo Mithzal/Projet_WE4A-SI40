@@ -6,7 +6,6 @@ Ce dossier contient le serveur d'API pour le projet WE4A-SI40.
 ## Prérequis
 
 - Accès à la base de données (vérifiez la configuration dans le code)
-- 
 
 ## Démarrage du serveur
 
