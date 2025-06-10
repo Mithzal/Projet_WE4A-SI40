@@ -7,18 +7,19 @@ import {MesCoursComponent} from "./mes-cours/mes-cours.component";
 import {TableauDeBordComponent} from "./tableau-de-bord/tableau-de-bord.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {AdminPageComponent} from "./admin-page/admin-page.component";
+import {UnCoursComponent} from "./un-cours/un-cours.component";
 
 
 
 const routes : Routes =[
   {path :"", component : HomeComponent},
   {path :"recherche", component : RechercheCoursComponent },
-  { path: 'assign-ue-user', component: AssignUeUserComponent },
+  {path: 'assign-ue-user', component: AssignUeUserComponent },
   {path: "admin-page", component: AdminPageComponent},
   {path :"mes-cours", component : MesCoursComponent },
   {path :"tableau-de-bord", component : TableauDeBordComponent },
   {path :"profile", component : ProfileComponent},
-
+  {path: "cours/:id", component: UnCoursComponent},
 ]
 
 @NgModule({

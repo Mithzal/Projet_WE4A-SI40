@@ -24,6 +24,7 @@ import { EditUserComponent } from './admin-page/edit-user/edit-user.component';
 import { EditUeComponent } from './admin-page/edit-ue/edit-ue.component';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { NewsfeedCardComponent } from './newsfeed-card/newsfeed-card.component';
+import { UnCoursComponent } from './un-cours/un-cours.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { NewsfeedCardComponent } from './newsfeed-card/newsfeed-card.component';
     EditUserComponent,
     EditUeComponent,
     NewsfeedComponent,
-    NewsfeedCardComponent
+    NewsfeedCardComponent,
+    UnCoursComponent
   ],
   imports: [
     BrowserModule,

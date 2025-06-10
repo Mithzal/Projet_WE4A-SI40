@@ -3,7 +3,7 @@
   <h3>{{name}}</h3>
   <p>{{code}}</p>
   <div class="course-footer">
-    <a href="{{courseUrl}}">Accéder</a>
+    <a [routerLink]="[courseUrl]">Accéder</a>
     <span class="progress">Progression : {{progression}}%</span>
   </div>
 </div>
