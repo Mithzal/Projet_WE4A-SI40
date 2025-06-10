@@ -1,0 +1,11 @@
+<aside class="newsfeed">
+  <h2>Fil d'actualité</h2>
+  <ul>
+    <ng-container *ngIf="newsItems.length > 0; else noNews">
+      <app-newsfeed-card *ngFor="let item of newsItems" [text]="item.text" [courseId]="item.courseId"></app-newsfeed-card>
+    </ng-container>
+    <ng-template #noNews>
+      <li>Aucune actualité disponible.</li>
+    </ng-template>
+  </ul>
+</aside>

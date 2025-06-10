@@ -22,6 +22,8 @@ import { CreateUserComponent } from './admin-page/create-user/create-user.compon
 import { CreateUeComponent } from './admin-page/create-ue/create-ue.component';
 import { EditUserComponent } from './admin-page/edit-user/edit-user.component';
 import { EditUeComponent } from './admin-page/edit-ue/edit-ue.component';
+import { NewsfeedComponent } from './newsfeed/newsfeed.component';
+import { NewsfeedCardComponent } from './newsfeed-card/newsfeed-card.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { EditUeComponent } from './admin-page/edit-ue/edit-ue.component';
     CreateUserComponent,
     CreateUeComponent,
     EditUserComponent,
-    EditUeComponent
+    EditUeComponent,
+    NewsfeedComponent,
+    NewsfeedCardComponent
   ],
   imports: [
     BrowserModule,
