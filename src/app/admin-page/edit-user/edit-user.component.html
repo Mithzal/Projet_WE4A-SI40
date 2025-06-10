@@ -1,15 +1,16 @@
 <h3>Modifier l'utilisateur</h3>
-<form (ngSubmit)="onSubmit()">
-  <label>Prénom : <input type="text" name="prenom" /></label><br>
-  <label>Nom : <input type="text" name="nom" /></label><br>
-  <label>Email : <input type="email" name="email" /></label><br>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <label>Prénom : <input type="text" formControlName="prenom" /></label><br>
+  <label>Nom : <input type="text" formControlName="nom" /></label><br>
+  <label>Email : <input type="email" formControlName="email" /></label><br>
   <label for="role">Rôle</label>
-        <select id="role" formControlName="role">
-            <option value="" disabled selected>Choisir un rôle</option>
-            <option value="admin">Admin</option>
-            <option value="enseignant">Enseignant</option>
-            <option value="etudiant">Étudiant</option>
-        </select><br>
+  <select id="role" formControlName="role">
+    <option value="" disabled>Choisir un rôle</option>
+    <option value="Admin">Admin</option>
+    <option value="User">User</option>
+    <option value="enseignant">Enseignant</option>
+    <option value="etudiant">Étudiant</option>
+  </select><br>
   <button type="submit">Enregistrer</button>
   <button type="button" (click)="onClose()">Annuler</button>
 </form>

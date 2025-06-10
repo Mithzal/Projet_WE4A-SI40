@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-edit-ue',
@@ -7,15 +7,23 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class EditUeComponent implements OnInit {
   @Input() ueId!: number;
+  @Input() ue: any;
   @Output() close = new EventEmitter<void>();
 
-  ue = { code: '', title: '' };
   
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['ue'] && this.ue) {
+      this.ue = { ...this.ue };
+    }
+  }
+  onSubmit() {
+    this.close.emit();
+  }
   onClose() {
     this.close.emit();
   }
