@@ -11,7 +11,7 @@ exports.index = async (req, res) => {
 
 exports.insert = async (req, res) => {
   const ue = new Ues({
-    id: req.body.id,
+    code: req.body.code,
     name: req.body.name,
     credits: req.body.credits,
     description: req.body.description,
@@ -29,7 +29,7 @@ exports.insert = async (req, res) => {
 exports.update = async (req, res) => {
   try {
     const ue = await Ues.findByIdAndUpdate(
-      req.body.id,
+      req.params.id,
       req.body,
       {new: true}
     );
