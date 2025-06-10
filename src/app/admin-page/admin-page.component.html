@@ -25,6 +25,7 @@
       <app-edit-ue
         *ngIf="selectedTab === 'ues' && editUeId"
         [ueId]="editUeId"
+        [ue]="editUe"
         (close)="editUeId = null">
       </app-edit-ue>
 
@@ -42,10 +43,17 @@
         <app-edit-user
           *ngIf="selectedTab === 'users' && editUserId"
           [userId]="editUserId"
+          [user]="editUser"
           (close)="editUserId = null">
         </app-edit-user>
+
+        <app-assign-ue-user
+          *ngIf="selectedTab === 'assign'"
+          [users]="users"
+          [ues]="ues"
+          (close)="selectTab('users')">
+        </app-assign-ue-user>
       
-      <app-assign-ue-user *ngIf="selectedTab === 'assign'"></app-assign-ue-user>
     </div>
   </section>
 </main>

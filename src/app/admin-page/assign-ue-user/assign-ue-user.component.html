@@ -1,12 +1,20 @@
 <h3>Assigner une UE à un utilisateur</h3>
-<form>
-  <!-- Formulaire à personnaliser -->
+<form (ngSubmit)="onSubmit()">
   <label for="user">Utilisateur :</label>
-  <input type="text" id="user" name="user">
+  <select id="user" [(ngModel)]="selectedUserId" name="user" required>
+    <option *ngFor="let user of users" [value]="user.id">
+      {{ user.Prenom }} {{ user.Nom }} ({{ user.email }})
+    </option>
+  </select>
 
   <label for="ue">UE :</label>
-  <input type="text" id="ue" name="ue">
+  <select id="ue" [(ngModel)]="selectedUeId" name="ue" required>
+    <option *ngFor="let ue of ues" [value]="ue.id">
+      {{ ue.code }} - {{ ue.title }}
+    </option>
+  </select>
 
   <button type="submit">Assigner</button>
+  <button type="button" (click)="onCancel()">Annuler</button>
 </form>
 
