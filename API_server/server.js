@@ -8,6 +8,7 @@ const logsRouter = require('./routes/logs');
 const usersRouter = require('./routes/users');
 const uesRouter = require('./routes/ues');
 const forumsRouter = require('./routes/forums');
+const notesRouter = require('./routes/notes');
 
 app.use(express.json())
 
@@ -20,6 +21,7 @@ app.use('/api/logs', logsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/ues', uesRouter);
 app.use('/api/forums', forumsRouter);
+app.use('/api/notes', notesRouter);
 
 //server running status
 app.listen(PORT, () => {
