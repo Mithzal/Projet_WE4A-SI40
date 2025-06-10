@@ -1,13 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Mes Cours</title>
-  <link rel="stylesheet" href="mes-cours.component.css">
-  <!-- <script src="Scripts/MesCours.js" defer></script> -->
-</head>
-<body>
-
 <div class="container">
   <main class="main-content">
     <h1>Mes Cours</h1>
@@ -21,48 +11,21 @@
     </div>
 
     <div class="courses">
-      <!-- Exemple de carte de cours (à dupliquer pour chaque UE) -->
-      <div class="course-card hidden">
-        <img src="/uploads/images/exemple-image.jpg" alt="Image de Introduction à l'informatique" style="max-height: 200px;">
-        <h3>Introduction à l'informatique</h3>
-        <p>INF101</p>
-        <div class="course-footer">
-          <a href="/cours/1">Accéder</a>
-          <span class="progress">Progression : 0%</span>
-        </div>
-      </div>
+      <!-- Dynamic course cards -->
+      <app-course-card
+        *ngFor="let course of filterCourses()"
+        [name]="course.name"
+        [code]="course.code || ''"
+        [imageUrl]="course.image || '/assets/images/default-course.jpg'"
+        [courseUrl]="'/cours/' + course.id"
+        [progression]="getCourseProgress(course.id)"
+        [nomimg]="'Image de ' + course.name">
+      </app-course-card>
 
-      <div class="course-card hidden">
-        <img src="/uploads/images/math.jpg" alt="Image de Mathématiques" style="max-height: 200px;">
-        <h3>Mathématiques</h3>
-        <p>MATH201</p>
-        <div class="course-footer">
-          <a href="/cours/2">Accéder</a>
-          <span class="progress">Progression : 0%</span>
-        </div>
-      </div>
-
-      <app-course-card name="Mathématiques" code="MATH201" imageUrl="/uploads/images/math.jpg" courseUrl="/cours/2" [progression]="0" nomimg="Image de Mathématiques"></app-course-card>
-
-
-      <!-- Si aucun cours disponible -->
-      <!-- <p>Aucun cours disponible.</p> -->
+      <!-- If no courses available -->
+      <p *ngIf="filterCourses().length === 0">Aucun cours disponible.</p>
     </div>
   </main>
 
-  <aside class="newsfeed">
-    <h2>Fil d'actualité</h2>
-    <ul>
-      <!-- Exemple d’actualité -->
-      <li><a href="/cours/1">Nouveau chapitre disponible dans INF101</a></li>
-      <li><a href="/cours/2">Examen blanc disponible pour MATH201</a></li>
-
-      <!-- Si aucune actualité -->
-      <!-- <li>Aucune actualité disponible.</li> -->
-    </ul>
-  </aside>
+  <app-newsfeed [newsItems]="newsItems"></app-newsfeed>
 </div>
-
-</body>
-</html>
-

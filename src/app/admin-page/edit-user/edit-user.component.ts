@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-user',
@@ -7,14 +8,32 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class EditUserComponent implements OnInit {
   @Input() userId!: number;
+  @Input() user: any;
   @Output() close = new EventEmitter<void>();
+
+  userForm!: FormGroup;
 
   // Ajoutez ici les champs du formulaire, à remplir avec les données de l'utilisateur
 
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    // Charger les données de l'utilisateur à partir de userId
+    this.initForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['user'] && this.user) {
+      this.initForm();
+    }
+  }
+
+  initForm() {
+    this.userForm = this.fb.group({
+      prenom: [this.user?.Prenom || ''],
+      nom: [this.user?.Nom || ''],
+      email: [this.user?.email || ''],
+      role: [this.user?.role || '']
+    });
   }
 
   onClose() {
