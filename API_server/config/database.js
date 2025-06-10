@@ -5,12 +5,6 @@ const mongoose = require('mongoose');
 const mongoDB = process.env.MONGO_URL || null;
 mongoose.connect(mongoDB)
 
-//Get the default connection
-const db = mongoose.connection;
-
-//Bind connection to error event (to get notification of connection errors)
 //eslint-disable-next-line no console
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
-
+mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
