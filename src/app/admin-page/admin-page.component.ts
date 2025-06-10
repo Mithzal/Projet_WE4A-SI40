@@ -8,12 +8,30 @@ import { Component, OnInit } from '@angular/core';
 export class AdminPageComponent implements OnInit {
   title = 'Page d\'administration';
   selectedTab: string = 'users';
+  showCreateUeForm = false;
+  showCreateUserForm = false;
+  editUeId: number | null = null;
+  editUserId: number | null = null;
+
   constructor() { }
 
+  
   ngOnInit(): void {
   }
 
   selectTab(tab: string) {
     this.selectedTab = tab;
+    this.showCreateUeForm = false;
+    this.showCreateUserForm = false;
+    this.editUeId = null;
+    this.editUserId = null;
+  }
+
+  onEditUe(id: number) {
+    this.editUeId = id;
+  }
+
+  onEditUser(id: number) {
+    this.editUserId = id;
   }
 }

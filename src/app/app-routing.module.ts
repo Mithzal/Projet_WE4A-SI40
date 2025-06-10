@@ -2,11 +2,12 @@ import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from "./home/home.component";
 import {RechercheCoursComponent} from "./recherche-cours/recherche-cours.component";
-import { AssignUeUserComponent } from './assign-ue-user/assign-ue-user.component';
+import {AssignUeUserComponent} from './admin-page/assign-ue-user/assign-ue-user.component';
 import {MesCoursComponent} from "./mes-cours/mes-cours.component";
 import {TableauDeBordComponent} from "./tableau-de-bord/tableau-de-bord.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {AdminPageComponent} from "./admin-page/admin-page.component";
+
 
 
 const routes : Routes =[
@@ -14,7 +15,6 @@ const routes : Routes =[
   {path :"recherche", component : RechercheCoursComponent },
   { path: 'assign-ue-user', component: AssignUeUserComponent },
   {path: "admin-page", component: AdminPageComponent},
-  {path :"recherche", component : RechercheCoursComponent },
   {path :"mes-cours", component : MesCoursComponent },
   {path :"tableau-de-bord", component : TableauDeBordComponent },
   {path :"profile", component : ProfileComponent},

@@ -1,5 +1,4 @@
 <h3>Liste des UE</h3>
-<button class="tab-button" id="create-ue">Créer une UE</button>
 <ul id="ue-list">
   <li *ngFor="let ue of ues" [attr.id]="'ue-' + ue.id">
     {{ ue.code }}
