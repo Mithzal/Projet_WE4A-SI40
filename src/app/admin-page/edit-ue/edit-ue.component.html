@@ -1,0 +1,9 @@
+<h3>Modifier l'UE {{ ueId }}</h3>
+<form (ngSubmit)="onSubmit()">
+    <label for="code">Code de l'UE:</label>
+    <input type="text" id="code" name="code" [(ngModel)]="ue.code" required><br>
+    <label for="title">Titre de l'UE:</label>
+    <input type="text" id="title" name="title" [(ngModel)]="ue.title" required><br>
+    <button type="submit">Enregistrer</button>
+    <button type="button" (click)="onClose()">Annuler</button>
+</form>

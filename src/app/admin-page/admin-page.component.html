@@ -10,9 +10,50 @@
 
 
     <div id="creation-zone">
-      <app-user-list *ngIf="selectedTab === 'users'"></app-user-list>
-      <app-ue-list *ngIf="selectedTab === 'ues'"></app-ue-list>
-      <app-assign-ue-user *ngIf="selectedTab === 'assign'"></app-assign-ue-user>
+      <button *ngIf="selectedTab === 'ues' && !showCreateUeForm" (click)="showCreateUeForm = true" class="sub-button">
+        Créer une UE
+      </button>
+
+      <app-create-ue
+        *ngIf="selectedTab === 'ues' && showCreateUeForm"
+        (close)="showCreateUeForm = false">
+      </app-create-ue>
+      <app-ue-list
+        *ngIf="selectedTab === 'ues' && !editUeId"
+        (edit)="onEditUe($event)">
+      </app-ue-list>
+      <app-edit-ue
+        *ngIf="selectedTab === 'ues' && editUeId"
+        [ueId]="editUeId"
+        [ue]="editUe"
+        (close)="editUeId = null">
+      </app-edit-ue>
+
+      <button *ngIf="selectedTab === 'users' && !showCreateUserForm" (click)="showCreateUserForm = true" class="sub-button">
+          Créer un utilisateur
+        </button>
+        <app-create-user
+          *ngIf="selectedTab === 'users' && showCreateUserForm"
+          (close)="showCreateUserForm = false">
+        </app-create-user>
+        <app-user-list
+          *ngIf="selectedTab === 'users' && !editUserId"
+          (edit)="onEditUser($event)">
+        </app-user-list>
+        <app-edit-user
+          *ngIf="selectedTab === 'users' && editUserId"
+          [userId]="editUserId"
+          [user]="editUser"
+          (close)="editUserId = null">
+        </app-edit-user>
+
+        <app-assign-ue-user
+          *ngIf="selectedTab === 'assign'"
+          [users]="users"
+          [ues]="ues"
+          (close)="selectTab('users')">
+        </app-assign-ue-user>
+      
     </div>
   </section>
 </main>
