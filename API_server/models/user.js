@@ -18,7 +18,8 @@ const userSchema = new Schema({
   },
   "courses": [{
     courseId: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: 'UEs',
       required: true
     },
     enrollmentDate: {

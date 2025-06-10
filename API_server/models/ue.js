@@ -21,7 +21,8 @@ const uesSchema = new Schema({
     required: true
   },
   "instructorId": {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'Users',
     required: true
   }
 })
