@@ -1,13 +1,13 @@
 export class Ue {
   constructor(
-    public id : number,
-    public code : string,
-    public name : string,
-    public description : string,
-    public credits : number,
-    public instructorId : string
+    public code: string,
+    public name: string,
+    public description: string,
+    public credits: number,
+    public instructorId: string,
+    public _id ?: number
   ) {
-    this.id = id
+    this._id = _id
     this.code = code
     this.name = name
     this.description = description

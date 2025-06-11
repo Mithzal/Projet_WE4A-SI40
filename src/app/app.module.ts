@@ -24,6 +24,7 @@ import { EditUserComponent } from './admin-page/edit-user/edit-user.component';
 import { EditUeComponent } from './admin-page/edit-ue/edit-ue.component';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { NewsfeedCardComponent } from './newsfeed-card/newsfeed-card.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { NewsfeedCardComponent } from './newsfeed-card/newsfeed-card.component';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

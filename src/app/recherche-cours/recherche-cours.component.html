@@ -13,24 +13,34 @@
       <table *ngIf="UEs_details && UEs_details.length > 0">
         <thead>
           <tr>
+            <th>ID</th>
             <th>Code</th>
             <th>Name</th>
             <th>Description</th>
+            <th>Credits</th>
             <th>Teachers</th>
           </tr>
         </thead>
         <tbody id="table-row">
           <tr *ngFor="let ue of UEs_details">
+            <td>{{ue._id?.toString()}}</td>
             <td>{{ ue.code }}</td>
-            <td><a [routerLink]="['/cours', ue.id]">{{ ue.titre }}</a></td>
+            <td><a [routerLink]="['/cours', ue._id]">{{ ue.name }}</a></td>
             <td>{{ ue.description }}</td>
+            <td>{{ue.credits}}</td>
             <td>
-              {{ getTeachersByCourse(ue.id) || 'No teachers assigned' }}
+              {{ getTeachersByCourse(ue._id) || 'No teachers assigned' }}
             </td>
+            <button (click)="modifierUe(ue)" >Modifier Ue</button>
+            <button (click)="supprimerUe(ue._id)" >Supprimer Ue</button>
+
           </tr>
         </tbody>
       </table>
       <p *ngIf="!UEs_details || UEs_details.length === 0">No courses available.</p>
+      <button (click)="ajouterNouvelleUe()" >Ajouter Ue</button>
+
+
     </div>
-  </div>
+</div>
 </div>
