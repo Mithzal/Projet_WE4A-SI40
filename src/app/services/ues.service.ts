@@ -9,22 +9,23 @@ import {Observable} from "rxjs";
 export class UEsService {
 
   constructor(private http:HttpClient) {
-
   }
+
+  private ApiUrl = "http://localhost:7777/api";
   getData():Observable<Ue[]> {
-    return this.http.get<Ue[]>("http://localhost:7777/api/ues");
+    return this.http.get<Ue[]>(this.ApiUrl+"/ues");
   }
 
   addUe(ue: Ue): Observable<Ue> {
-    return this.http.post<Ue>("http://localhost:7777/api/ues", ue);
+    return this.http.post<Ue>(`${this.ApiUrl}/ues`, ue);
   }
 
   updateUe(newUe: Ue): Observable<Ue> {
-    return this.http.put<Ue>(`http://localhost:7777/api/ues/${newUe._id}`, newUe);
+    return this.http.put<Ue>(`${this.ApiUrl}/ues/${newUe._id}`, newUe);
   }
 
   deleteUe(id: number | undefined): Observable<void> {
-    return this.http.delete<void>(`http://localhost:7777/api/ues/${id}`);
+    return this.http.delete<void>(`${this.ApiUrl}/ues/${id}`);
   }
 
 
