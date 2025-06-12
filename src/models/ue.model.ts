@@ -5,7 +5,7 @@ export class Ue {
     public description: string,
     public credits: number,
     public instructorId: string,
-    public _id ?: number
+    public _id ?: string
   ) {
     this._id = _id
     this.code = code

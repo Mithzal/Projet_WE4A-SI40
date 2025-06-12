@@ -1,5 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { User, Ue } from '../admin-page.component';
+import {User} from "../../../models/user.model";
+import {UsersService} from "../../services/users.service";
+import {Ue} from "../../../models/ue.model";
+
 
 @Component({
   selector: 'app-assign-ue-user',
@@ -11,11 +14,24 @@ export class AssignUeUserComponent {
   @Input() ues: Ue[] = [];
   @Output() close = new EventEmitter<void>();
 
-  selectedUserId: number | null = null;
-  selectedUeId: number | null = null;
+  selectedUserId: string  = '';
+  selectedUeId: string = '';
+  errorMessage: string = '';
+
+  constructor(private service : UsersService) {
+  }
 
   onSubmit() {
-    alert(`Utilisateur ID: ${this.selectedUserId}, UE ID: ${this.selectedUeId}`);
+    this.errorMessage = '';
+    this.service.assignUeToUser(this.selectedUserId, this.selectedUeId).subscribe({
+      next: () => {
+        this.close.emit();
+      },
+      error: (err) => {
+        this.errorMessage = err.error.message ;
+
+      }
+    })
   }
 
   onCancel() {

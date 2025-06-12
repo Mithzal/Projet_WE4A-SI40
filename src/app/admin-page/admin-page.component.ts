@@ -1,19 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserListComponent } from './user-list/user-list.component';
-
-export interface User {
-  id: number;
-  Prenom: string;
-  Nom: string;
-  email: string;
-  role: string;
-}
-
-export interface Ue {
-  id: number;
-  code: string;
-  title: string;
-}
+import {UEsService} from "../services/ues.service";
+import {UsersService} from "../services/users.service";
+import {User} from "../../models/user.model";
+import { Ue } from "../../models/ue.model";
 
 @Component({
   selector: 'app-admin-page',
@@ -25,23 +15,25 @@ export class AdminPageComponent implements OnInit {
   selectedTab: string = 'users';
   showCreateUeForm = false;
   showCreateUserForm = false;
-  editUeId: number | null = null;
-  editUserId: number | null = null;
+  editUeId: string | null = null;
+  editUserId: string | null = null;
 
   users: User[] = [
-    { id: 1, Prenom: 'Jean', Nom: 'Dupont', email: 'jean.dupont@example.com' , role: 'Admin' },
-    { id: 2, Prenom: 'Marie', Nom: 'Curie', email: 'test@email.com', role: 'User'},
   ];
 
   ues: Ue[] = [
-    { id: 1, code: 'INF101', title: 'Informatique 1' },
-    { id: 2, code: 'INF102', title: 'Informatique 2' },
-    { id: 3, code: 'INF103', title: 'Informatique 3' }
   ];
 
-  constructor() { }
+  constructor(private UeService : UEsService, private UserService : UsersService ) {
+    this.UserService.getAllUsers().subscribe(data =>
+    this.users = data)
 
-  
+    this.UeService.getData().subscribe(data =>{
+      this.ues = data;
+    })
+  }
+
+
   ngOnInit(): void {
   }
 
@@ -54,18 +46,18 @@ export class AdminPageComponent implements OnInit {
   }
 
   get editUser(): User | undefined {
-    return this.users.find(u => u.id === this.editUserId!);
+    return this.users.find(u => u._id === this.editUserId!);
   }
 
   get editUe(): Ue | undefined {
-    return this.ues.find(u => u.id === this.editUeId!);
+    return this.ues.find(u => u._id === this.editUeId!);
   }
-  
-  onEditUe(id: number) {
+
+  onEditUe(id: string) {
     this.editUeId = id;
   }
 
-  onEditUser(id: number) {
+  onEditUser(id: string) {
     this.editUserId = id;
   }
 }

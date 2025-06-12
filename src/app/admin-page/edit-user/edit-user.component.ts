@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import {UsersService} from "../../services/users.service";
+import {User} from "../../../models/user.model";
 
 @Component({
   selector: 'app-edit-user',
@@ -7,15 +9,15 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./edit-user.component.css']
 })
 export class EditUserComponent implements OnInit {
-  @Input() userId!: number;
-  @Input() user: any;
+  @Input() userId!: string;
+  @Input() user!: User;
   @Output() close = new EventEmitter<void>();
 
   userForm!: FormGroup;
 
   // Ajoutez ici les champs du formulaire, à remplir avec les données de l'utilisateur
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private service : UsersService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -29,11 +31,14 @@ export class EditUserComponent implements OnInit {
 
   initForm() {
     this.userForm = this.fb.group({
-      prenom: [this.user?.Prenom || ''],
-      nom: [this.user?.Nom || ''],
+      name: [this.user?.name || ''],
       email: [this.user?.email || ''],
       role: [this.user?.role || '']
+
     });
+    console.log('Form initialized with user data:', this.user)
+    console.log('user role : ', this.user.role);
+
   }
 
   onClose() {
@@ -41,7 +46,23 @@ export class EditUserComponent implements OnInit {
   }
 
   onSubmit() {
-    // Envoyer les modifications
-    this.close.emit();
-  }
+      if (this.userForm.valid) {
+        // Récupérer les valeurs du formulaire
+        const updatedUser = {
+          ...this.user,
+          ...this.userForm.value
+        };
+
+        this.service.updateUser(updatedUser).subscribe({
+          next: (response) => {
+            console.log('Utilisateur mis à jour avec succès', response);
+            this.close.emit();
+          },
+          error: (error) => {
+            console.error('Erreur lors de la mise à jour:', error);
+          }
+        });
+      }
+    }
+
 }

@@ -2,10 +2,18 @@
   <h3>Créer une UE</h3>
   <form [formGroup]="ueForm" (ngSubmit)="onSubmit()" class="form-popup-stack">
     <label for="nom">Nom de l'UE</label>
-    <input id="nom" type="text" formControlName="nom" />
-
+    <input id="nom" type="text" formControlName="name" /><br>
     <label for="code">Code UE</label>
-    <input id="code" type="text" formControlName="code" />
+    <input id="code" type="text" formControlName="code" /><br>
+    <label for="description">Description</label>
+    <textarea id="description" formControlName="description"></textarea><br>
+    <label for="credits">Crédits ECTS</label>
+    <input id="credits" type="number" formControlName="credits" /><br>
+    <label for="instructorId">Teacher :</label>
+    <select id="instructorId" formControlName="instructorId">
+      <option value="" disabled>Choisir un enseignant</option>
+      <option *ngFor="let teacher of teachers" [value]="teacher._id">{{ teacher.name }}</option>
+    </select><br>
 
     <div class="button-group">
       <button type="submit" class="sub-button">Créer</button>

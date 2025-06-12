@@ -62,7 +62,7 @@ export class RechercheCoursComponent implements OnInit {
     });
   }
 
-  supprimerUe(id: number | undefined ): void {
+  supprimerUe(id: string | undefined ): void {
     // Appelez la méthode deleteUe et souscrivez à l'Observable
     if (id !== null) {
       this.service.deleteUe(id).subscribe({
@@ -84,7 +84,7 @@ export class RechercheCoursComponent implements OnInit {
     // Initialize your data here, possibly from a service
   }
 
-  getTeachersByCourse(courseId: number | undefined): string {
+  getTeachersByCourse(courseId: string | undefined): string {
 
     return "John Doe";
   }

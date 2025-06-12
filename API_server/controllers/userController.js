@@ -62,3 +62,51 @@ exports.delete = async (req, res) => {
   }
 }
 
+
+exports.addCourse = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const courseId = req.params.courseId;
+
+    const existingUser = await user.findById(userId)
+    if (!existingUser) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' });
+    }
+    const courseExists = existingUser.courses.some(course =>
+      course.courseId ? course.courseId.toString() === courseId : course.toString() === courseId
+    );
+    // Vérifier si le cours existe déjà
+    if (courseExists) {
+      return res.status(400).json({ message: 'Ce cours est déjà assigné à l\'utilisateur' });
+    }
+
+    const updatedUser = await user.findByIdAndUpdate(
+      userId,
+      { push: { courses: { courseId: courseId } } },
+      { new: true }
+    );
+
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+}
+
+exports.getTeachers = async (req, res) => {
+  try {
+    const teachers = await user.find({ role: 'Teacher' });
+    res.json(teachers);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+exports.getStudents = async (req, res) => {
+  try {
+    const students = await user.find({ role: 'Student' });
+    res.json(students);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+

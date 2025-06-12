@@ -13,13 +13,14 @@ const userSchema = new Schema({
   },
   "role": {
     type: String,
-    enum: ['student', 'teacher', 'admin'],
+    enum: ['Student', 'Teacher', 'Admin'],
     required: true
   },
   "courses": [{
     courseId: {
       type: Schema.Types.ObjectId,
       ref: 'UEs',
+      unique : true,
       required: true
     },
     enrollmentDate: {

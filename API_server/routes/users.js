@@ -11,4 +11,10 @@ router.put('/:id', userController.update);
 
 router.delete('/:id', userController.delete);
 
+router.put('/enroll/:id/:courseId', userController.addCourse);
+
+router.get('/teachers', userController.getTeachers);
+
+router.get('/students', userController.getStudents);
+
 module.exports = router;

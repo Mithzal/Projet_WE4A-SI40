@@ -1,4 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {UsersService} from "../../services/users.service";
+import {User} from "../../../models/user.model";
 
 @Component({
   selector: 'app-user-list',
@@ -6,18 +8,23 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent {
-  @Input() users = [
-    { id: 1, Prenom: 'Jean', Nom: 'Dupont', email: 'jean.dupont@example.com' , role: 'Admin' },
-    { id: 2, Prenom: 'Marie', Nom: 'Curie', email: 'test@email.com', role: 'User'},
-  ];
+  @Input() users: User[] = [];
 
-  @Output() edit = new EventEmitter<number>();
+  @Output() edit = new EventEmitter<string>();
 
-  deleteUser(id: number) {
-    console.log('Delete user', id);
+  constructor(private service: UsersService) {
+    this.service.getAllUsers().subscribe(data =>
+      this.users = data)
   }
 
-  editUser(id: number) {
+  deleteUser(id: string) {
+    this.service.deleteUser(id).subscribe({
+      next: () => console.log('Delete user', id),
+      error: (err) => console.error('Erreur lors de la suppression:', err)
+    });
+  }
+
+  editUser(id: string) {
     this.edit.emit(id);
   }
 }
