@@ -7,16 +7,15 @@
         <h2>Mes cours</h2>
       </div>
       <div class="courses">
-        <div class="course-card" *ngFor="let course of userCourses">
-          <img [src]="'/assets/images/default-course.jpg'" [alt]="'Image de ' + course.name" style="max-height: 200px;">
-          <h3>{{ course.name }}</h3>
-          <p>{{ course.description }}</p>
-          <p *ngIf="course.code"><strong>Code:</strong> {{ course.code }}</p>
-          <p><strong>Crédits:</strong> {{ course.credits }}</p>
-          <div class="course-footer">
-            <a [routerLink]="['/cours', course._id]">Accéder</a>
-          </div>
-        </div>
+        <app-course-card
+          *ngFor="let course of userCourses"
+          [name]="course.name"
+          [code]="course.code"
+          [imageUrl]="'/assets/images/default-course.jpg'"
+          [courseUrl]="'/cours/' + course._id"
+          [progression]="getCourseProgress(course._id!)"
+          [nomimg]="'Image de ' + course.name">
+        </app-course-card>
 
         <!-- Message if no courses available -->
         <div *ngIf="userCourses.length === 0" class="empty-state">
@@ -28,16 +27,15 @@
     <div class="section">
       <h2>Cours consultés récemment</h2>
       <div class="courses">
-        <div class="course-card" *ngFor="let ue of getRecentCourses()">
-          <img [src]="'/assets/images/default-course.jpg'" [alt]="'Image de ' + ue.name" style="max-height: 200px;">
-          <h3>{{ ue.name }}</h3>
-          <p>{{ ue.description }}</p>
-          <p *ngIf="ue.code"><strong>Code:</strong> {{ ue.code }}</p>
-          <p><strong>Crédits:</strong> {{ ue.credits }}</p>
-          <div class="course-footer">
-            <a [routerLink]="['/cours', ue._id]">Accéder</a>
-          </div>
-        </div>
+        <app-course-card
+          *ngFor="let ue of getRecentCourses()"
+          [name]="ue.name"
+          [code]="ue.code"
+          [imageUrl]="'/assets/images/default-course.jpg'"
+          [courseUrl]="'/cours/' + ue._id"
+          [progression]="getCourseProgress(ue._id!)"
+          [nomimg]="'Image de ' + ue.name">
+        </app-course-card>
 
         <!-- Message if no courses available -->
         <div *ngIf="getRecentCourses().length === 0" class="empty-state">

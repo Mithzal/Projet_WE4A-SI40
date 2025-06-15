@@ -1,4 +1,6 @@
-import {Component,OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { UEsService } from "../services/ues.service";
 import { UsersService } from "../services/users.service";
 import { User } from "../../models/user.model";
 import { Ue } from "../../models/ue.model";
@@ -75,4 +77,45 @@ export class TableauDeBordComponent implements OnInit {
     return this.userCourses
   }
 
+  // Get course progress
+  getCourseProgress(courseId: string): number {
+    // Mock function - would normally calculate actual progress
+    return Math.floor(Math.random() * 100);
+  }
+
+  // Get favorite courses
+  // getFavoriteCourses(): Ue[] {
+  //   if (!this.currentUser.favoriteCourses || this.userCourses.length === 0) {
+  //     return [];
+  //   }
+  //
+  //   return this.userCourses
+  //     .filter(enrollment =>
+  //       this.currentUser.favoriteCourses?.includes(enrollment.courseId._id))
+  //     .map(enrollment => enrollment.courseId);
+  // }
+  //
+  //
+  // // Initialize calendar
+  // initializeCalendar(): void {
+  //   // Calendar initialization code
+  // }
+  //
+  // // Toggle favorite status
+  // toggleFavorite(course: Ue): void {
+  //   if (!this.currentUser.favoriteCourses) {
+  //     this.currentUser.favoriteCourses = [];
+  //   }
+  //
+  //   if (this.currentUser.favoriteCourses.includes(course._id)) {
+  //     // If course is already in favorites, remove it
+  //     this.currentUser.favoriteCourses = this.currentUser.favoriteCourses.filter(id => id !== course._id);
+  //   } else {
+  //     // If course is not in favorites, add it
+  //     this.currentUser.favoriteCourses.push(course._id);
+  //   }
+  // }
+    // Save updated favorites to server (would implement with API call)
+    // For example:
+    // this.usersService.updateUser(this.currentUser._id, { favoriteCourses: this.currentUser.favoriteCourses }).subscribe();
 }
