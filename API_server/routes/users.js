@@ -17,4 +17,6 @@ router.get('/teachers', userController.getTeachers);
 
 router.get('/students', userController.getStudents);
 
+router.get('/:id/courses', userController.getCourseFromUserId);
+
 module.exports = router;

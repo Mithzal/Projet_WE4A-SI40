@@ -1,4 +1,5 @@
 const user = require('../models/user');
+const Ues = require("../models/ue");
 
 // Afficher tous les utilisateurs
 exports.index = async (req, res) => {
@@ -89,6 +90,43 @@ exports.addCourse = async (req, res) => {
     res.json(updatedUser);
   } catch (err) {
     res.status(400).json({ message: err.message });
+  }
+}
+
+exports.getCourseFromUserId = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const userWithCourses = await user.findById(userId).populate('courses.courseId');
+
+    if (!userWithCourses) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const courseIds = userWithCourses.courses.map(course =>
+      course.courseId ? course.courseId._id : course
+    ).filter(id => id);
+
+    const uesList = await Ues.find({ _id: { $in: courseIds } });
+
+    res.json(uesList);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+exports.getUsersEnrolement = async (req, res) => {
+  try {
+    const users = await user.find({}).populate('courses.courseId');
+    const usersWithCourses = users.map(user => ({
+      ...user.toObject(),
+      courses: user.courses.map(course => ({
+        ...course.toObject(),
+        courseId: course.courseId ? course.courseId._id : null
+      }))
+    }));
+    res.json(usersWithCourses);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 }
 
