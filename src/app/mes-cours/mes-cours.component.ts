@@ -1,29 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
-// Interfaces based on the provided sample data
-interface UE {
-  code: string;
-  id: string;
-  name: string;
-  description: string;
-  credits: number;
-  instructorId: string;
-  image?: string;
-}
-
-interface CourseEnrollment {
-  courseId: string;
-  enrollmentDate: string;
-}
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  courses: CourseEnrollment[];
-  password: string;
-}
+import { UEsService } from "../services/ues.service";
+import { UsersService } from "../services/users.service";
+import { User } from "../../models/user.model";
+import { Ue } from "../../models/ue.model";
 
 interface NewsItem {
   text: string;
@@ -36,105 +15,73 @@ interface NewsItem {
   styleUrls: ['./mes-cours.component.css']
 })
 export class MesCoursComponent implements OnInit {
-  // Sample data (would normally come from a service)
-  ues: UE[] = [
-    {
-      id: "1",
-      name: "Math 101",
-      code : "MTH101",
-      description: "An introductory course to mathematics.",
-      credits: 3,
-      instructorId: "instructor-123",
-      image: "/uploads/images/math.jpg"
-    },
-    {
-      id: "2",
-      name: "Physics 101",
-      code : "PHY101",
-      description: "An introductory course to physics.",
-      credits: 4,
-      instructorId: "instructor-456",
-      image: "/uploads/images/exemple-image.jpg"
-    }
-  ];
 
-  users: User[] = [
-    {
-      id: "1",
-      name: "Alice Smith",
-      email: "aliceSmith@mail.com",
-      role: "student",
-      courses: [
-        {
-          courseId: "1", // Changed to match UE ids
-          enrollmentDate: "2023-09-01"
-        },
-        {
-          courseId: "2", // Changed to match UE ids
-          enrollmentDate: "2023-09-15"
-        }
-      ],
-      password: "hashed_password_1"
-    }
-  ];
+  // Current user
+  currentUser: User = {
+    _id: "684dc8793a0e6e40c1aa96e5",
+    name: "Alex Ramallo",
+    email: "alex.ramallo@mail.com",
+    role: "student",
+    courses: [],
+    password: "alex",
+  };
 
-  // Sample news items
+  userCourses: Ue[] = [];
+
+  // Sample news items (would normally come from a service)
   newsItems: NewsItem[] = [
     { text: "Nouveau chapitre disponible dans Math 101", courseId: "1" },
     { text: "Examen blanc disponible pour Physics 101", courseId: "2" }
   ];
 
-  // Current user (in a real app, this would come from an auth service)
-  currentUser: User = this.users[0]; // Default to first user (Alice)
-
   // Search and filter properties
   searchTerm: string = '';
   sortBy: string = 'name';
 
-  constructor() { }
+  constructor(private usersService: UsersService, private uesService: UEsService) { }
 
   ngOnInit(): void {
+    this.fetchUserCourses();
   }
 
-  // Get the user's enrolled courses
-  getUserCourses(): UE[] {
-    if (!this.currentUser) return [];
-
-    // Get the IDs of courses the user is enrolled in
-    const enrolledCourseIds = this.currentUser.courses.map(c => c.courseId);
-
-    // Filter UEs to only include those the user is enrolled in
-    return this.ues.filter(ue => enrolledCourseIds.includes(ue.id))
-      .sort((a, b) => this.sortCourses(a, b));
+  // Fetch user courses from API - same as in tableau-de-bord
+  fetchUserCourses(): void {
+    this.usersService.getCourseFromUserId(this.currentUser._id!).subscribe({
+      next: (data) => {
+        this.userCourses = data;
+        console.log('User courses fetched:', this.userCourses);
+      },
+      error: (err) => {
+        console.error('Error fetching user courses:', err);
+      }
+    });
   }
 
   // Filter courses based on search term
-  filterCourses(): UE[] {
-    const userCourses = this.getUserCourses();
+  filterCourses(): Ue[] {
+    if (!this.userCourses) return [];
 
-    if (!this.searchTerm) return userCourses;
+    if (!this.searchTerm) return this.sortUserCourses();
 
     const term = this.searchTerm.toLowerCase();
-    return userCourses.filter(ue =>
+    return this.userCourses.filter(ue =>
       ue.name.toLowerCase().includes(term) ||
-      ue.description.toLowerCase().includes(term)
-    );
+      (ue.description && ue.description.toLowerCase().includes(term))
+    ).sort((a, b) => this.sortCourses(a, b));
+  }
+
+  // Sort user courses based on selected option
+  sortUserCourses(): Ue[] {
+    return [...this.userCourses].sort((a, b) => this.sortCourses(a, b));
   }
 
   // Sort courses based on selected option
-  sortCourses(a: UE, b: UE): number {
+  sortCourses(a: Ue, b: Ue): number {
     if (this.sortBy === 'name') {
       return a.name.localeCompare(b.name);
     } else if (this.sortBy === 'date') {
       // In a real app, you'd sort by last access date
-      // For now, we'll use the enrollment date
-      const aEnrollment = this.currentUser.courses.find(c => c.courseId === a.id);
-      const bEnrollment = this.currentUser.courses.find(c => c.courseId === b.id);
-
-      if (!aEnrollment || !bEnrollment) return 0;
-
-      return new Date(bEnrollment.enrollmentDate).getTime() -
-             new Date(aEnrollment.enrollmentDate).getTime();
+      return 0;
     }
     return 0;
   }
@@ -144,7 +91,7 @@ export class MesCoursComponent implements OnInit {
     this.sortBy = (event.target as HTMLSelectElement).value;
   }
 
-  // Method to calculate progress (placeholder)
+  // Method to calculate progress
   getCourseProgress(courseId: string): number {
     // In a real app, this would calculate actual progress
     return Math.floor(Math.random() * 100);

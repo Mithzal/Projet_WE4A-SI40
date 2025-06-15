@@ -3,8 +3,12 @@
     <h1>Mes Cours</h1>
 
     <div class="course-controls">
-      <input type="text" id="search-bar" placeholder="Rechercher un cours...">
-      <select id="sort-courses">
+      <input
+        type="text"
+        id="search-bar"
+        placeholder="Rechercher un cours..."
+        [(ngModel)]="searchTerm">
+      <select id="sort-courses" (change)="updateSort($event)">
         <option value="name">Trier par nom</option>
         <option value="date">Trier par dernier accès</option>
       </select>
@@ -16,14 +20,16 @@
         *ngFor="let course of filterCourses()"
         [name]="course.name"
         [code]="course.code || ''"
-        [imageUrl]="course.image || '/assets/images/default-course.jpg'"
-        [courseUrl]="'/cours/' + course.id"
-        [progression]="getCourseProgress(course.id)"
+        [imageUrl]="'/assets/images/default-course.jpg'"
+        [courseUrl]="'/cours/' + course._id"
+        [progression]="getCourseProgress(course._id!)"
         [nomimg]="'Image de ' + course.name">
       </app-course-card>
 
       <!-- If no courses available -->
-      <p *ngIf="filterCourses().length === 0">Aucun cours disponible.</p>
+      <div *ngIf="filterCourses().length === 0" class="empty-state">
+        Aucun cours disponible.
+      </div>
     </div>
   </main>
 

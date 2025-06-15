@@ -20,12 +20,12 @@ interface CalendarEvent {
 })
 export class TableauDeBordComponent implements OnInit {
   currentUser: User = {
-    _id: "68481c3d11b909893f8ff4ec",
-    name: "Alice Smith",
-    email: "aliceSmith@mail.com",
+    _id: "684dc8793a0e6e40c1aa96e5",
+    name: "Alex Ramallo",
+    email: "alex.ramallo@mail.com",
     role: "student",
     courses: [],
-    password: "hashed_password_1",
+    password: "alex",
   };
 
   userCourses: Ue[] = [];
