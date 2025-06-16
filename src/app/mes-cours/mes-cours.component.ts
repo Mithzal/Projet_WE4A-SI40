@@ -21,8 +21,8 @@ export class MesCoursComponent implements OnInit {
 
   // Current user
   currentUser: User = {
-    _id: "684dc8793a0e6e40c1aa96e5",
-    name: "Alex Ramallo",
+    _id: "68481c3d11b909893f8ff4ec",
+    name: "Alicia Smith",
     email: "alex.ramallo@mail.com",
     role: "student",
     courses: [],
