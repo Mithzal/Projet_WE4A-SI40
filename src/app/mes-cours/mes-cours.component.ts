@@ -1,15 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {UEsService} from "../services/ues.service";
+import {Ue} from "../../models/ue.model";
 
-// Interfaces based on the provided sample data
-interface UE {
-  code: string;
-  id: string;
-  name: string;
-  description: string;
-  credits: number;
-  instructorId: string;
-  image?: string;
-}
 
 interface CourseEnrollment {
   courseId: string;
@@ -37,25 +29,7 @@ interface NewsItem {
 })
 export class MesCoursComponent implements OnInit {
   // Sample data (would normally come from a service)
-  ues: UE[] = [
-    {
-      id: "1",
-      name: "Math 101",
-      code : "MTH101",
-      description: "An introductory course to mathematics.",
-      credits: 3,
-      instructorId: "instructor-123",
-      image: "/uploads/images/math.jpg"
-    },
-    {
-      id: "2",
-      name: "Physics 101",
-      code : "PHY101",
-      description: "An introductory course to physics.",
-      credits: 4,
-      instructorId: "instructor-456",
-      image: "/uploads/images/exemple-image.jpg"
-    }
+  ues: Ue[] = [
   ];
 
   users: User[] = [
@@ -91,25 +65,29 @@ export class MesCoursComponent implements OnInit {
   searchTerm: string = '';
   sortBy: string = 'name';
 
-  constructor() { }
+  constructor(private UeService : UEsService) {
+    this.UeService.getData().subscribe(data =>{
+      this.ues = data;
+    })
+  }
 
   ngOnInit(): void {
   }
 
   // Get the user's enrolled courses
-  getUserCourses(): UE[] {
+  getUserCourses(): Ue[] {
     if (!this.currentUser) return [];
 
     // Get the IDs of courses the user is enrolled in
     const enrolledCourseIds = this.currentUser.courses.map(c => c.courseId);
 
     // Filter UEs to only include those the user is enrolled in
-    return this.ues.filter(ue => enrolledCourseIds.includes(ue.id))
+    return this.ues.filter(ue => enrolledCourseIds.includes(ue._id!))
       .sort((a, b) => this.sortCourses(a, b));
   }
 
   // Filter courses based on search term
-  filterCourses(): UE[] {
+  filterCourses(): Ue[] {
     const userCourses = this.getUserCourses();
 
     if (!this.searchTerm) return userCourses;
@@ -122,14 +100,14 @@ export class MesCoursComponent implements OnInit {
   }
 
   // Sort courses based on selected option
-  sortCourses(a: UE, b: UE): number {
+  sortCourses(a: Ue, b: Ue): number {
     if (this.sortBy === 'name') {
       return a.name.localeCompare(b.name);
     } else if (this.sortBy === 'date') {
       // In a real app, you'd sort by last access date
       // For now, we'll use the enrollment date
-      const aEnrollment = this.currentUser.courses.find(c => c.courseId === a.id);
-      const bEnrollment = this.currentUser.courses.find(c => c.courseId === b.id);
+      const aEnrollment = this.currentUser.courses.find(c => c.courseId === a._id);
+      const bEnrollment = this.currentUser.courses.find(c => c.courseId === b._id);
 
       if (!aEnrollment || !bEnrollment) return 0;
 

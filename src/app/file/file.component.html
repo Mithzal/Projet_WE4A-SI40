@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="upload-section">
+    <h3>Uploader un fichier</h3>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+
+    <div class="form-group">
+      <label for="file">Sélectionner un fichier</label>
+      <input
+        type="file"
+        id="file"
+        class="form-control-file"
+        (change)="onFileSelected($event)"
+      >
+      <small *ngIf="selectedFile">Fichier sélectionné: {{ selectedFile.name }}</small>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description (optionnel)</label>
+      <textarea
+        id="description"
+        class="form-control"
+        rows="3"
+        [(ngModel)]="description"
+        placeholder="Décrivez ce fichier..."></textarea>
+    </div>
+
+    <button
+      class="btn btn-primary"
+      [disabled]="isUploading || !selectedFile"
+      (click)="uploadFile()">
+      <span *ngIf="isUploading">Téléchargement...</span>
+      <span *ngIf="!isUploading">Télécharger</span>
+    </button>
+  </div>
+
+  <div class="files-section mt-4">
+    <h3>Fichiers disponibles</h3>
+
+    <div *ngIf="files.length === 0" class="no-files">
+      <p>Aucun fichier disponible pour ce cours.</p>
+    </div>
+
+    <div class="table-responsive" >
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Type</th>
+            <th>Taille</th>
+            <th>Ajouté par</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let file of files">
+            <td>{{ file.nom }}</td>
+            <td>{{ file.type }}</td>
+            <td>{{ formatFileSize(file.taille) }}</td>
+            <td>{{ file.uploadedBy?.prenom }} {{ file.uploadedBy?.nom }}</td>
+            <td>{{ file.dateUpload | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ file.description }}</td>
+            <td>
+              <button class="btn btn-sm btn-info mr-2" (click)="download(file._id!, file.nom)" title="Télécharger">
+                <i class="fas fa-download"></i> Télécharger
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="deleteFile(file._id!)" title="Supprimer">
+                <i class="fas fa-trash"></i> Supprimer
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

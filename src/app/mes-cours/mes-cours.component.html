@@ -16,9 +16,9 @@
         *ngFor="let course of filterCourses()"
         [name]="course.name"
         [code]="course.code || ''"
-        [imageUrl]="course.image || '/assets/images/default-course.jpg'"
-        [courseUrl]="'/cours/' + course.id"
-        [progression]="getCourseProgress(course.id)"
+        [imageUrl]="  '/assets/images/default-course.jpg'"
+        [courseUrl]="'/cours/' + course._id"
+        [progression]="getCourseProgress(course._id!)"
         [nomimg]="'Image de ' + course.name">
       </app-course-card>
 

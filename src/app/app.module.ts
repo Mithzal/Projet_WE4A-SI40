@@ -26,6 +26,7 @@ import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { NewsfeedCardComponent } from './newsfeed-card/newsfeed-card.component';
 import { UnCoursComponent } from './un-cours/un-cours.component';
 import {HttpClientModule} from "@angular/common/http";
+import { FileComponent } from './file/file.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {HttpClientModule} from "@angular/common/http";
     EditUeComponent,
     NewsfeedComponent,
     NewsfeedCardComponent,
-    UnCoursComponent
+    UnCoursComponent,
+    FileComponent
   ],
   imports: [
     BrowserModule,
