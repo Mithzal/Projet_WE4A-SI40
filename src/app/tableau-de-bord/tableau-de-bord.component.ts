@@ -1,39 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-
-// Interfaces based on the provided sample data
-interface UE {
-  id: string;
-  name: string;
-  description: string;
-  credits: number;
-  instructorId: string;
-  image?: string;
-  lastAccessed?: Date;
-  progress?: number;
-  isFavorite?: boolean;
-}
-
-interface CourseEnrollment {
-  courseId: string;
-  enrollmentDate: string;
-  lastAccessed?: Date;
-}
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  courses: CourseEnrollment[];
-  password: string;
-  favoriteCourses?: string[];
-}
+import {Component, Input, OnInit} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { UEsService } from "../services/ues.service";
+import { UsersService } from "../services/users.service";
+import { User } from "../../models/user.model";
+import { Ue } from "../../models/ue.model";
 
 interface CalendarEvent {
-  id: string;
+  _id: string;
   title: string;
   date: Date;
-  courseId: string;
+  courseCode: string;
   type: 'assignment' | 'exam' | 'lecture';
 }
 
@@ -43,132 +19,103 @@ interface CalendarEvent {
   styleUrls: ['./tableau-de-bord.component.css']
 })
 export class TableauDeBordComponent implements OnInit {
-  // Sample data (would normally come from a service)
-  ues: UE[] = [
-    {
-      id: "1",
-      name: "Math 101",
-      description: "An introductory course to mathematics.",
-      credits: 3,
-      instructorId: "instructor-123",
-      image: "/uploads/images/math.jpg",
-      lastAccessed: new Date('2023-11-10'),
-      progress: 45,
-      isFavorite: true
-    },
-    {
-      id: "2",
-      name: "Physics 101",
-      description: "An introductory course to physics.",
-      credits: 4,
-      instructorId: "instructor-456",
-      image: "/uploads/images/exemple-image.jpg",
-      lastAccessed: new Date('2023-11-05'),
-      progress: 30,
-      isFavorite: false
-    }
-  ];
+  currentUser: User = {
+    _id: "684dc8793a0e6e40c1aa96e5",
+    name: "Alex Ramallo",
+    email: "alex.ramallo@mail.com",
+    role: "student",
+    courses: [],
+    password: "alex",
+  };
 
-  users: User[] = [
-    {
-      id: "1",
-      name: "Alice Smith",
-      email: "aliceSmith@mail.com",
-      role: "student",
-      courses: [
-        {
-          courseId: "1",
-          enrollmentDate: "2023-09-01",
-          lastAccessed: new Date('2023-11-10')
-        },
-        {
-          courseId: "2",
-          enrollmentDate: "2023-09-15",
-          lastAccessed: new Date('2023-11-05')
-        }
-      ],
-      password: "hashed_password_1",
-      favoriteCourses: ["1"]
-    }
-  ];
+  userCourses: Ue[] = [];
 
   // Calendar events
   calendarEvents: CalendarEvent[] = [
     {
-      id: "1",
+      _id: "1",
       title: "Math 101 Exam",
       date: new Date('2023-12-15'),
-      courseId: "1",
+      courseCode: "MT01",
       type: "exam"
     },
     {
-      id: "2",
+      _id: "2",
       title: "Physics Assignment Due",
       date: new Date('2023-12-10'),
-      courseId: "2",
+      courseCode: "PS02",
       type: "assignment"
     }
   ];
 
-  // Current user
-  currentUser: User = this.users[0];
-
-  constructor() { }
+  constructor(private usersService: UsersService) {
+    this.fetchUserCourses();
+    // Initialize calendar events if needed
+    // this.initializeCalendar();
+  }
 
   ngOnInit(): void {
-    this.initializeCalendar();
+  }
+
+  fetchUserCourses(): void {
+    this.usersService.getCourseFromUserId(this.currentUser._id!).subscribe({
+      next: (data) => {
+        this.userCourses = data;
+        console.log('User courses fetched:', this.userCourses);
+      },
+      error: (err) => {
+        console.error('Error fetching user courses:', err);
+      }
+    });
   }
 
   // Get recently accessed courses
-  getRecentCourses(): UE[] {
-    if (!this.currentUser) return [];
-
-    const userCourses = this.currentUser.courses;
-    // Sort by last accessed date (most recent first)
-    userCourses.sort((a, b) => {
-      if (!a.lastAccessed || !b.lastAccessed) return 0;
-      return b.lastAccessed.getTime() - a.lastAccessed.getTime();
-    });
-
-    // Get the 3 most recently accessed courses
-    const recentCourseIds = userCourses.slice(0, 3).map(c => c.courseId);
-
-    return this.ues.filter(ue => recentCourseIds.includes(ue.id));
-  }
-
-  // Get favorite courses
-  getFavoriteCourses(): UE[] {
-    if (!this.currentUser || !this.currentUser.favoriteCourses) return [];
-
-    return this.ues.filter(ue =>
-      this.currentUser.favoriteCourses?.includes(ue.id)
-    );
+  getRecentCourses(): Ue[] {
+    if (!this.currentUser.courses || this.userCourses.length === 0) {
+      return [];
+    }
+    return this.userCourses
   }
 
   // Get course progress
   getCourseProgress(courseId: string): number {
-    const course = this.ues.find(ue => ue.id === courseId);
-    return course?.progress || 0;
+    // Mock function - would normally calculate actual progress
+    return Math.floor(Math.random() * 100);
   }
 
-  // Initialize calendar
-  initializeCalendar(): void {
-    // This would integrate with a calendar library
-    console.log('Calendar initialized with events:', this.calendarEvents);
-  }
-
-  // Toggle favorite status
-  toggleFavorite(course: UE): void {
-    course.isFavorite = !course.isFavorite;
-
-    if (!this.currentUser.favoriteCourses) {
-      this.currentUser.favoriteCourses = [];
-    }
-
-    if (course.isFavorite) {
-      this.currentUser.favoriteCourses.push(course.id);
-    } else {
-      this.currentUser.favoriteCourses = this.currentUser.favoriteCourses.filter(id => id !== course.id);
-    }
-  }
+  // Get favorite courses
+  // getFavoriteCourses(): Ue[] {
+  //   if (!this.currentUser.favoriteCourses || this.userCourses.length === 0) {
+  //     return [];
+  //   }
+  //
+  //   return this.userCourses
+  //     .filter(enrollment =>
+  //       this.currentUser.favoriteCourses?.includes(enrollment.courseId._id))
+  //     .map(enrollment => enrollment.courseId);
+  // }
+  //
+  //
+  // // Initialize calendar
+  // initializeCalendar(): void {
+  //   // Calendar initialization code
+  // }
+  //
+  // // Toggle favorite status
+  // toggleFavorite(course: Ue): void {
+  //   if (!this.currentUser.favoriteCourses) {
+  //     this.currentUser.favoriteCourses = [];
+  //   }
+  //
+  //   if (this.currentUser.favoriteCourses.includes(course._id)) {
+  //     // If course is already in favorites, remove it
+  //     this.currentUser.favoriteCourses = this.currentUser.favoriteCourses.filter(id => id !== course._id);
+  //   } else {
+  //     // If course is not in favorites, add it
+  //     this.currentUser.favoriteCourses.push(course._id);
+  //   }
+  // }
+    // Save updated favorites to server (would implement with API call)
+    // For example:
+    // this.usersService.updateUser(this.currentUser._id, { favoriteCourses: this.currentUser.favoriteCourses }).subscribe();
 }

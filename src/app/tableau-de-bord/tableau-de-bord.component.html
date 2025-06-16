@@ -1,21 +1,41 @@
 <div class="container">
   <main class="main-content">
     <h1>Tableau de bord</h1>
+
     <div class="section">
       <div class="course-controls">
-        <h2>Cours consultés récemment</h2>
-        <!-- Arrow controls could be implemented here -->
+        <h2>Mes cours</h2>
       </div>
       <div class="courses">
-        <div class="course-card" *ngFor="let ue of getRecentCourses()">
-          <img [src]="ue.image || '/assets/images/default-course.jpg'" [alt]="'Image de ' + ue.name" style="max-height: 200px;">
-          <h3>{{ ue.name }}</h3>
-          <p>{{ ue.description }}</p>
-          <div class="course-footer">
-            <a [routerLink]="['/cours', ue.id]">Accéder</a>
-            <span class="progress">Progression : {{ getCourseProgress(ue.id) }}%</span>
-          </div>
+        <app-course-card
+          *ngFor="let course of userCourses"
+          [name]="course.name"
+          [code]="course.code"
+          [imageUrl]="'/assets/images/default-course.jpg'"
+          [courseUrl]="'/cours/' + course._id"
+          [progression]="getCourseProgress(course._id!)"
+          [nomimg]="'Image de ' + course.name">
+        </app-course-card>
+
+        <!-- Message if no courses available -->
+        <div *ngIf="userCourses.length === 0" class="empty-state">
+          Vous n'êtes inscrit à aucun cours
         </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Cours consultés récemment</h2>
+      <div class="courses">
+        <app-course-card
+          *ngFor="let ue of getRecentCourses()"
+          [name]="ue.name"
+          [code]="ue.code"
+          [imageUrl]="'/assets/images/default-course.jpg'"
+          [courseUrl]="'/cours/' + ue._id"
+          [progression]="getCourseProgress(ue._id!)"
+          [nomimg]="'Image de ' + ue.name">
+        </app-course-card>
 
         <!-- Message if no courses available -->
         <div *ngIf="getRecentCourses().length === 0" class="empty-state">
@@ -24,27 +44,7 @@
       </div>
     </div>
 
-    <div class="section">
-      <h2>Cours favoris</h2>
-      <div class="favorites">
-        <div class="course-card" *ngFor="let ue of getFavoriteCourses()">
-          <img [src]="ue.image || '/assets/images/default-course.jpg'" [alt]="'Image de ' + ue.name" style="max-height: 200px;">
-          <h3>{{ ue.name }}</h3>
-          <p>{{ ue.description }}</p>
-          <div class="course-footer">
-            <a [routerLink]="['/cours', ue.id]">Accéder</a>
-            <button class="favorite-btn" (click)="toggleFavorite(ue)">
-              <i class="fa" [ngClass]="{'fa-star': ue.isFavorite, 'fa-star-o': !ue.isFavorite}"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Message if no favorites -->
-        <div *ngIf="getFavoriteCourses().length === 0" class="empty-state">
-          Aucun cours marqué comme favori
-        </div>
-      </div>
-    </div>
+    <!-- Removed favorite courses section as it's commented out in the TS file -->
 
     <div class="calendar-section">
       <h2>Calendar</h2>
@@ -54,7 +54,7 @@
           <h3>Événements à venir</h3>
           <ul>
             <li *ngFor="let event of calendarEvents">
-              <div class="event-date">{{ event.date | date:'shortDate' }}</div>
+              <div class="event-date">{{ event.date }}</div>
               <div class="event-title">{{ event.title }}</div>
               <div class="event-type" [ngClass]="event.type">{{ event.type }}</div>
             </li>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {User} from "../../models/user.model";
+import {Ue} from "../../models/ue.model";
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,10 @@ export class UsersService {
 
   getStudents() {
     return this.http.get<User[]>(`${this.ApiUrl}/students`);
+  }
+
+  getCourseFromUserId(id: string) {
+    return this.http.get<Ue[]>(`${this.ApiUrl}/${id}/courses`);
   }
 
 }
