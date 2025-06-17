@@ -1,0 +1,14 @@
+.newsfeed {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.newsfeed h2 {
+  margin-top: 0;
+}
+
+.newsfeed ul {
+  list-style-type: none;
+  padding: 0;
+}
