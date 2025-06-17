@@ -1,14 +1,9 @@
 .newsfeed {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
+  background-color: white; /* Peut être retiré si Bootstrap `bg-white` est ajouté */
+  border-radius: 10px; /* Plus prononcé que `rounded` de Bootstrap */
 }
 
 .newsfeed h2 {
-  margin-top: 0;
+  margin-top: 0; /* Pour garantir une marge nulle au-dessus du titre */
 }
 
-.newsfeed ul {
-  list-style-type: none;
-  padding: 0;
-}
