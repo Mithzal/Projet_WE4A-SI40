@@ -1,0 +1,38 @@
+<!-- Login form content -->
+<form id="formulaire_login" [formGroup]="loginForm" (ngSubmit)="loginUser()">
+    <h1>Connexion</h1>
+
+    <div>
+        <label for="email">Email</label>
+        <br>
+        <input autofocus type="email" id="email"
+               formControlName="email" placeholder="Email"
+               required autocomplete="email">
+    </div>
+    <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+        <div *ngIf="email?.errors?.['required']">Email is required</div>
+        <div *ngIf="email?.errors?.['email']">Invalid Email</div>
+    </div>
+    <br>
+    <div class="password-container">
+        <label for="password">Mot de passe</label>
+        <br>
+        <input type="password" id="password"
+               formControlName="password" placeholder="Mot de passe"
+               required autocomplete="current-password" #passwordField>
+        <span class="toggle-password" (click)="togglePasswordVisibility(passwordField)">👁</span>
+    </div>
+    <div *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+        <div *ngIf="password?.errors?.['required']">Mot de passe is required</div>
+    </div>
+    <br>
+
+    <div>
+        <button type="submit" style="width:50%;" [disabled]="!loginForm.valid">Se Connecter</button>
+    </div>
+</form>
+
+<br>
+<div style="text-align: center;">
+    <a>Mot de passe oublié ?</a>
+</div>

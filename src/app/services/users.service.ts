@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../../models/user.model";
 import {Ue} from "../../models/ue.model";
+import {Observable, tap} from "rxjs";
+import {loginResponse} from "../../models/loginResponse.model";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +13,19 @@ export class UsersService {
   constructor(private http : HttpClient) { }
 
   private ApiUrl = "http://localhost:7777/api/users";
+
+  // Get auth token
+  getToken(): string | null {
+    return sessionStorage.getItem('authToken');
+  }
+
+  // Get headers with auth token
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.getToken();
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  }
 
   getAllUsers() {
     return this.http.get<User[]>(this.ApiUrl);
@@ -44,4 +59,16 @@ export class UsersService {
     return this.http.get<Ue[]>(`${this.ApiUrl}/${id}/courses`);
   }
 
+  loginUser(email: string, password: string): Observable<loginResponse> {
+    return this.http.post<any>(`${this.ApiUrl}/login`, { email, password })
+      .pipe(
+        tap(response => {
+          if (response.token) {
+            sessionStorage.setItem('authToken', response.token);
+            sessionStorage.setItem('userId', response.user._id);
+          }
+        })
+      );
+  }
 }
+

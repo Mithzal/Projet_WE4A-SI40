@@ -27,6 +27,8 @@ import { NewsfeedCardComponent } from './newsfeed-card/newsfeed-card.component';
 import { UnCoursComponent } from './un-cours/un-cours.component';
 import {HttpClientModule} from "@angular/common/http";
 import { FileComponent } from './file/file.component';
+import { LoginComponent } from './login/login.component';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { FileComponent } from './file/file.component';
     NewsfeedComponent,
     NewsfeedCardComponent,
     UnCoursComponent,
-    FileComponent
+    FileComponent,
+    LoginComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
