@@ -4,7 +4,7 @@ export class User {
     public email: string,
     public role: string,
     public courses: [],
-    public password: string,
+    public password?: string,
     public _id?: string,
   ) {
     this._id = _id;

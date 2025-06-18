@@ -1,5 +1,6 @@
 const user = require('../models/user');
 const Ues = require("../models/ue");
+const jwt = require('jsonwebtoken');
 
 // Afficher tous les utilisateurs
 exports.index = async (req, res) => {

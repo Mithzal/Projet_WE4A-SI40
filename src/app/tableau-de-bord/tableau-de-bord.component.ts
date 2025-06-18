@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UEsService } from "../services/ues.service";
 import { UsersService } from "../services/users.service";
+import { AuthService } from "../services/auth.service";
 import { User } from "../../models/user.model";
 import { Ue } from "../../models/ue.model";
 
@@ -19,15 +20,7 @@ interface CalendarEvent {
   styleUrls: ['./tableau-de-bord.component.css']
 })
 export class TableauDeBordComponent implements OnInit {
-  currentUser: User = {
-    _id: "684dc8793a0e6e40c1aa96e5",
-    name: "Alex Ramallo",
-    email: "alex.ramallo@mail.com",
-    role: "student",
-    courses: [],
-    password: "alex",
-  };
-
+  currentUser: User | null = null;
   userCourses: Ue[] = [];
 
   // Calendar events
@@ -48,30 +41,45 @@ export class TableauDeBordComponent implements OnInit {
     }
   ];
 
-  constructor(private usersService: UsersService) {
-    this.fetchUserCourses();
-    // Initialize calendar events if needed
-    // this.initializeCalendar();
-  }
+  constructor(
+    private usersService: UsersService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
-  }
+    // Get user from auth service
+    this.currentUser = this.authService.getCurrentUser();
 
-  fetchUserCourses(): void {
-    this.usersService.getCourseFromUserId(this.currentUser._id!).subscribe({
-      next: (data) => {
-        this.userCourses = data;
-        console.log('User courses fetched:', this.userCourses);
-      },
-      error: (err) => {
-        console.error('Error fetching user courses:', err);
+    // If user exists, fetch their courses
+    if (this.currentUser && this.currentUser._id) {
+      this.fetchUserCourses();
+    }
+
+    // Subscribe to changes in the current user
+    this.authService.currentUser$.subscribe(user => {
+      if (user) {
+        this.currentUser = user;
+        this.fetchUserCourses();
       }
     });
   }
 
+  fetchUserCourses(): void {
+    if (this.currentUser && this.currentUser._id) {
+      this.usersService.getCourseFromUserId(this.currentUser._id).subscribe({
+        next: (courses) => {
+          this.userCourses = courses;
+        },
+        error: (error) => {
+          console.error('Error fetching user courses:', error);
+        }
+      });
+    }
+  }
+
   // Get recently accessed courses
   getRecentCourses(): Ue[] {
-    if (!this.currentUser.courses || this.userCourses.length === 0) {
+    if (!this.currentUser?.courses || this.userCourses.length === 0) {
       return [];
     }
     return this.userCourses

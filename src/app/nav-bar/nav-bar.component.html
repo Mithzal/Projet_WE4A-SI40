@@ -103,8 +103,13 @@
         </div>
       </div>
     </ng-container>
+
+    <!-- Login popup for unauthenticated users -->
+    <div class="login-popup" *ngIf="showLoginPopup">
+      <div class="login-popup-content">
+        <span class="close" (click)="toggleLoginPopup()">&times;</span>
+        <app-login (loginSuccess)="handleLoginSuccess()"></app-login>
+      </div>
+    </div>
   </div>
 </header>
-
-<!-- Add login component with side menu -->
-<app-login #loginComponent (loginSuccess)="handleLoginSuccess()"></app-login>

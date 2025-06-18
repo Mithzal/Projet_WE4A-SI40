@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../../models/user.model";
 import {Ue} from "../../models/ue.model";
-import {Observable, tap} from "rxjs";
-import {loginResponse} from "../../models/loginResponse.model";
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +16,20 @@ export class UsersService {
   // Get auth token
   getToken(): string | null {
     return sessionStorage.getItem('authToken');
+  }
+
+  // Get current user ID
+  getCurrentUserId(): string | null {
+    return sessionStorage.getItem('userId');
+  }
+
+  // Get current user information
+  getCurrentUser(): Observable<User> {
+    const userId = this.getCurrentUserId();
+    if (!userId) {
+      throw new Error('No user ID found in session');
+    }
+    return this.http.get<User>(`${this.ApiUrl}/${userId}`);
   }
 
   // Get headers with auth token
@@ -59,16 +72,4 @@ export class UsersService {
     return this.http.get<Ue[]>(`${this.ApiUrl}/${id}/courses`);
   }
 
-  loginUser(email: string, password: string): Observable<loginResponse> {
-    return this.http.post<any>(`${this.ApiUrl}/login`, { email, password })
-      .pipe(
-        tap(response => {
-          if (response.token) {
-            sessionStorage.setItem('authToken', response.token);
-            sessionStorage.setItem('userId', response.user._id);
-          }
-        })
-      );
-  }
 }
-
