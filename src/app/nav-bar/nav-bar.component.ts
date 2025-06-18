@@ -27,6 +27,7 @@ export class NavBarComponent implements OnInit {
       popup.style.display = 'none';
     }
   }
+
   openGradePopup() {
     const popup = document.getElementById('gradePopup');
     if (popup) {
@@ -34,12 +35,6 @@ export class NavBarComponent implements OnInit {
     }
   }
 
-  closeGradePopup() {
-    const popup = document.getElementById('gradePopup');
-    if (popup) {
-      popup.style.display = 'none';
-    }
-  }
   constructor() { }
 
   ngOnInit(): void {

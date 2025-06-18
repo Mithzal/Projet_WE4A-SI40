@@ -97,6 +97,7 @@ export class MesCoursComponent implements OnInit {
   // Method to calculate progress
   getCourseProgress(courseId: string): number {
     // In a real app, this would calculate actual progress
-    return Math.floor(Math.random() * 100);
+    //return Math.floor(Math.random() * 100);
+    return 1;
   }
 }

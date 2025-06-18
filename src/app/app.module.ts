@@ -13,7 +13,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import { RechercheCoursComponent } from './recherche-cours/recherche-cours.component';
 import { MesCoursComponent } from './mes-cours/mes-cours.component';
 import { TableauDeBordComponent } from './tableau-de-bord/tableau-de-bord.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './nav-bar/profile/profile.component';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { UserListComponent } from './admin-page/user-list/user-list.component';
 import { UeListComponent } from './admin-page/ue-list/ue-list.component';
@@ -27,6 +27,8 @@ import { NewsfeedCardComponent } from './newsfeed-card/newsfeed-card.component';
 import { UnCoursComponent } from './un-cours/un-cours.component';
 import {HttpClientModule} from "@angular/common/http";
 import { FileComponent } from './file/file.component';
+import { ProfileOptionComponent } from './nav-bar/profile-option/profile-option.component';
+import { GradePopupComponent } from './nav-bar/grade-popup/grade-popup.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { FileComponent } from './file/file.component';
     NewsfeedComponent,
     NewsfeedCardComponent,
     UnCoursComponent,
-    FileComponent
+    FileComponent,
+    ProfileOptionComponent,
+    GradePopupComponent
   ],
   imports: [
     BrowserModule,

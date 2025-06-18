@@ -20,7 +20,9 @@
         this.teachers = data;
       })
     }
+    log(){
 
+    }
 
     ngOnInit() {
       this.ueForm = this.fb.group({
