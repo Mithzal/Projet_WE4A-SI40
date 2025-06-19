@@ -45,8 +45,8 @@ export class RechercheCoursComponent implements OnInit {
     // Modifiez les propriétés de l'UE
     const nouvelleUe: Ue = {
       ...ue,
-      name: 'Physique Avancées',
-      description: 'Méchanique du point go brr'
+      name: 'Mathématique Avancées',
+      description: 'Intégrale go brr'
     };
 
     // Appelez la méthode updateUe et souscrivez à l'Observable

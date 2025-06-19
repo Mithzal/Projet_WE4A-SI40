@@ -53,3 +53,17 @@ exports.delete = async (req, res) => {
     res.status(500).json({message: err.message});
   }
 };
+
+exports.getNameById = async (req, res) => {
+  try {
+    const ue = await Ues.findById(req.params.id);
+    if (!ue) {
+      return res.status(404).json({message: 'UE non trouvée'});
+    }
+    res.json({name: ue.name});
+  } catch (err) {
+    res.status(500).json({message: err.message});
+  }
+
+}
+
