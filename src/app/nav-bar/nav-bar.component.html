@@ -82,27 +82,9 @@
       </div>
 
       <!-- Popup d'affichage des notes -->
-      <div id="gradePopup" class="gradePopup">
-        <div class="popup-box">
-          <span class="close" (click)="closeGradePopup()">&times;</span>
-          <div class="popup-content">
-            <h2>Mes notes</h2>
-            <table>
-              <thead>
-              <tr>
-                <th>UE</th>
-                <th>Notes</th>
-                <th>Moyenne</th>
-              </tr>
-              </thead>
-              <tbody>
-              <!-- Les lignes du tableau seront générées dynamiquement par JavaScript -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <app-grade-popup></app-grade-popup>
     </ng-container>
+
   </div>
 </header>
 

@@ -31,14 +31,11 @@
             <td>
               {{ getTeachersByCourse(ue._id) || 'No teachers assigned' }}
             </td>
-            <button (click)="modifierUe(ue)" >Modifier Ue</button>
-            <button (click)="supprimerUe(ue._id)" >Supprimer Ue</button>
 
           </tr>
         </tbody>
       </table>
       <p *ngIf="!UEs_details || UEs_details.length === 0">No courses available.</p>
-      <button (click)="ajouterNouvelleUe()" >Ajouter Ue</button>
 
 
     </div>
