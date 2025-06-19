@@ -19,4 +19,6 @@ router.get('/students', userController.getStudents);
 
 router.get('/:id/courses', userController.getCourseFromUserId);
 
+router.post('/login', userController.login);
+
 module.exports = router;

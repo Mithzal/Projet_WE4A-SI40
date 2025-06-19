@@ -1,18 +1,22 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { Router } from '@angular/router';
-import {LoginComponent} from "../login/login.component";
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.component.css']
+  styleUrls: ['./nav-bar.component.css', './login-popup.css']
 })
 export class NavBarComponent implements OnInit {
   isAuthenticated: boolean = false; // Track authentication status
+  showLoginPopup: boolean = false;  // Control login popup visibility
+  returnUrl: string | null = null;  // Store the return URL
 
-  @ViewChild('loginComponent') loginComponent!: LoginComponent;
-
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService
+  ) { }
 
   toggleDropdown() {
     if (this.isAuthenticated) {
@@ -22,19 +26,30 @@ export class NavBarComponent implements OnInit {
         dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
       }
     } else {
-
+      this.toggleLoginPopup();
     }
+  }
+
+  // Toggle login popup visibility
+  toggleLoginPopup() {
+    this.showLoginPopup = !this.showLoginPopup;
   }
 
   // Method to handle successful login
   handleLoginSuccess() {
     this.isAuthenticated = true;
+    this.showLoginPopup = false;
+
+    // If there's a return URL, navigate to it
+    if (this.returnUrl) {
+      this.router.navigateByUrl(this.returnUrl);
+      this.returnUrl = null;
+    }
   }
 
   // Method to handle logout
   logout() {
-    // Clear authentication state
-    localStorage.removeItem('isAuthenticated');
+    this.authService.logout();
     this.isAuthenticated = false;
 
     // Close any open dropdowns or popups
@@ -45,9 +60,6 @@ export class NavBarComponent implements OnInit {
 
     this.closeProfilePopup();
     this.closeGradePopup();
-
-    // Navigate to home page
-    this.router.navigate(['/']);
 
     console.log('User logged out successfully');
   }
@@ -82,7 +94,19 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+    // Check authentication status
+    this.isAuthenticated = this.authService.isAuthenticated();
+
+    // Subscribe to query params to detect if login popup should be shown
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params['showLogin'] === 'true') {
+        this.showLoginPopup = true;
+
+        // Store the return URL if provided
+        if (params['returnUrl']) {
+          this.returnUrl = params['returnUrl'];
+        }
+      }
+    });
   }
 }
-

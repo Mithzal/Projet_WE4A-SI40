@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {Validators, FormGroup, FormControl, AbstractControl} from "@angular/forms";
-import { UsersService } from "../services/users.service";
-import {Router} from "@angular/router";
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Validators, FormGroup, FormControl, AbstractControl} from "@angular/forms";
+import { Router } from "@angular/router";
+import { AuthService } from "../services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -14,12 +14,16 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required])
   });
 
-  constructor(private userService: UsersService, private router : Router) {
+  @Output() loginSuccess = new EventEmitter<void>();
+  loginError: string | null = null;
+
+  constructor(private authService: AuthService, private router: Router) {
     // Redirect to home if user is already logged in
-    if (sessionStorage.getItem('userId')) {
-      this.router.navigate(['/home']);
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/']);
     }
   }
+
   ngOnInit(): void {
   }
 
@@ -41,13 +45,15 @@ export class LoginComponent implements OnInit {
       const email = this.email?.value;
       const password = this.password?.value;
 
-      this.userService.loginUser(email, password).subscribe(
+      this.authService.login(email, password).subscribe(
         response => {
-          this.router.navigate(['/home']);
+          this.loginError = null;
+          this.loginSuccess.emit(); // Emit event on successful login
+          this.router.navigate(['/']);
         },
         error => {
           console.error('Login failed:', error);
-          // Handle login error (show message to user)
+          this.loginError = 'Login failed: ' + (error.error?.message);
         }
       );
     }

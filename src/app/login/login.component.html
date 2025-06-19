@@ -2,6 +2,11 @@
 <form id="formulaire_login" [formGroup]="loginForm" (ngSubmit)="loginUser()">
     <h1>Connexion</h1>
 
+    <!-- Error message display -->
+    <div class="error-message" *ngIf="loginError">
+        {{ loginError }}
+    </div>
+
     <div>
         <label for="email">Email</label>
         <br>
@@ -9,7 +14,7 @@
                formControlName="email" placeholder="Email"
                required autocomplete="email">
     </div>
-    <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+    <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="form-error">
         <div *ngIf="email?.errors?.['required']">Email is required</div>
         <div *ngIf="email?.errors?.['email']">Invalid Email</div>
     </div>
@@ -22,17 +27,17 @@
                required autocomplete="current-password" #passwordField>
         <span class="toggle-password" (click)="togglePasswordVisibility(passwordField)">👁</span>
     </div>
-    <div *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+    <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="form-error">
         <div *ngIf="password?.errors?.['required']">Mot de passe is required</div>
     </div>
     <br>
 
     <div>
-        <button type="submit" style="width:50%;" [disabled]="!loginForm.valid">Se Connecter</button>
+        <button type="submit" class="login-button" [disabled]="!loginForm.valid">Se Connecter</button>
     </div>
 </form>
 
 <br>
-<div style="text-align: center;">
-    <a>Mot de passe oublié ?</a>
+<div class="forgot-password">
+    <a href="#">Mot de passe oublié ?</a>
 </div>
