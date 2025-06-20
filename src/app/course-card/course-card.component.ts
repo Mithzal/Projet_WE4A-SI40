@@ -16,6 +16,7 @@ export class CourseCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.progression = 1
   }
 
 }

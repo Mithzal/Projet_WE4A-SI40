@@ -5,7 +5,7 @@ import {RechercheCoursComponent} from "./recherche-cours/recherche-cours.compone
 import {AssignUeUserComponent} from './admin-page/assign-ue-user/assign-ue-user.component';
 import {MesCoursComponent} from "./mes-cours/mes-cours.component";
 import {TableauDeBordComponent} from "./tableau-de-bord/tableau-de-bord.component";
-import {ProfileComponent} from "./profile/profile.component";
+import {ProfileComponent} from "./nav-bar/profile/profile.component";
 import {AdminPageComponent} from "./admin-page/admin-page.component";
 import {UnCoursComponent} from "./un-cours/un-cours.component";
 import {AuthGuard} from "./guards/auth.guard";

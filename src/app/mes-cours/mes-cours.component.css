@@ -1,78 +1,14 @@
-body {
-  background: #E0ECF9;
+body.bg-light-blue {
+  background-color: #E0ECF9;
   font-family: Arial, sans-serif;
-  display: flex;
-  margin: 0;
-  padding-bottom: 20px;
 }
 
-.main-content {
-  border-radius: 10px;
-  background: #FFFFFF;
-  padding: 20px;
-  flex-grow: 1;
-}
-
-.courses {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-
-.progress {
-  font-size: 14px;
-  color: #2c3e50;
-  font-weight: bold;
-}
-
-.course-controls {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-#search-bar {
-  padding: 8px;
-  width: 30%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
+#search-bar,
 #sort-courses {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  min-width: 200px;
 }
 
-.container {
-  display: grid;
-  grid-template-columns: 4fr 1fr;
-  gap: 2%;
-  width: 100%;
-  margin-top: 3.5%;
-  margin-left: 2%;
-  margin-right: 2%;
+app-course-card {
+  flex: 1 1 250px;
 }
 
-.sidebar, .newsfeed {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.sidebar h2, .newsfeed h2 {
-  margin-top: 0;
-}
-
-.sidebar ul, .newsfeed ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.sidebar li, .newsfeed li {
-  background-color: #F7F7F7;
-  margin: 5px 0;
-  padding: 10px;
-  border-radius: 5px;
-}

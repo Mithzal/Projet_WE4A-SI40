@@ -32,5 +32,9 @@ export class UEsService {
     }
   }
 
+  getNameById(id: string): Observable<Ue> {
+    return this.http.get<any>(`${this.ApiUrl}/name/${id}`);
+  }
+
 
 }
