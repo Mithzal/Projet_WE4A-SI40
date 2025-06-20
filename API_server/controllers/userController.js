@@ -1,5 +1,6 @@
 const user = require('../models/user');
 const Ues = require("../models/ue");
+const jwt = require('jsonwebtoken');
 
 // Afficher tous les utilisateurs
 exports.index = async (req, res) => {
@@ -148,3 +149,40 @@ exports.getStudents = async (req, res) => {
   }
 }
 
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Find user by email
+    const foundUser = await user.findOne({ email });
+
+    if (!foundUser) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // Validate password (in production, use bcrypt to compare hashed passwords)
+    if (foundUser.password !== password) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // Generate token
+    const token = jwt.sign(
+      { userId: foundUser._id, role: foundUser.role },
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '24h' }
+    );
+
+    // Return user data and token
+    res.json({
+      token,
+      user: {
+        _id: foundUser._id,
+        name: foundUser.name,
+        email: foundUser.email,
+        role: foundUser.role
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

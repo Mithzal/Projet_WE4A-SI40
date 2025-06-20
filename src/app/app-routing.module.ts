@@ -8,19 +8,21 @@ import {TableauDeBordComponent} from "./tableau-de-bord/tableau-de-bord.componen
 import {ProfileComponent} from "./nav-bar/profile/profile.component";
 import {AdminPageComponent} from "./admin-page/admin-page.component";
 import {UnCoursComponent} from "./un-cours/un-cours.component";
+import {AuthGuard} from "./guards/auth.guard";
+import {LoginComponent} from "./login/login.component";
 
 
 
 const routes : Routes =[
   {path :"", component : HomeComponent},
-  {path :"recherche", component : RechercheCoursComponent },
-  {path: 'assign-ue-user', component: AssignUeUserComponent },
-  {path: "admin-page", component: AdminPageComponent},
-  {path :"mes-cours", component : MesCoursComponent },
-  {path :"tableau-de-bord", component : TableauDeBordComponent },
-  {path :"profile", component : ProfileComponent},
-  {path: "cours/:id", component: UnCoursComponent},
-  //{path : "cours/notes/:id", component :}
+  {path: "login", component: LoginComponent},
+  {path :"recherche", component : RechercheCoursComponent},
+  {path: 'assign-ue-user', component: AssignUeUserComponent, canActivate: [AuthGuard] },
+  {path: "admin-page", component: AdminPageComponent, canActivate: [AuthGuard]},
+  {path :"mes-cours", component : MesCoursComponent, canActivate: [AuthGuard] },
+  {path :"tableau-de-bord", component : TableauDeBordComponent, canActivate: [AuthGuard] },
+  {path :"profile", component : ProfileComponent, canActivate: [AuthGuard]},
+  {path: "cours/:id", component: UnCoursComponent, canActivate: [AuthGuard]},
 ]
 
 @NgModule({

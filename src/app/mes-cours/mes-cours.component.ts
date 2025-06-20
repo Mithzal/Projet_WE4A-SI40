@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UEsService } from "../services/ues.service";
 import { UsersService } from "../services/users.service";
+import { AuthService } from "../services/auth.service";
 import { User } from "../../models/user.model";
 import { Ue } from "../../models/ue.model";
 
@@ -15,19 +16,11 @@ interface NewsItem {
   styleUrls: ['./mes-cours.component.css']
 })
 export class MesCoursComponent implements OnInit {
-  // Sample data (would normally come from a service)
-  ues: Ue[] = [
-  ];
+  // Sample data
+  ues: Ue[] = [];
 
   // Current user
-  currentUser: User = {
-    _id: "68481c3d11b909893f8ff4ec",
-    name: "Alicia Smith",
-    email: "alex.ramallo@mail.com",
-    role: "student",
-    courses: [],
-    password: "alex",
-  };
+  currentUser: User | null = null;
 
   userCourses: Ue[] = [];
 
@@ -41,23 +34,42 @@ export class MesCoursComponent implements OnInit {
   searchTerm: string = '';
   sortBy: string = 'name';
 
-  constructor(private usersService: UsersService, private uesService: UEsService) { }
+  constructor(
+    private usersService: UsersService,
+    private uesService: UEsService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
-    this.fetchUserCourses();
-  }
+    // Get user from auth service
+    this.currentUser = this.authService.getCurrentUser();
 
-  // Fetch user courses from API - same as in tableau-de-bord
-  fetchUserCourses(): void {
-    this.usersService.getCourseFromUserId(this.currentUser._id!).subscribe({
-      next: (data) => {
-        this.userCourses = data;
-        console.log('User courses fetched:', this.userCourses);
-      },
-      error: (err) => {
-        console.error('Error fetching user courses:', err);
+    // If user exists, fetch their courses
+    if (this.currentUser && this.currentUser._id) {
+      this.fetchUserCourses();
+    }
+
+    // Subscribe to changes in the current user
+    this.authService.currentUser$.subscribe(user => {
+      if (user) {
+        this.currentUser = user;
+        this.fetchUserCourses();
       }
     });
+  }
+
+  // Fetch user courses from API
+  fetchUserCourses(): void {
+    if (this.currentUser && this.currentUser._id) {
+      this.usersService.getCourseFromUserId(this.currentUser._id).subscribe({
+        next: (courses) => {
+          this.userCourses = courses;
+        },
+        error: (error) => {
+          console.error('Error fetching user courses:', error);
+        }
+      });
+    }
   }
 
   // Filter courses based on search term

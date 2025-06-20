@@ -27,6 +27,8 @@ import { NewsfeedCardComponent } from './newsfeed-card/newsfeed-card.component';
 import { UnCoursComponent } from './un-cours/un-cours.component';
 import {HttpClientModule} from "@angular/common/http";
 import { FileComponent } from './file/file.component';
+import { LoginComponent } from './login/login.component';
+import { AuthComponent } from './auth/auth.component';
 import { ProfileOptionComponent } from './nav-bar/profile-option/profile-option.component';
 import { GradePopupComponent } from './nav-bar/grade-popup/grade-popup.component';
 
@@ -52,6 +54,8 @@ import { GradePopupComponent } from './nav-bar/grade-popup/grade-popup.component
     NewsfeedCardComponent,
     UnCoursComponent,
     FileComponent,
+    LoginComponent,
+    AuthComponent,
     ProfileOptionComponent,
     GradePopupComponent
   ],
