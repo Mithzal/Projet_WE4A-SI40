@@ -1,0 +1,9 @@
+<h3>Liste des utilisateurs</h3>
+<ul id="user-list">
+  <li *ngFor="let user of users" [attr.id]="'user-' + user._id">
+    {{ user.name }} - {{ user.email }} - {{ user.role }}
+    <button class="edit-user-button" (click)="editUser(user._id!)">Modifier</button>
+    <button class="delete-user-button" (click)="deleteUser(user._id!)">Supprimer</button>
+  </li>
+  <li *ngIf="users.length === 0">Aucun utilisateur trouvé.</li>
+</ul>

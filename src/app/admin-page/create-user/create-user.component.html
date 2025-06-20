@@ -1,0 +1,24 @@
+<div class="form-popup">
+  <h3>Créer un utilisateur</h3>
+  <form [formGroup]="ueForm" (ngSubmit)="onSubmit()" class="form-popup-stack">
+    <label for="name">Nom </label>
+    <input id="name" type="text" formControlName="name" />
+
+    <label for="email">Email</label>
+    <input id="email" type="email" formControlName="email" />
+    <label for="role">Rôle</label>
+        <select id="role" formControlName="role">
+            <option value="" disabled selected>Choisir un rôle</option>
+            <option value="admin">Admin</option>
+            <option value="Teacher">Enseignant</option>
+            <option value="Student">Étudiant</option>
+        </select>
+    <label for="password">Password</label>
+    <input id="password" type="password" formControlName="password" />
+
+    <div class="button-group">
+      <button type="submit" class="sub-button" >Créer</button>
+      <button type="button" class="close-form" (click)="closeForm()">Annuler</button>
+    </div>
+  </form>
+</div>

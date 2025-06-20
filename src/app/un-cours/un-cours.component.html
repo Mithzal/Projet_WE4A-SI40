@@ -1,0 +1,29 @@
+<div class="container">
+  <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+  <aside class="sidebar" [ngClass]="{'hidden': sidebarHidden}">
+    <h2>Menu du Cours</h2>
+    <ul>
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#messageimportant">Message important</a></li>
+      <li><a href="#messageinfo">Message information</a></li>
+      <li><a href="#download">Fichier</a></li>
+      <li><a href="#quiz">Quiz Final</a></li>
+    </ul>
+  </aside>
+  <main class="main-content">
+    <h1>{{ course.titre }}</h1>
+    <div *ngIf="isTeacherOrAdmin()" class="action-buttons">
+      <a [routerLink]="['/ajouter-contenu', course.id]" class="btn btn-primary">Ajouter un contenu</a>
+    </div>
+    <div class="navbar">
+      <button class="active">Cours</button>
+      <button><a class="active" [routerLink]="['/cours-participants', course.id]">Participants</a></button>
+      <button *ngIf="userRole === 'ROLE_PROF'">Notes</button>
+    </div>
+
+    <!-- Course content will go here -->
+    <app-file [courseId]="course._id"></app-file>
+
+    <app-newsfeed [newsItems]="courseNewsItems"></app-newsfeed>
+  </main>
+</div>

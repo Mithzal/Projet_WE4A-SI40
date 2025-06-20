@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="main-content">
+    <h1>Recherche de Cours</h1>
+    <div class="course-controls">
+      <input type="text" id="search-bar" placeholder="Rechercher un cours...">
+      <label for="sort-courses"></label>
+      <select id="sort-courses">
+        <option value="name">Trier par nom</option>
+        <option value="date">Trier par code</option>
+      </select>
+    </div>
+    <div class="courses" id="course-list">
+      <table *ngIf="UEs_details && UEs_details.length > 0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Credits</th>
+            <th>Teachers</th>
+          </tr>
+        </thead>
+        <tbody id="table-row">
+          <tr *ngFor="let ue of UEs_details">
+            <td>{{ue._id?.toString()}}</td>
+            <td>{{ ue.code }}</td>
+            <td><a [routerLink]="['/cours', ue._id]">{{ ue.name }}</a></td>
+            <td>{{ ue.description }}</td>
+            <td>{{ue.credits}}</td>
+            <td>
+              {{ getTeachersByCourse(ue._id) || 'No teachers assigned' }}
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+      <p *ngIf="!UEs_details || UEs_details.length === 0">No courses available.</p>
+
+
+    </div>
+</div>
+</div>

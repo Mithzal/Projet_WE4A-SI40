@@ -1,0 +1,9 @@
+<h3>Liste des UE</h3>
+<ul id="ue-list">
+  <li *ngFor="let ue of ues" [attr.id]="'ue-' + ue._id">
+    {{ ue.code }} - {{ue.name}}
+    <button class="edit-ue-button" (click)="editUe(ue._id!)">Modifier</button>
+    <button class="delete-ue-button" (click)="deleteUe(ue._id!)">Supprimer</button>
+  </li>
+  <li *ngIf="ues.length === 0">Aucune UE trouvée.</li>
+</ul>

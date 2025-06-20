@@ -1,0 +1,59 @@
+<main>
+  <h1>{{ title }}</h1>
+  <section id="catalogue">
+    <h2>Catalogue</h2>
+    <div class="tabs">
+      <button class="tab-button" (click)="selectTab('users')">Utilisateurs</button>
+      <button class="tab-button" (click)="selectTab('ues')">UE</button>
+      <button class="tab-button" (click)="selectTab('assign')">Assigner des utilisateurs</button>
+    </div>
+
+
+    <div id="creation-zone">
+      <button *ngIf="selectedTab === 'ues' && !showCreateUeForm" (click)="showCreateUeForm = true" class="sub-button">
+        Créer une UE
+      </button>
+
+      <app-create-ue
+        *ngIf="selectedTab === 'ues' && showCreateUeForm"
+        (close)="showCreateUeForm = false">
+      </app-create-ue>
+      <app-ue-list
+        *ngIf="selectedTab === 'ues' && !editUeId"
+        (edit)="onEditUe($event)">
+      </app-ue-list>
+      <app-edit-ue
+        *ngIf="selectedTab === 'ues' && editUeId"
+        [ueId]="editUeId"
+        [ue]="editUe!"
+        (close)="editUeId = null">
+      </app-edit-ue>
+
+      <button *ngIf="selectedTab === 'users' && !showCreateUserForm" (click)="showCreateUserForm = true" class="sub-button">
+          Créer un utilisateur
+        </button>
+        <app-create-user
+          *ngIf="selectedTab === 'users' && showCreateUserForm"
+          (close)="showCreateUserForm = false">
+        </app-create-user>
+        <app-user-list
+          *ngIf="selectedTab === 'users' && !editUserId"
+          (edit)="onEditUser($event)">
+        </app-user-list>
+        <app-edit-user
+          *ngIf="selectedTab === 'users' && editUserId"
+          [userId]="editUserId"
+          [user]="editUser!"
+          (close)="editUserId = null">
+        </app-edit-user>
+
+        <app-assign-ue-user
+          *ngIf="selectedTab === 'assign'"
+          [users]="users"
+          [ues]="ues"
+          (close)="selectTab('users')">
+        </app-assign-ue-user>
+
+    </div>
+  </section>
+</main>
