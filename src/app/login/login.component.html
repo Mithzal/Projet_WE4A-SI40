@@ -1,43 +1,61 @@
-<!-- Login form content -->
-<form id="formulaire_login" [formGroup]="loginForm" (ngSubmit)="loginUser()">
-    <h1>Connexion</h1>
+<!-- Login form content using Bootstrap -->
+<form id="formulaire_login" [formGroup]="loginForm" (ngSubmit)="loginUser()" class="card shadow-sm p-4 mx-auto mt-5" style="max-width: 400px;">
+  <h1 class="text-center mb-4">Connexion</h1>
 
-    <!-- Error message display -->
-    <div class="error-message" *ngIf="loginError">
-        {{ loginError }}
-    </div>
+  <!-- Error message display -->
+  <div class="alert alert-danger" *ngIf="loginError">
+    {{ loginError }}
+  </div>
 
-    <div>
-        <label for="email">Email</label>
-        <br>
-        <input autofocus type="email" id="email"
-               formControlName="email" placeholder="Email"
-               required autocomplete="email">
+  <!-- Email field -->
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input
+      type="email"
+      id="email"
+      class="form-control"
+      formControlName="email"
+      placeholder="Email"
+      required
+      autocomplete="email"
+      autofocus
+    >
+    <!-- Email validation messages -->
+    <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="text-danger mt-1">
+      <div *ngIf="email?.errors?.['required']">Email is required</div>
+      <div *ngIf="email?.errors?.['email']">Invalid Email</div>
     </div>
-    <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="form-error">
-        <div *ngIf="email?.errors?.['required']">Email is required</div>
-        <div *ngIf="email?.errors?.['email']">Invalid Email</div>
-    </div>
-    <br>
-    <div class="password-container">
-        <label for="password">Mot de passe</label>
-        <br>
-        <input type="password" id="password"
-               formControlName="password" placeholder="Mot de passe"
-               required autocomplete="current-password" #passwordField>
-        <span class="toggle-password" (click)="togglePasswordVisibility(passwordField)">👁</span>
-    </div>
-    <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="form-error">
-        <div *ngIf="password?.errors?.['required']">Mot de passe is required</div>
-    </div>
-    <br>
+  </div>
 
-    <div>
-        <button type="submit" class="login-button" [disabled]="!loginForm.valid">Se Connecter</button>
+  <!-- Password field -->
+  <div class="mb-3">
+    <label for="password" class="form-label">Mot de passe</label>
+    <div class="input-group">
+      <input
+        [type]="passwordVisible ? 'text' : 'password'"
+        id="password"
+        class="form-control"
+        formControlName="password"
+        placeholder="Mot de passe"
+        required
+        autocomplete="current-password"
+      />
     </div>
+    <!-- Password validation messages -->
+    <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="text-danger mt-1">
+      <div *ngIf="password?.errors?.['required']">Mot de passe is required</div>
+    </div>
+  </div>
+
+  <!-- Submit button -->
+  <div>
+    <button type="submit" class="btn btn-primary w-100" [disabled]="!loginForm.valid">
+      Se Connecter
+    </button>
+  </div>
 </form>
 
-<br>
-<div class="forgot-password">
-    <a href="#">Mot de passe oublié ?</a>
+<!-- Forgot password link -->
+<div class="text-center mt-3">
+  <a href="#" class="text-decoration-none">Mot de passe oublié ?</a>
 </div>

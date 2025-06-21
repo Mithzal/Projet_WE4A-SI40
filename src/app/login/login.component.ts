@@ -36,10 +36,11 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-  togglePasswordVisibility(passwordInput: HTMLInputElement): void {
-    passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
-  }
+  passwordVisible = false;
 
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+  }
   loginUser(): void {
     if (this.loginForm.valid) {
       const email = this.email?.value;
