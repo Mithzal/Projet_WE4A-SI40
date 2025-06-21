@@ -1,15 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/auth'); // Import auth middleware
 
 // Require controller module
 const logController = require('../controllers/logController');
 
-router.get('/', logController.index);
-
-router.post('/', logController.insert);
-
-router.put('/:id', logController.update);
-
-router.delete('/:id', logController.delete);
+// All routes are protected
+router.get('/', auth, logController.index);
+router.post('/', auth, logController.insert);
+router.put('/:id', auth, logController.update);
+router.delete('/:id', auth, logController.delete);
 
 module.exports = router;

@@ -1,11 +1,13 @@
 // routes/fichierRoutes.js
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/auth'); // Import auth middleware
 const fichierController = require('../controllers/fichierController');
 
-router.post('/upload', fichierController.uploadFile);
-router.get('/', fichierController.listerFichiers);
-router.get('/download/:id', fichierController.downloadFile);
-router.delete('/delete/:id', fichierController.deleteFile);
+// All routes are protected
+router.post('/upload', auth, fichierController.uploadFile);
+router.get('/', auth, fichierController.listerFichiers);
+router.get('/download/:id', auth, fichierController.downloadFile);
+router.delete('/delete/:id', auth, fichierController.deleteFile);
 
 module.exports = router;
