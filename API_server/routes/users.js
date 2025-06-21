@@ -1,24 +1,20 @@
 const express = require ('express');
 const router = express.Router();
+const auth = require('../middleware/auth');
 
 const userController = require('../controllers/userController');
 
-router.get('/', userController.index);
-
-router.post('/', userController.insert);
-
-router.put('/:id', userController.update);
-
-router.delete('/:id', userController.delete);
-
-router.put('/enroll/:id/:courseId', userController.addCourse);
-
-router.get('/teachers', userController.getTeachers);
-
-router.get('/students', userController.getStudents);
-
-router.get('/:id/courses', userController.getCourseFromUserId);
-
+// Public routes
 router.post('/login', userController.login);
+
+// Protected routes - require authentication
+router.get('/', auth, userController.index);
+router.post('/', auth, userController.insert);
+router.put('/:id', auth, userController.update);
+router.delete('/:id', auth, userController.delete);
+router.put('/enroll/:id/:courseId', auth, userController.addCourse);
+router.get('/teachers', auth, userController.getTeachers);
+router.get('/students', auth, userController.getStudents);
+router.get('/:id/courses', auth, userController.getCourseFromUserId);
 
 module.exports = router;
