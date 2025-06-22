@@ -7,15 +7,23 @@
   <app-course-sidebar [hidden]="sidebarHidden"></app-course-sidebar>
 
   <main class="main-content container-fluid">
-    <h1>{{ course.titre }}</h1>
+    <div class="row">
+      <!-- Partie gauche : contenu du cours -->
+      <div class="col-md-8">
+        <h1>{{ course.titre }}</h1>
 
-    <div *ngIf="isTeacherOrAdmin()" class="mb-3">
-      <a [routerLink]="['/ajouter-contenu', course.id]" class="btn btn-primary">Ajouter un contenu</a>
+        <div *ngIf="isTeacherOrAdmin()" class="mb-3">
+          <a [routerLink]="['/ajouter-contenu', course.id]" class="btn btn-primary">Ajouter un contenu</a>
+        </div>
+
+        <app-course-navbar [courseId]="course.id" [userRole]="userRole"></app-course-navbar>
+        <app-file [courseId]="course._id"></app-file>
+      </div>
+
+      <!-- Partie droite : fil d'actualité -->
+      <div class="col-md-4">
+        <app-newsfeed [newsItems]="courseNewsItems"></app-newsfeed>
+      </div>
     </div>
-
-    <app-course-navbar [courseId]="course.id" [userRole]="userRole"></app-course-navbar>
-
-    <app-file [courseId]="course._id"></app-file>
-    <app-newsfeed [newsItems]="courseNewsItems"></app-newsfeed>
   </main>
 </div>
