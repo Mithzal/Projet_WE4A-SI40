@@ -1,0 +1,14 @@
+<div class="post message" [ngClass]="type">
+  <div *ngIf="type === 'important'" class="alert-icon">
+    <div class="circle"></div>
+    <div class="exclamation">!</div>
+  </div>
+  <div *ngIf="type === 'depot'" class="download-icon">
+    <div class="bar"></div>
+    <div class="arrow-head"></div>
+  </div>
+  <div class="text-content" [ngClass]="type">
+    <h2>{{ titre }}</h2>
+    <p>{{ contenu }}</p>
+  </div>
+</div>

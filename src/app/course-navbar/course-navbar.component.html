@@ -1,0 +1,7 @@
+<div class="navbar d-flex border-bottom mb-3">
+  <button class="btn nav-link active">Cours</button>
+  <button class="btn nav-link">
+    <a class="text-decoration-none" [routerLink]="['/cours-participants', courseId]">Participants</a>
+  </button>
+  <button class="btn nav-link" *ngIf="userRole === 'ROLE_PROF'">Notes</button>
+</div>

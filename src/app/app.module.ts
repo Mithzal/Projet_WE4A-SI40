@@ -31,6 +31,9 @@ import { LoginComponent } from './login/login.component';
 import { AuthComponent } from './auth/auth.component';
 import { ProfileOptionComponent } from './nav-bar/profile-option/profile-option.component';
 import { GradePopupComponent } from './nav-bar/grade-popup/grade-popup.component';
+import { CourseNavbarComponent } from './course-navbar/course-navbar.component';
+import { PostComponent } from './post/post.component';
+import { CourseSidebarComponent } from './course-sidebar/course-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,10 @@ import { GradePopupComponent } from './nav-bar/grade-popup/grade-popup.component
     LoginComponent,
     AuthComponent,
     ProfileOptionComponent,
-    GradePopupComponent
+    GradePopupComponent,
+    CourseNavbarComponent,
+    PostComponent,
+    CourseSidebarComponent
   ],
   imports: [
     BrowserModule,
