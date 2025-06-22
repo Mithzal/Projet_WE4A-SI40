@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {UEsService} from "../services/ues.service";
+import {Ue} from "../../models/ue.model";
+import {AuthService} from "../services/auth.service";
 
 interface NewsItem {
   text: string;
@@ -12,42 +15,59 @@ interface NewsItem {
   styleUrls: ['./un-cours.component.css']
 })
 export class UnCoursComponent implements OnInit {
-  course: any = {
-    id: '',
-    titre: 'Chargement du cours...'
+  courseId = this.route.snapshot.paramMap.get('id');
+
+
+  course: Ue = {
+    name: 'Chargement du cours...',
+    code: '',
+    description: '',
+    credits: 0,
+    instructorId: '',
+    content : [],
   };
 
   sidebarHidden = true;
   userRole = '';
   courseNewsItems: NewsItem[] = [];
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private service : UEsService, private authService : AuthService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const courseId = params.get('id');
       // Here you would fetch the course data from your API
-      this.loadCourse(courseId);
+      this.loadCourse(courseId!);
       this.loadUserRole();
       this.loadCourseNews(courseId);
     });
   }
 
-  loadCourse(courseId: string | null): void {
-    // This is where you would make an API call to get the course details
-    // For now, using mock data
+  loadCourse(courseId: string): void {
+
     if (courseId) {
-      this.course = {
-        id: courseId,
-        titre: 'Exemple de cours ' + courseId
-      };
+       this.service.getDataById(courseId).subscribe(
+        (data: Ue) => {
+          this.course = data;
+        },
+        (error) => {
+          console.error('Error fetching course data:', error);
+          this.course = {
+            name: 'Erreur de chargement du cours',
+            code: '',
+            description: '',
+            credits: 0,
+            instructorId: '',
+            content : [],
+          };
+        }
+      )
     }
   }
 
   loadUserRole(): void {
-    // Simulate getting the user role from an auth service
-    // You would implement this properly with your auth service
-    this.userRole = 'ROLE_PROF'; // Example role
+   this.userRole =  this.authService.getCurrentUser()?.role!
+
   }
 
   loadCourseNews(courseId: string | null): void {

@@ -6,7 +6,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./course-navbar.component.css']
 })
 export class CourseNavbarComponent {
-  @Input() courseId!: number;
+  @Input() courseId!: string;
   @Input() userRole!: string; // <--- CE `@Input()` DOIT EXISTER
 
   constructor() { }

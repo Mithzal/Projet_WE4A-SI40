@@ -46,4 +46,8 @@ export class UEsService {
   getNameById(id: string): Observable<Ue> {
     return this.http.get<any>(`${this.ApiUrl}/name/${id}`, { headers: this.getAuthHeaders() });
   }
+
+  getDataById(id: string): Observable<Ue> {
+    return this.http.get<Ue>(`${this.ApiUrl}/${id}`, { headers: this.getAuthHeaders() });
+  }
 }

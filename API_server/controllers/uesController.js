@@ -67,3 +67,22 @@ exports.getNameById = async (req, res) => {
 
 }
 
+exports.getDataById = async (req, res) => {
+  try {
+    const ue = await Ues.findById(req.params.id);
+    if (!ue) {
+      return res.status(404).json({message: 'UE non trouvée'});
+    }
+    res.json({
+      code: ue.code,
+      name: ue.name,
+      credits: ue.credits,
+      description: ue.description,
+      instructorId: ue.instructorId,
+      content: ue.content
+    });
+  } catch (err) {
+    res.status(500).json({message: err.message});
+  }
+}
+
