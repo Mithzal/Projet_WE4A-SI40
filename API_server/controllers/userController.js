@@ -64,7 +64,6 @@ exports.delete = async (req, res) => {
   }
 }
 
-
 exports.addCourse = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -179,7 +178,8 @@ exports.login = async (req, res) => {
         _id: foundUser._id,
         name: foundUser.name,
         email: foundUser.email,
-        role: foundUser.role
+        role: foundUser.role,
+        courses : foundUser.courses
       }
     });
   } catch (err) {

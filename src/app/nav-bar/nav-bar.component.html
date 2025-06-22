@@ -56,30 +56,7 @@
     <!-- Profile and grade popups only for authenticated users -->
     <ng-container *ngIf="isAuthenticated">
       <!-- Popup d'affichage et d'édition du profil utilisateur -->
-      <div id="profilePopup" class="popup">
-        <div class="popup-box">
-          <span class="close" (click)="closeProfilePopup()">&times;</span>
-          <div class="popup-content">
-            <div class="profile">
-              <h2>Informations de l'utilisateur</h2>
-              <p>Photo de profile : </p>
-              <img class="profile_picture" src="assets/no_image.webp" alt="Profile Icon">
-              <p>Prénom: John, Nom : Doe</p>
-              <p>Email: email@gmail.com</p>
-            </div>
-            <div class="popup-UE">
-              <h2>Mes UEs</h2>
-              <ul>
-                <li>Ue1</li>
-                <li>Ue2</li>
-                <li>Ue3</li>
-              </ul>
-            </div>
-          </div>
-          <button onclick="editProfile()" class="popup-button">Modifier</button>
-          <button onclick="editPassWord()" class="popup-button">Changer le mot de passe</button>
-        </div>
-      </div>
+      <app-profile></app-profile>
 
       <!-- Popup d'affichage des notes -->
       <app-grade-popup></app-grade-popup>

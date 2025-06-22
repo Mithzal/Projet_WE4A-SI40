@@ -1,9 +1,14 @@
+export interface UserCourse {
+  courseId: string;
+  enrollmentDate: Date;
+}
+
 export class User {
   constructor(
     public name: string,
     public email: string,
     public role: string,
-    public courses: [],
+    public courses: UserCourse[],
     public password?: string,
     public _id?: string,
   ) {

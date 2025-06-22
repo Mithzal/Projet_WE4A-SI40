@@ -66,4 +66,16 @@ export class AuthService {
 
     this.router.navigate(['/']);
   }
+
+  updateCurrentUser(user: User): void {
+    // Update the current user in the BehaviorSubject
+    this.currentUserSubject.next(user);
+
+    // Update session storage
+    sessionStorage.setItem('userId', user._id!);
+    sessionStorage.setItem('userName', user.name);
+    sessionStorage.setItem('userEmail', user.email);
+    sessionStorage.setItem('userRole', user.role);
+    sessionStorage.setItem('userCourses', JSON.stringify(user.courses));
+  }
 }

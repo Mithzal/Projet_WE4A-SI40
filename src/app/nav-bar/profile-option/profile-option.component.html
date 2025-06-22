@@ -1,1 +1,41 @@
-<p>profile-option works!</p>
+<div id="editProfilePopup" class="popup">
+  <h2 class="mb-4">Modifier mon profil</h2>
+
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="needs-validation">
+    <div class="popup-box">
+      <div class="col-md-6">
+        <label for="name" class="form-label">Nom</label>
+        <input type="text" class="form-control" id="name" formControlName="name">
+        <div *ngIf="f['name'].touched && f['name'].invalid" class="text-danger">
+          <small *ngIf="f['name'].errors?.['required']">Le nom est obligatoire.</small>
+        </div>
+      </div>
+
+
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" formControlName="email">
+      <div *ngIf="f['email'].touched && f['email'].invalid" class="text-danger">
+        <small *ngIf="f['email'].errors?.['required']">L'email est obligatoire.</small>
+        <small *ngIf="f['email'].errors?.['email']">Format d'email invalide.</small>
+      </div>
+
+
+      <hr class="my-4">
+
+      <h4>Changer de mot de passe</h4>
+
+      <div class="col-md-6">
+        <label for="password" class="form-label">Nouveau mot de passe</label>
+        <input type="password" class="form-control" id="password" formControlName="password">
+        <div *ngIf="f['password'].touched && f['password'].invalid" class="text-danger">
+          <small *ngIf="f['password'].errors?.['minlength']">Le mot de passe doit contenir au moins 6
+            caractères.</small>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">Enregistrer les modifications
+      </button>
+      <button type="button" class="btn btn-outline-secondary" (click)="close()">Annuler</button>
+    </div>
+  </form>
+</div>
