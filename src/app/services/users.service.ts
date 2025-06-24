@@ -71,4 +71,5 @@ export class UsersService {
   getCourseFromUserId(id: string) {
     return this.http.get<Ue[]>(`${this.ApiUrl}/${id}/courses`, { headers: this.getAuthHeaders() });
   }
+
 }

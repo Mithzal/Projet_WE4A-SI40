@@ -24,6 +24,7 @@ const routes : Routes =[
   {path :"profile", component : ProfileComponent, canActivate: [AuthGuard]},
   {path: "cours/:id", component: UnCoursComponent, canActivate: [AuthGuard]},
 ]
+//todo : ajouter un AdminGuard pour les routes admin
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

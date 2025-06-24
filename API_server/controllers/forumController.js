@@ -95,3 +95,18 @@ exports.getMessages = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+//obtenir un forum par son ID
+exports.getForumById = async (req, res) => {
+  try {
+    const forumById = await forum.findById(req.params.id);
+
+    if (!forumById) {
+      return res.status(404).json({ message: 'Forum non trouvé' });
+    }
+
+    res.json(forumById);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}

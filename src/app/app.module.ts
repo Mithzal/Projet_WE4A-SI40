@@ -34,6 +34,8 @@ import { GradePopupComponent } from './nav-bar/grade-popup/grade-popup.component
 import { CourseNavbarComponent } from './course-navbar/course-navbar.component';
 import { PostComponent } from './post/post.component';
 import { CourseSidebarComponent } from './course-sidebar/course-sidebar.component';
+import { ForumsComponent } from './forums/forums.component';
+import { MessagesComponent } from './forums/messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { CourseSidebarComponent } from './course-sidebar/course-sidebar.componen
     GradePopupComponent,
     CourseNavbarComponent,
     PostComponent,
-    CourseSidebarComponent
+    CourseSidebarComponent,
+    ForumsComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,

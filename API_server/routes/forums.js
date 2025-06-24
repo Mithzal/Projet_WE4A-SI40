@@ -12,5 +12,6 @@ router.put('/:id', auth, forumController.update);
 router.delete('/:id', auth, forumController.delete);
 router.put('/:id/addMessages', auth, forumController.addMessage);
 router.get('/:id/messages', auth, forumController.getMessages);
+router.get('/:id', auth, forumController.getForumById);
 
 module.exports = router;

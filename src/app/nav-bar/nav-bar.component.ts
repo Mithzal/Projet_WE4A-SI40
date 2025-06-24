@@ -11,6 +11,7 @@ export class NavBarComponent implements OnInit {
   isAuthenticated: boolean = false; // Track authentication status
   showLoginPopup: boolean = false;  // Control login popup visibility
   returnUrl: string | null = null;  // Store the return URL
+  isAdmin : boolean = false; // Track if the user is an admin
 
   constructor(
     private router: Router,
@@ -96,6 +97,7 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
     // Check authentication status
     this.isAuthenticated = this.authService.isAuthenticated();
+    this.isAdmin = this.authService.getCurrentUser()?.role === 'Admin';
 
     // Subscribe to query params to detect if login popup should be shown
     this.activatedRoute.queryParams.subscribe(params => {
@@ -110,3 +112,4 @@ export class NavBarComponent implements OnInit {
     });
   }
 }
+//todo : fix la popup qui redirige vers la home page
