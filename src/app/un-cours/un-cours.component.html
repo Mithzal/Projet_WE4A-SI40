@@ -14,10 +14,13 @@
           <h1>{{ course.name }}</h1>
 
           <div *ngIf="isTeacherOrAdmin()" class="mb-3">
-            <a [routerLink]="['/ajouter-contenu', course._id!]" class="btn btn-primary">Ajouter un contenu</a>
+            <a [routerLink]="['/ajouter-contenu', courseId]" class="btn btn-primary">Ajouter un contenu</a>
           </div>
 
-          <app-course-navbar [courseId]="course._id!" [userRole]="userRole"></app-course-navbar>
+          <app-course-navbar [courseId]="courseId!" [userRole]="userRole" (showForumsEvent)="onShowForums($event)"></app-course-navbar>
+
+          <!-- Affichage conditionnel du composant Forums -->
+          <app-forums *ngIf="showForums" [courseId]="courseId!"></app-forums>
 
         </div>
 

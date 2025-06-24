@@ -14,7 +14,7 @@ import { RechercheCoursComponent } from './recherche-cours/recherche-cours.compo
 import { MesCoursComponent } from './mes-cours/mes-cours.component';
 import { TableauDeBordComponent } from './tableau-de-bord/tableau-de-bord.component';
 import { ProfileComponent } from './nav-bar/profile/profile.component';
-import { CourseCardComponent } from './course-card/course-card.component';
+import { CourseCardComponent } from './un-cours/course-card/course-card.component';
 import { UserListComponent } from './admin-page/user-list/user-list.component';
 import { UeListComponent } from './admin-page/ue-list/ue-list.component';
 import { AssignUeUserComponent } from './admin-page/assign-ue-user/assign-ue-user.component';
@@ -31,11 +31,13 @@ import { LoginComponent } from './login/login.component';
 import { AuthComponent } from './auth/auth.component';
 import { ProfileOptionComponent } from './nav-bar/profile-option/profile-option.component';
 import { GradePopupComponent } from './nav-bar/grade-popup/grade-popup.component';
-import { CourseNavbarComponent } from './course-navbar/course-navbar.component';
+import { CourseNavbarComponent } from './un-cours/course-navbar/course-navbar.component';
 import { PostComponent } from './post/post.component';
-import { CourseSidebarComponent } from './course-sidebar/course-sidebar.component';
+import { CourseSidebarComponent } from './un-cours/course-sidebar/course-sidebar.component';
 import { ForumsComponent } from './forums/forums.component';
 import { MessagesComponent } from './forums/messages/messages.component';
+import { AddMessageComponent } from './forums/add-message/add-message.component';
+import { MessageListComponent } from './forums/message-list/message-list.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,9 @@ import { MessagesComponent } from './forums/messages/messages.component';
     PostComponent,
     CourseSidebarComponent,
     ForumsComponent,
-    MessagesComponent
+    MessagesComponent,
+    AddMessageComponent,
+    MessageListComponent
   ],
   imports: [
     BrowserModule,

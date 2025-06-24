@@ -1,1 +1,14 @@
-<p>forums works!</p>
+<div class="forum-container">
+  <!-- En-tête du forum -->
+  <div class="forum-header mb-4">
+    <h2>{{ forum.title }}</h2>
+    <p class="text-muted">Forum du cours</p>
+  </div>
+
+<app-message-list [messages]="forum.messages!" ></app-message-list>
+
+  <app-add-message
+    [forumId]="forum._id!"
+    [forum]="forum"
+    (messageAdded)="onMessageAdded($event)"></app-add-message>
+</div>

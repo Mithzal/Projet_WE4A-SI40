@@ -10,6 +10,7 @@ import {AdminPageComponent} from "./admin-page/admin-page.component";
 import {UnCoursComponent} from "./un-cours/un-cours.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {LoginComponent} from "./login/login.component";
+import {ForumsComponent} from "./forums/forums.component";
 
 
 

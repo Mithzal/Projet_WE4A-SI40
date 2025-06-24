@@ -12,7 +12,7 @@ exports.index = async (req, res) => {
 // Ajouter un nouveau forum
 exports.insert = async (req, res) => {
   const newForum = new forum({
-    courseCode: req.body.courseCode,
+    courseId: req.body.courseId,
     title: req.body.title,
     messages : req.body.messages
   });
@@ -96,17 +96,18 @@ exports.getMessages = async (req, res) => {
   }
 };
 
-//obtenir un forum par son ID
+//obtenir un forum par l'id du cours
 exports.getForumById = async (req, res) => {
   try {
-    const forumById = await forum.findById(req.params.id);
+    const forumByCourseId = await forum.findOne({ courseId: req.params.courseId });
 
-    if (!forumById) {
-      return res.status(404).json({ message: 'Forum non trouvé' });
+    if (!forumByCourseId) {
+      return res.status(404).json({ message: 'Forum non trouvé pour ce cours' });
     }
 
-    res.json(forumById);
+    res.json(forumByCourseId);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+
 }

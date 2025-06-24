@@ -29,6 +29,7 @@ export class UnCoursComponent implements OnInit {
 
   sidebarHidden = true;
   userRole = '';
+  showForums = false; // Variable pour contrôler l'affichage du forum
   courseNewsItems: NewsItem[] = [];
 
   constructor(private route: ActivatedRoute, private service : UEsService, private authService : AuthService) { }
@@ -36,7 +37,6 @@ export class UnCoursComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const courseId = params.get('id');
-      // Here you would fetch the course data from your API
       this.loadCourse(courseId!);
       this.loadUserRole();
       this.loadCourseNews(courseId);
@@ -87,5 +87,10 @@ export class UnCoursComponent implements OnInit {
   isTeacherOrAdmin(): boolean {
     // Check if user is teacher or admin
     return ['ROLE_PROF', 'ROLE_PROF_ADMIN', 'ROLE_ADMIN'].includes(this.userRole);
+  }
+
+  // Méthode pour afficher les forums
+  onShowForums(show: boolean) {
+    this.showForums = show;
   }
 }

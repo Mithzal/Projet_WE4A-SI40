@@ -1,3 +1,11 @@
+export interface UeContent {
+  type: string;
+  title: string;
+  text: string;
+  fileId?: string;
+  _id?: string;
+}
+
 export class Ue {
   constructor(
     public code: string,
@@ -6,7 +14,7 @@ export class Ue {
     public credits: number,
     public instructorId: string,
     public _id ?: string,
-    public content ?: []
+    public content ?: UeContent[]
   ) {
     this._id = _id
     this.code = code

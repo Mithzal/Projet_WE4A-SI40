@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {ForumMessage} from "../../../models/forums.model";
 
 @Component({
   selector: 'app-messages',
@@ -6,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent implements OnInit {
+  @Input() message: ForumMessage = {
+    content: '',
+    type: 'message',
+    timestamp: new Date(),
+    author : ''
+  };
+
 
   constructor() { }
 
