@@ -14,10 +14,9 @@ exports.index = async (req, res) => {
 // Ajouter un nouveau log
 exports.insert = async (req, res) => {
   const log = new Log({
-    level: req.body.level,
+    type: req.body.type,
     message: req.body.message,
-    source: req.body.source,
-    metadata: req.body.metadata
+    userId: req.body.userId,
   });
 
   try {
