@@ -4,6 +4,8 @@ import {Ue} from "../../../models/ue.model";
 import {User} from "../../../models/user.model";
 import {UsersService} from "../../services/users.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import { LogsService } from '../../services/logs.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-edit-ue',
@@ -15,18 +17,23 @@ export class EditUeComponent implements OnInit {
   @Input() ue!: Ue;
   @Input() teachers : User[] = [];
   @Output() close = new EventEmitter<void>();
-
   ueForm!:FormGroup
+  CurrentUser: User | null = null;
 
-
-  constructor(private fb: FormBuilder, private UeService :UEsService, private UserService : UsersService ) {
+  constructor(
+    private fb: FormBuilder,
+    private UeService: UEsService,
+    private UserService: UsersService,
+    private logsService: LogsService,
+    private authService: AuthService
+  ) {
     this.UserService.getTeachers().subscribe(data => {
       this.teachers = data;
-    }
-    )
+    });
   }
 
   ngOnInit(): void {
+    this.CurrentUser = this.authService.getCurrentUser();
     this.initForm();
   }
 
@@ -46,6 +53,23 @@ export class EditUeComponent implements OnInit {
       this.ue = { ...this.ue };
     }
   }
+
+  createLog(type: string, message: string) {
+    if (!this.CurrentUser) return;
+    const log = {
+      type,
+      message,
+      userId: this.CurrentUser._id,
+    };
+    this.logsService.addLog(log).subscribe({
+      next: (logResponse: any) => console.log('Log créé avec succès:', logResponse),
+      error: (err: any) => {
+        console.error('Erreur lors de la création du log:', err);
+        alert('Erreur lors de la création du log : ' + (err?.message || err?.error || JSON.stringify(err)));
+      }
+    });
+  }
+
   onSubmit() {
     if (this.ueForm.valid) {
       // Récupérer les valeurs du formulaire
@@ -56,7 +80,11 @@ export class EditUeComponent implements OnInit {
 
       this.UeService.updateUe(updatedUe).subscribe({
         next: (response) => {
-          console.log('Utilisateur mis à jour avec succès', response);
+          console.log('UE mise à jour avec succès', response);
+          this.createLog(
+            'update',
+            `UE modifiée : ${updatedUe.code} par ${this.CurrentUser?.name} ${new Date().toLocaleString()}`
+          );
           this.close.emit();
         },
         error: (error) => {

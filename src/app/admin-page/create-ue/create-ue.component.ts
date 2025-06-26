@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
 import { UEsService } from '../../services/ues.service';
 import { User } from '../../../models/user.model';
-import { LogsService } from '../../logs.service';
+import { LogsService } from '../../services/logs.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-create-ue',
@@ -12,6 +13,7 @@ import { LogsService } from '../../logs.service';
 })
 export class CreateUeComponent implements OnInit {
   ueForm!: FormGroup;
+  CurrentUser: User | null = null;
   @Input() teachers: User[] = [];
 
   @Output() close = new EventEmitter<void>();
@@ -20,7 +22,8 @@ export class CreateUeComponent implements OnInit {
     private fb: FormBuilder,
     private service: UEsService,
     private UserService: UsersService,
-    private logsService: LogsService
+    private logsService: LogsService,
+    private authService: AuthService
   ) {
     this.UserService.getTeachers().subscribe(data => {
       this.teachers = data;
@@ -28,6 +31,7 @@ export class CreateUeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.CurrentUser = this.authService.getCurrentUser();
     this.ueForm = this.fb.group({
       code: ['', Validators.required],
       name: ['', Validators.required],
@@ -37,21 +41,44 @@ export class CreateUeComponent implements OnInit {
     });
   }
 
+  createLog(type: string, message: string) {
+    if (!this.CurrentUser) return;
+    const log = {
+      type,
+      message,
+      userId: this.CurrentUser._id,
+    };
+    console.log('Log envoyé:', log);
+    this.logsService.addLog(log).subscribe({
+      next: (logResponse: any) => console.log('Log créé avec succès:', logResponse),
+      error: (err: any) => {
+        console.error('Erreur lors de la création du log:', err);
+        alert('Erreur lors de la création du log : ' + (err?.message || err?.error || JSON.stringify(err)));
+      }
+    });
+  }
+
   onSubmit() {
     if (this.ueForm.valid) {
       this.service.addUe(this.ueForm.value).subscribe({
         next: (response) => {
+          console.log('Réponse création UE:', response);
+          // Debug localStorage user
+          console.log('localStorage user:', localStorage.getItem('user'));
+          console.log('userId récupéré:', this.CurrentUser?._id);
           // Création du log après succès
-          const log = {
-            type: 'creation',
-            message: `UE créée ${response.code} ${new Date().toLocaleString()}`,
-            userId: JSON.parse(localStorage.getItem('user') || '{}').id,
-          };
-          this.logsService.addLog(log).subscribe();
+          this.createLog(
+            'creation',
+            `UE créée ${response.code} par ${this.CurrentUser?.name} ${new Date().toLocaleString()}`
+          );
           this.closeForm();
+        },
+        error: (err: any) => {
+          console.error('Erreur lors de la création de l\'UE:', err);
+          alert('Erreur lors de la création de l\'UE : ' + (err?.message || err?.error || JSON.stringify(err)));
         }
       });
-      console.log(this.ueForm.value);
+      console.log('Valeur du formulaire UE:', this.ueForm.value);
     }
   }
 
