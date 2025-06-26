@@ -39,6 +39,8 @@ import { MessagesComponent } from './forums/messages/messages.component';
 import { AddMessageComponent } from './forums/add-message/add-message.component';
 import { MessageListComponent } from './forums/message-list/message-list.component';
 import { CourseDetailsComponent } from './un-cours/course-details/course-details.component';
+import { LogsListComponent } from './admin-page/logs-list/logs-list.component';
+import { LogComponent } from './admin-page/log/log.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,9 @@ import { CourseDetailsComponent } from './un-cours/course-details/course-details
     MessagesComponent,
     AddMessageComponent,
     MessageListComponent,
-    CourseDetailsComponent
+    CourseDetailsComponent,
+    LogsListComponent,
+    LogComponent
   ],
   imports: [
     BrowserModule,
