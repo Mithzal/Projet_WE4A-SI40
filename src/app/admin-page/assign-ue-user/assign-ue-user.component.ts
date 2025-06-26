@@ -29,6 +29,7 @@ export class AssignUeUserComponent {
       },
       error: (err) => {
         this.errorMessage = err.error.message ;
+        console.log(err)
 
       }
     })

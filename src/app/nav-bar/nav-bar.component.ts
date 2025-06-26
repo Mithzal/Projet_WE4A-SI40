@@ -40,6 +40,8 @@ export class NavBarComponent implements OnInit {
   handleLoginSuccess() {
     this.isAuthenticated = true;
     this.showLoginPopup = false;
+    this.isAdmin = this.authService.getCurrentUser()?.role === 'Admin';
+
 
     // If there's a return URL, navigate to it
     if (this.returnUrl) {
@@ -52,6 +54,7 @@ export class NavBarComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.isAuthenticated = false;
+    this.isAdmin = false;
 
     // Close any open dropdowns or popups
     const dropdown = document.getElementById('profileDropdown');
@@ -97,8 +100,6 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
     // Check authentication status
     this.isAuthenticated = this.authService.isAuthenticated();
-    this.isAdmin = this.authService.getCurrentUser()?.role === 'Admin';
-
     // Subscribe to query params to detect if login popup should be shown
     this.activatedRoute.queryParams.subscribe(params => {
       if (params['showLogin'] === 'true') {
