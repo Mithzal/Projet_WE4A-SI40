@@ -17,10 +17,11 @@
             <a [routerLink]="['/ajouter-contenu', courseId]" class="btn btn-primary">Ajouter un contenu</a>
           </div>
 
-          <app-course-navbar [courseId]="courseId!" [userRole]="userRole" (showForumsEvent)="onShowForums($event)"></app-course-navbar>
+          <app-course-navbar [courseId]="courseId!" [userRole]="userRole" (showForumsEvent)="onShowForums($event)" (showCourseEvent)="onShowCourse($event)"></app-course-navbar>
 
           <!-- Affichage conditionnel du composant Forums -->
           <app-forums *ngIf="showForums" [courseId]="courseId!"></app-forums>
+          <app-course-details *ngIf="showCourse"></app-course-details>
 
         </div>
 

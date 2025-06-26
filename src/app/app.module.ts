@@ -38,6 +38,7 @@ import { ForumsComponent } from './forums/forums.component';
 import { MessagesComponent } from './forums/messages/messages.component';
 import { AddMessageComponent } from './forums/add-message/add-message.component';
 import { MessageListComponent } from './forums/message-list/message-list.component';
+import { CourseDetailsComponent } from './un-cours/course-details/course-details.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { MessageListComponent } from './forums/message-list/message-list.compone
     ForumsComponent,
     MessagesComponent,
     AddMessageComponent,
-    MessageListComponent
+    MessageListComponent,
+    CourseDetailsComponent
   ],
   imports: [
     BrowserModule,

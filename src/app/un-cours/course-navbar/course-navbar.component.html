@@ -6,7 +6,7 @@
   class="navbar d-flex border-bottom mb-3 gap-2"
   [ngClass]="{ 'justify-content-start': userRole !== 'ROLE_PROF', 'justify-content-between': userRole === 'ROLE_PROF' }"
 >
-  <a class="btn nav-link active" routerLink="/cours">Cours</a>
+  <a class="btn nav-link active" (click)="toggleCourse()">Cours</a>
   <a class="btn nav-link" [routerLink]="['/cours-participants', courseId]">Participants</a>
   <a
     *ngIf="userRole === 'ROLE_PROF'"
