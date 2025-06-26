@@ -83,7 +83,7 @@ exports.addCourse = async (req, res) => {
 
     const updatedUser = await user.findByIdAndUpdate(
       userId,
-      { push: { courses: { courseId: courseId } } },
+      { $push: { courses: { courseId: courseId } } },
       { new: true }
     );
 
@@ -146,6 +146,21 @@ exports.getStudents = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+}
+
+exports.getNameById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const foundUser = await user.findById(userId);
+    if (!foundUser) {
+      return res.status(404).json({message: 'Utilisateur non trouvé'});
+    }
+    console.log(foundUser.name)
+    res.json({name: foundUser.name});
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+
 }
 
 exports.login = async (req, res) => {
