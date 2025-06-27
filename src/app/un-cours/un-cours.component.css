@@ -10,7 +10,7 @@ body {
 .toggle-btn {
   position: fixed;
   top: 45%;
-  left: 0;
+  left: 250px;
   background: white;
   color: black;
   border: none;
@@ -24,10 +24,12 @@ body {
   flex: 1;
   background: white;
   padding: 1% 2%;
-  margin-left: 2%;
+  margin-left: 19%;
   margin-right: 2%;
   margin-top: 6%;
   transition: margin-left 0.3s ease;
   border-radius: 10px;
 }
 
+.sidebar-collapsed .toggle-btn   { left: 0; }
+.sidebar-collapsed .main-content { margin-left: 2%; }

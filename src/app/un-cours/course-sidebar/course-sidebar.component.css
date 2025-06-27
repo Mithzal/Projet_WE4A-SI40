@@ -1,31 +1,7 @@
-.sidebar {
-  width: 250px;
-  background: white;
-  color: black;
-  padding: 5% 1%;
-  height: 100vh;
-  transition: transform 0.3s ease;
-  position: fixed;
-}
-
-.sidebar h2 {
-  font-size: 1.5em;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar ul li {
-  margin: 15px 0;
-}
-
-.sidebar ul li a {
-  color: black;
-  text-decoration: none;
-}
-
-.sidebar ul li a:hover {
-  text-decoration: none;
+#sidebarMenu {
+  width: 250px;          /* Largeur identique à l’original */
+  height: 100vh;         /* Pleine hauteur */
+  transition: transform .3s ease;  /* Animation d’apparition/disparition */
+  transform: translateX(0);        /* Changez en translateX(-100%) pour la masquer */
+  z-index:40;
 }
