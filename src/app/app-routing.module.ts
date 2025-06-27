@@ -11,6 +11,7 @@ import {UnCoursComponent} from "./un-cours/un-cours.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {LoginComponent} from "./login/login.component";
 import {ForumsComponent} from "./forums/forums.component";
+import {AddContentComponent} from "./un-cours/add-content/add-content.component";
 
 
 
@@ -24,6 +25,7 @@ const routes : Routes =[
   {path :"tableau-de-bord", component : TableauDeBordComponent, canActivate: [AuthGuard] },
   {path :"profile", component : ProfileComponent, canActivate: [AuthGuard]},
   {path: "cours/:id", component: UnCoursComponent, canActivate: [AuthGuard]},
+  {path : "ajouter-contenu/:id", component : AddContentComponent , canActivate : [AuthGuard]},
 ]
 //todo : ajouter un AdminGuard pour les routes admin
 

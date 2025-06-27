@@ -50,4 +50,8 @@ export class UEsService {
   getDataById(id: string): Observable<Ue> {
     return this.http.get<Ue>(`${this.ApiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
+  addContentToUe(ueId: string, content: any): Observable<Ue> {
+    return this.http.post<Ue>(`${this.ApiUrl}/content/${ueId}/`, content, { headers: this.getAuthHeaders() });
+  }
+
 }

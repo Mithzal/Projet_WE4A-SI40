@@ -1,0 +1,28 @@
+<div class="content-container" [ngClass]="'type-' + (content.type || 'default')">
+    <!-- En-tête du contenu -->
+    <div class="content-header">
+        <h3>{{ content.title }}</h3>
+        <span class="content-type badge bg-secondary">{{ content.type }}</span>
+    </div>
+
+    <!-- Corps du contenu -->
+    <div class="content-body mt-3">
+        <!-- Pour le contenu de type texte -->
+        <div *ngIf="content.type === 'text'" class="text-content">
+            <p [innerHTML]="content.text"></p>
+        </div>
+
+        <!-- Pour le contenu avec fichier -->
+        <div *ngIf="content.fileId" class="file-content mt-2">
+            <p>{{ content.text }}</p>
+            <div class="file-info">
+                <span><i class="fas fa-paperclip"></i> Pièce jointe: {{ content.fileId }}</span>
+            </div>
+        </div>
+
+        <!-- Pour tout type de contenu (affichage par défaut) -->
+        <div *ngIf="content.type !== 'text' && !content.fileId" class="default-content">
+            <p>{{ content.text }}</p>
+        </div>
+    </div>
+</div>

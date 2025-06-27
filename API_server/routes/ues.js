@@ -11,5 +11,6 @@ router.put('/:id', auth, ueController.update);
 router.delete('/:id', auth, ueController.delete);
 router.get('/name/:id', auth, ueController.getNameById);
 router.get('/:id', auth, ueController.getDataById);
+router.post('/content/:id', auth, ueController.addContent);
 
 module.exports = router;

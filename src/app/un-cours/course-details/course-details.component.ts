@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
-import {Ue} from "../../../models/ue.model";
+import {Ue, UeContent} from "../../../models/ue.model";
 import {UsersService} from "../../services/users.service";
+import {UEsService} from "../../services/ues.service";
 
 @Component({
   selector: 'app-course-details',
@@ -8,15 +9,17 @@ import {UsersService} from "../../services/users.service";
   styleUrls: ['./course-details.component.css']
 })
 export class CourseDetailsComponent implements OnInit, OnChanges {
-  @Input() course : Ue = {
+  @Input() course: Ue = {
     _id: '',
-    code : '',
+    code: '',
     name: '',
     description: '',
-    instructorId : '',
+    instructorId: '',
     credits: 0,
   }
-  name : string = "unknown"
+  name: string = "unknown"
+
+
 
   loadTeacherName() {
     if (this.course && this.course.instructorId) {
@@ -37,7 +40,9 @@ export class CourseDetailsComponent implements OnInit, OnChanges {
       this.name = "Non assigné";
     }
   }
-  constructor(private UserService : UsersService) { }
+
+  constructor(private UserService: UsersService, private UeService: UEsService) {
+  }
 
   ngOnInit(): void {
     if (this.course._id) {
@@ -45,10 +50,11 @@ export class CourseDetailsComponent implements OnInit, OnChanges {
     }
   }
 
+
   ngOnChanges(changes: SimpleChanges): void {
 
     if (changes['course']) {
-        this.loadTeacherName();
+      this.loadTeacherName();
     }
   }
 }
