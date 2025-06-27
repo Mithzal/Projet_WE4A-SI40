@@ -67,6 +67,28 @@ export class CreateUserComponent implements OnInit {
         }
       });
     } else {
+      const errors: string[] = [];
+      const emailCtrl = this.ueForm.get('email');
+      const passwordCtrl = this.ueForm.get('password');
+      if (emailCtrl && emailCtrl.invalid) {
+        if (emailCtrl.errors?.['required']) {
+          errors.push('L\'email est requis.');
+        } else if (emailCtrl.errors?.['email']) {
+          errors.push('Le format de l\'email est incorrect.');
+        }
+      }
+      if (passwordCtrl && passwordCtrl.invalid) {
+        if (passwordCtrl.errors?.['required']) {
+          errors.push('Le mot de passe est requis.');
+        } else if (passwordCtrl.errors?.['minlength']) {
+          errors.push('Le mot de passe doit contenir au moins 6 caractères.');
+        }
+      }
+      if (errors.length > 0) {
+        alert('Erreur(s) dans le formulaire :\n' + errors.join('\n'));
+      } else {
+        alert('Formulaire invalide.');
+      }
       console.log('Formulaire invalide');
       console.log(this.ueForm.value);
     }

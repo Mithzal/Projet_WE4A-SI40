@@ -77,10 +77,33 @@ export class CreateUeComponent implements OnInit {
         },
         error: (err: any) => {
           console.error('Erreur lors de la création de l\'UE:', err);
-          alert('Erreur lors de la création de l\'UE : ' + (err?.message || err?.error || JSON.stringify(err)));
+          let errorMsg = 'Erreur lors de la création de l\'UE.';
+          // Si l'API retourne des erreurs de validation par champ
+          if (err?.error) {
+            if (typeof err.error === 'object') {
+              // Cas d'un objet d'erreurs par champ
+              errorMsg += '\n';
+              for (const key in err.error) {
+                if (err.error.hasOwnProperty(key)) {
+                  errorMsg += `Champ "${key}" : ${err.error[key]}\n`;
+                }
+              }
+            } else if (typeof err.error === 'string') {
+              // Cas d'un message d'erreur simple
+              errorMsg += `\n${err.error}`;
+            }
+          } else if (err?.message) {
+            errorMsg += `\n${err.message}`;
+          }
+          alert(errorMsg);
         }
       });
       console.log('Valeur du formulaire UE:', this.ueForm.value);
+    } else {
+      // Affichage des champs invalides côté client
+      const invalid = Object.keys(this.ueForm.controls).filter(key => this.ueForm.get(key)?.invalid);
+      let errorMsg = 'Champs invalides : ' + invalid.join(', ');
+      alert(errorMsg);
     }
   }
 

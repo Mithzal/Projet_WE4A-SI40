@@ -44,6 +44,8 @@ export class UserListComponent {
 
   deleteUser(id: string) {
     const userToDelete = this.users.find(u => u._id === id);
+    const confirmDelete = window.confirm(`Voulez-vous vraiment supprimer l'utilisateur : ${userToDelete?.name || id} ?`);
+    if (!confirmDelete) return;
     this.service.deleteUser(id).subscribe({
       next: () => {
         console.log('Delete user', id);
