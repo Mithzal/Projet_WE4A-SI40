@@ -1,0 +1,77 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h3>Ajouter un nouveau contenu</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="contentForm" (ngSubmit)="onSubmit()">
+
+            <!-- Message d'erreur -->
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+
+            <!-- Titre du contenu -->
+            <div class="mb-3">
+              <label for="title" class="form-label">Titre</label>
+              <input type="text" id="title" formControlName="title" class="form-control" placeholder="Titre du contenu">
+              <div *ngIf="contentForm.get('title')?.invalid && contentForm.get('title')?.touched" class="text-danger">
+                <small *ngIf="contentForm.get('title')?.errors?.['required']">Le titre est obligatoire.</small>
+                <small *ngIf="contentForm.get('title')?.errors?.['minlength']">Le titre doit contenir au moins 3 caractères.</small>
+              </div>
+            </div>
+
+            <!-- Type de contenu -->
+            <div class="mb-3">
+              <label for="type" class="form-label">Type de contenu</label>
+              <select id="type" formControlName="type" class="form-select">
+                <option *ngFor="let type of contentTypes" [value]="type">
+                  {{ type | titlecase }}
+                </option>
+              </select>
+            </div>
+
+            <!-- Contenu texte -->
+            <div class="mb-3">
+              <label for="text" class="form-label">Contenu</label>
+              <textarea id="text" formControlName="text" class="form-control" rows="6"
+                placeholder="Saisissez votre contenu ici..."></textarea>
+              <div *ngIf="contentForm.get('text')?.invalid && contentForm.get('text')?.touched" class="text-danger">
+                <small *ngIf="contentForm.get('text')?.errors?.['required']">Le contenu est obligatoire.</small>
+              </div>
+              <small *ngIf="contentForm.get('type')?.value === 'text'" class="text-muted">
+                Vous pouvez utiliser du texte simple.
+              </small>
+              <small *ngIf="contentForm.get('type')?.value === 'link'" class="text-muted">
+                Saisissez l'URL complète (ex: https://www.exemple.com).
+              </small>
+              <small *ngIf="contentForm.get('type')?.value === 'video'" class="text-muted">
+                Collez ici l'URL de la vidéo (YouTube, Vimeo, etc.).
+              </small>
+            </div>
+
+            <!-- Fichier joint (pour document et image) -->
+            <div class="mb-3" *ngIf="hasFile">
+              <label for="file" class="form-label">Fichier
+                <span *ngIf="contentForm.get('type')?.value === 'document'">(Document PDF, Word, etc.)</span>
+                <span *ngIf="contentForm.get('type')?.value === 'image'">(JPG, PNG, etc.)</span>
+              </label>
+              <input type="file" id="file" class="form-control" (change)="onFileChange($event)">
+            </div>
+
+            <!-- Boutons d'action -->
+            <div class="d-flex justify-content-end mt-4">
+              <button type="button" class="btn btn-secondary me-2" (click)="cancel()">Annuler</button>
+              <button type="submit" class="btn btn-primary" [disabled]="contentForm.invalid || isSubmitting">
+                <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                Ajouter
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
