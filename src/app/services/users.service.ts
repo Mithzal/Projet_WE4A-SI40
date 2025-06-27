@@ -72,4 +72,8 @@ export class UsersService {
     return this.http.get<Ue[]>(`${this.ApiUrl}/${id}/courses`, { headers: this.getAuthHeaders() });
   }
 
+  getNameById(id : string){
+    return this.http.get<string>(`${this.ApiUrl}/${id}/name`, { headers: this.getAuthHeaders() });
+  }
+
 }

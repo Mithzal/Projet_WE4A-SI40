@@ -6,6 +6,7 @@
       <button class="tab-button" (click)="selectTab('users')">Utilisateurs</button>
       <button class="tab-button" (click)="selectTab('ues')">UE</button>
       <button class="tab-button" (click)="selectTab('assign')">Assigner des utilisateurs</button>
+      <button class="tab-button" (click)="selectTab('logs')">Logs</button>
     </div>
 
 
@@ -28,6 +29,7 @@
         [ue]="editUe!"
         (close)="editUeId = null">
       </app-edit-ue>
+      <app-logs-list *ngIf="selectedTab === 'logs'"></app-logs-list>
 
       <button *ngIf="selectedTab === 'users' && !showCreateUserForm" (click)="showCreateUserForm = true" class="sub-button">
           Créer un utilisateur

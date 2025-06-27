@@ -1,7 +1,7 @@
 
     <div class="card-header d-flex justify-content-between">
       <div>
-        <strong>{{ message.author }}</strong>
+        <strong>{{ name }}</strong>
         <small class="text-muted ms-2">{{ message.timestamp | date:'dd/MM/yyyy à HH:mm' }}</small>
       </div>
       <span class="badge" [ngClass]="message.type === 'question' ? 'bg-primary' : 'bg-success'">

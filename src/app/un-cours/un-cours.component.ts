@@ -31,6 +31,7 @@ export class UnCoursComponent implements OnInit {
   userRole = '';
   showForums = false; // Variable pour contrôler l'affichage du forum
   courseNewsItems: NewsItem[] = [];
+  showCourse = true;
 
   constructor(private route: ActivatedRoute, private service : UEsService, private authService : AuthService) { }
 
@@ -92,5 +93,11 @@ export class UnCoursComponent implements OnInit {
   // Méthode pour afficher les forums
   onShowForums(show: boolean) {
     this.showForums = show;
+    this.showCourse = !show;
+  }
+
+  onShowCourse(show : boolean){
+    this.showCourse = show;
+    this.showForums = !show;
   }
 }
