@@ -48,4 +48,8 @@ export class ForumService {
     return this.http.delete<void>(`${this.apiUrl}${forumId}`,{headers : this.getAuthHeaders()});
   }
 
+  // Update forum title
+  updateForumTitle(forumId: string, newTitle: string): Observable<Forums> {
+    return this.http.put<Forums>(`${this.apiUrl}${forumId}/updateTitle`, { title: newTitle }, {headers : this.getAuthHeaders()});
+  }
 }
