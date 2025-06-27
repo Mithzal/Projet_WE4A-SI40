@@ -45,6 +45,8 @@ export class UeListComponent {
 
   deleteUe(id: string) {
     const ue = this.ues.find(u => u._id === id);
+    const confirmDelete = window.confirm(`Voulez-vous vraiment supprimer l'UE : ${ue?.code || id} ?`);
+    if (!confirmDelete) return;
     this.service.deleteUe(id).subscribe({
       next: () => {
         console.log('Delete UE', id);
