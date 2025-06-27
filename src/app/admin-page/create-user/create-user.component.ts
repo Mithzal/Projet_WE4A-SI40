@@ -18,7 +18,6 @@ export class CreateUserComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private service: UsersService,
-    private logsService: LogsService,
     private authService: AuthService
   ) { }
 
@@ -32,38 +31,16 @@ export class CreateUserComponent implements OnInit {
     });
   }
 
-  createLog(type: string, message: string) {
-    if (!this.CurrentUser) return;
-    const log = {
-      type,
-      message,
-      userId: this.CurrentUser._id,
-    };
-    this.logsService.addLog(log).subscribe({
-      next: (logResponse: any) => console.log('Log créé avec succès:', logResponse),
-      error: (err: any) => {
-        console.error('Erreur lors de la création du log:', err);
-        alert('Erreur lors de la création du log : ' + (err?.message || err?.error || JSON.stringify(err)));
-      }
-    });
-  }
-
   onSubmit(): void {
     if (this.ueForm.valid) {
       console.log(this.ueForm.value);
       this.service.adduser(this.ueForm.value).subscribe({
         next: (response) => {
           console.log('Utilisateur créé avec succès', response);
-          this.createLog(
-            'creation',
-            `Utilisateur créé : ${this.ueForm.value.name} par ${this.CurrentUser?.name} ${new Date().toLocaleString()}`
-          );
-          this.refresh.emit();
           this.closeForm();
         },
-        error: (err) => {
-          console.error('Erreur lors de la création de l\'utilisateur:', err);
-          alert('Erreur lors de la création de l\'utilisateur : ' + (err?.message || err?.error || JSON.stringify(err)));
+        error: (error) => {
+          console.error('Erreur lors de la création de l\'utilisateur', error);
         }
       });
     } else {

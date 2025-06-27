@@ -1,0 +1,115 @@
+.content-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.content-container:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.content-header h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.content-type {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.content-body {
+    padding-top: 10px;
+}
+
+/* Styles spécifiques pour chaque type de contenu */
+/* Type: text */
+.content-container.type-text {
+    border-left: 4px solid #4285f4; /* Bleu Google */
+}
+.content-container.type-text .content-type {
+    background-color: #4285f4;
+    color: white;
+}
+
+/* Type: document */
+.content-container.type-document {
+    border-left: 4px solid #0f9d58; /* Vert Google */
+}
+.content-container.type-document .content-type {
+    background-color: #0f9d58;
+    color: white;
+}
+
+/* Type: link */
+.content-container.type-link {
+    border-left: 4px solid #f4b400; /* Jaune Google */
+}
+.content-container.type-link .content-type {
+    background-color: #f4b400;
+    color: white;
+}
+
+/* Type: video */
+.content-container.type-video {
+    border-left: 4px solid #db4437; /* Rouge Google */
+}
+.content-container.type-video .content-type {
+    background-color: #db4437;
+    color: white;
+}
+
+/* Type: image */
+.content-container.type-image {
+    border-left: 4px solid #673ab7; /* Violet */
+}
+.content-container.type-image .content-type {
+    background-color: #673ab7;
+    color: white;
+}
+
+/* Type: exercise */
+.content-container.type-exercise {
+    border-left: 4px solid #ff6d00; /* Orange */
+}
+.content-container.type-exercise .content-type {
+    background-color: #ff6d00;
+    color: white;
+}
+
+/* Type par défaut pour les autres types */
+.content-container.type-default {
+    border-left: 4px solid #757575; /* Gris */
+}
+.content-container.type-default .content-type {
+    background-color: #757575;
+    color: white;
+}
+
+/* Style pour les fichiers */
+.file-info {
+    margin-top: 10px;
+    padding: 8px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.file-info i {
+    margin-right: 5px;
+    color: #757575;
+}

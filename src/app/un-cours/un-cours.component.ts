@@ -19,6 +19,7 @@ export class UnCoursComponent implements OnInit {
 
 
   course: Ue = {
+    _id : this.courseId || '',
     name: 'Chargement du cours...',
     code: '',
     description: '',
@@ -87,7 +88,7 @@ export class UnCoursComponent implements OnInit {
 
   isTeacherOrAdmin(): boolean {
     // Check if user is teacher or admin
-    return ['ROLE_PROF', 'ROLE_PROF_ADMIN', 'ROLE_ADMIN'].includes(this.userRole);
+    return ['Teacher', 'Admin'].includes(this.userRole);
   }
 
   // Méthode pour afficher les forums

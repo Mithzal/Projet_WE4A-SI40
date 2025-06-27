@@ -86,3 +86,25 @@ exports.getDataById = async (req, res) => {
   }
 }
 
+exports.addContent = async (req, res) => {
+  try {
+    const ue = await Ues.findById(req.params.id);
+    if (!ue) {
+      return res.status(404).json({message: 'UE non trouvée'});
+    }
+
+    const newContent = {
+      type: req.body.type,
+      title: req.body.title,
+      text: req.body.text,
+      fileId: req.body.fileId
+    };
+
+    ue.content.push(newContent);
+    await ue.save();
+    res.status(201).json(newContent);
+  } catch (err) {
+    res.status(400).json({message: err.message});
+  }
+}
+

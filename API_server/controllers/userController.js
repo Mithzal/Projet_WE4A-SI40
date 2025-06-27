@@ -155,7 +155,6 @@ exports.getNameById = async (req, res) => {
     if (!foundUser) {
       return res.status(404).json({message: 'Utilisateur non trouvé'});
     }
-    console.log(foundUser.name)
     res.json({name: foundUser.name});
   } catch (err) {
     res.status(500).json({ message: err.message });

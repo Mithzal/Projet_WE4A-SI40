@@ -26,7 +26,6 @@ export class MessagesComponent implements OnInit {
     if (this.message.author) {
       this.UserService.getNameById(this.message.author).subscribe(
         (data : any) => {
-          console.log(data)
           this.name = data.name || 'Unknown';
         }
       );

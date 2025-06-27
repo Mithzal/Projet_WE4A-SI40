@@ -41,6 +41,9 @@ import { MessageListComponent } from './forums/message-list/message-list.compone
 import { CourseDetailsComponent } from './un-cours/course-details/course-details.component';
 import { LogsListComponent } from './admin-page/logs-list/logs-list.component';
 import { LogComponent } from './admin-page/log/log.component';
+import { ContentListComponent } from './un-cours/content-list/content-list.component';
+import { ContentComponent } from './un-cours/content/content.component';
+import { AddContentComponent } from './un-cours/add-content/add-content.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +80,10 @@ import { LogComponent } from './admin-page/log/log.component';
     MessageListComponent,
     CourseDetailsComponent,
     LogsListComponent,
-    LogComponent
+    LogComponent,
+    ContentListComponent,
+    ContentComponent,
+    AddContentComponent
   ],
   imports: [
     BrowserModule,
