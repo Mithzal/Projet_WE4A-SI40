@@ -185,6 +185,16 @@ exports.login = async (req, res) => {
       { expiresIn: '24h' }
     );
 
+    // Log the login action
+    const loginLog = require('../models/log');
+    await loginLog.create({
+      type: 'logging',
+      message: `Utilisateur connecté : ${foundUser.name || foundUser.email || 'inconnu'} à ${new Date().toLocaleString()}`,
+      userId: foundUser._id,
+      timestamp: new Date()
+    });
+    
+
     // Return user data and token
     res.json({
       token,
@@ -196,6 +206,21 @@ exports.login = async (req, res) => {
         courses : foundUser.courses
       }
     });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.logout = async (req, res) => {
+  try {
+    const Log = require('../models/log');
+    await Log.create({
+      type: 'disconnect',
+      message: `Utilisateur déconnecté : ${req.userData.name || req.userData.userId || 'inconnu'} à ${new Date().toLocaleString()}`,
+      userId: req.userData.userId,
+      timestamp: new Date()
+    });
+    res.json({ message: 'Déconnexion réussie' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

@@ -72,6 +72,18 @@ export class AuthService {
 
   // Logout user and clear session
   logout(): void {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      // Appel au backend pour logguer la déconnexion
+      this.http.post(`${this.ApiUrl}/logout`, {}, {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${token}`
+        })
+      }).subscribe({
+        next: () => {},
+        error: () => {} // On ignore l'erreur pour ne pas bloquer le logout côté client
+      });
+    }
     localStorage.removeItem('authToken');
     localStorage.removeItem('userId');
     localStorage.removeItem('userName');
