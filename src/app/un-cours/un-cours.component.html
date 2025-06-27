@@ -21,7 +21,7 @@
 
           <!-- Affichage conditionnel du composant Forums -->
           <app-forums *ngIf="showForums" [courseId]="courseId!"></app-forums>
-          <app-course-details *ngIf="showCourse"></app-course-details>
+          <app-course-details [course]="course" *ngIf="showCourse"></app-course-details>
 
         </div>
 
