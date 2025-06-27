@@ -111,3 +111,28 @@ exports.getForumById = async (req, res) => {
   }
 
 }
+
+// Mettre à jour le titre d'un forum
+exports.updateTitle = async (req, res) => {
+  try {
+    // Vérifier que le titre est fourni
+    if (!req.body.title) {
+      return res.status(400).json({ message: 'Le titre du forum est requis' });
+    }
+
+    // Rechercher et mettre à jour uniquement le titre du forum
+    const updatedForum = await forum.findByIdAndUpdate(
+      req.params.id,
+      { title: req.body.title },
+      { new: true } // Pour retourner le document mis à jour
+    );
+
+    if (!updatedForum) {
+      return res.status(404).json({ message: 'Forum non trouvé' });
+    }
+
+    res.json(updatedForum);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};

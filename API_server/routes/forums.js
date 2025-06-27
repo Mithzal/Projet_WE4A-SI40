@@ -13,5 +13,6 @@ router.delete('/:id', auth, forumController.delete);
 router.put('/:id/addMessages', auth, forumController.addMessage);
 router.get('/:id/messages', auth, forumController.getMessages);
 router.get('/:courseId', auth, forumController.getForumById);
+router.put('/:id/updateTitle', auth, forumController.updateTitle);
 
 module.exports = router;
