@@ -1,17 +1,19 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css', './login-popup.css']
 })
-export class NavBarComponent implements OnInit {
+export class NavBarComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean = false; // Track authentication status
   showLoginPopup: boolean = false;  // Control login popup visibility
   returnUrl: string | null = null;  // Store the return URL
   isAdmin : boolean = false; // Track if the user is an admin
+  private userSub?: Subscription;
 
   constructor(
     private router: Router,
@@ -98,8 +100,11 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Check authentication status
-    this.isAuthenticated = this.authService.isAuthenticated();
+    // S'abonner à l'utilisateur courant pour réagir à tout changement (connexion, refresh, déconnexion)
+    this.userSub = this.authService.currentUser$.subscribe(user => {
+      this.isAuthenticated = !!user;
+      this.isAdmin = user?.role === 'Admin';
+    });
     // Subscribe to query params to detect if login popup should be shown
     this.activatedRoute.queryParams.subscribe(params => {
       if (params['showLogin'] === 'true') {
@@ -111,6 +116,10 @@ export class NavBarComponent implements OnInit {
         }
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.userSub?.unsubscribe();
   }
 }
 //todo : fix la popup qui redirige vers la home page

@@ -13,6 +13,7 @@ export class UserListComponent {
   @Input() users: User[] = [];
 
   @Output() edit = new EventEmitter<string>();
+  @Output() refresh = new EventEmitter<void>();
   CurrentUser: User | null = null;
 
   constructor(
@@ -50,6 +51,7 @@ export class UserListComponent {
           'delete',
           `Utilisateur supprimé : ${userToDelete?.name || id} par ${this.CurrentUser?.name} ${new Date().toLocaleString()}`
         );
+        this.refresh.emit();
       },
       error: (err) => console.error('Erreur lors de la suppression:', err)
     });

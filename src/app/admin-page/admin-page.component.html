@@ -17,11 +17,14 @@
 
       <app-create-ue
         *ngIf="selectedTab === 'ues' && showCreateUeForm"
-        (close)="showCreateUeForm = false">
+        (close)="showCreateUeForm = false"
+        (refresh)="refreshList('ues')">
       </app-create-ue>
       <app-ue-list
         *ngIf="selectedTab === 'ues' && !editUeId"
-        (edit)="onEditUe($event)">
+        [ues]="ues"
+        (edit)="onEditUe($event)"
+        (refresh)="refreshList('ues')">
       </app-ue-list>
       <app-edit-ue
         *ngIf="selectedTab === 'ues' && editUeId"
@@ -36,11 +39,14 @@
         </button>
         <app-create-user
           *ngIf="selectedTab === 'users' && showCreateUserForm"
-          (close)="showCreateUserForm = false">
+          (close)="showCreateUserForm = false"
+          (refresh)="refreshList('users')">
         </app-create-user>
         <app-user-list
           *ngIf="selectedTab === 'users' && !editUserId"
-          (edit)="onEditUser($event)">
+          [users]="users"
+          (edit)="onEditUser($event)"
+          (refresh)="refreshList('users')">
         </app-user-list>
         <app-edit-user
           *ngIf="selectedTab === 'users' && editUserId"

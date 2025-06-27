@@ -60,4 +60,17 @@ export class AdminPageComponent implements OnInit {
   onEditUser(id: string) {
     this.editUserId = id;
   }
+
+  // Fonction générique pour rafraîchir une liste
+  refreshList(type: 'ues' | 'users') {
+    if (type === 'ues') {
+      this.UeService.getData().subscribe(data => {
+        this.ues = data;
+      });
+    } else if (type === 'users') {
+      this.UserService.getAllUsers().subscribe(data => {
+        this.users = data;
+      });
+    }
+  }
 }

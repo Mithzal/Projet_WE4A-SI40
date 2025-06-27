@@ -17,6 +17,7 @@ export class CreateUeComponent implements OnInit {
   @Input() teachers: User[] = [];
 
   @Output() close = new EventEmitter<void>();
+  @Output() refresh = new EventEmitter<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -71,6 +72,7 @@ export class CreateUeComponent implements OnInit {
             'creation',
             `UE créée ${response.code} par ${this.CurrentUser?.name} ${new Date().toLocaleString()}`
           );
+          this.refresh.emit();
           this.closeForm();
         },
         error: (err: any) => {
