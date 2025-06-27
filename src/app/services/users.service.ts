@@ -15,12 +15,12 @@ export class UsersService {
 
   // Get auth token
   getToken(): string | null {
-    return sessionStorage.getItem('authToken');
+    return localStorage.getItem('authToken');
   }
 
   // Get current user ID
   getCurrentUserId(): string | null {
-    return sessionStorage.getItem('userId');
+    return localStorage.getItem('userId');
   }
 
   // Get current user information

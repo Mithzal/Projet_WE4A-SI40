@@ -18,15 +18,24 @@ export class AuthService {
     private usersService: UsersService,
     private http: HttpClient
 ) {
-    // Load user from session storage if available
-    this.currentUserSubject.next({
-      _id: sessionStorage.getItem('userId')!,
-      name: sessionStorage.getItem('userName')!,
-      email: sessionStorage.getItem('userEmail')!,
-      role: sessionStorage.getItem('userRole')!,
-      courses: sessionStorage.getItem('userCourses') ? JSON.parse(sessionStorage.getItem('userCourses')!) : [],
-      password: ''
-    });
+    // Vérifie la présence de toutes les infos utilisateur dans le localStorage
+    const userId = localStorage.getItem('userId');
+    const userName = localStorage.getItem('userName');
+    const userEmail = localStorage.getItem('userEmail');
+    const userRole = localStorage.getItem('userRole');
+    const userCourses = localStorage.getItem('userCourses');
+    if (userId && userName && userEmail && userRole && userCourses) {
+      this.currentUserSubject.next({
+        _id: userId,
+        name: userName,
+        email: userEmail,
+        role: userRole,
+        courses: JSON.parse(userCourses),
+        password: ''
+      });
+    } else {
+      this.currentUserSubject.next(null);
+    }
   }
 
   private ApiUrl = "http://localhost:7777/api/users";
@@ -47,9 +56,13 @@ export class AuthService {
       .pipe(
         tap(response => {
           if (response.token) {
-            // Store token and user ID
-            sessionStorage.setItem('authToken', response.token);
-
+            // Store token and user info in localStorage
+            localStorage.setItem('authToken', response.token);
+            localStorage.setItem('userId', response.user._id!);
+            localStorage.setItem('userName', response.user.name);
+            localStorage.setItem('userEmail', response.user.email);
+            localStorage.setItem('userRole', response.user.role);
+            localStorage.setItem('userCourses', JSON.stringify(response.user.courses));
             // Update current user subject
             this.currentUserSubject.next(response.user);
           }
@@ -59,23 +72,46 @@ export class AuthService {
 
   // Logout user and clear session
   logout(): void {
-    sessionStorage.removeItem('authToken');
-
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('userCourses');
     // Clear the current user
     this.currentUserSubject.next(null);
-
     this.router.navigate(['/']);
   }
 
   updateCurrentUser(user: User): void {
     // Update the current user in the BehaviorSubject
     this.currentUserSubject.next(user);
+    // Update localStorage
+    localStorage.setItem('userId', user._id!);
+    localStorage.setItem('userName', user.name);
+    localStorage.setItem('userEmail', user.email);
+    localStorage.setItem('userRole', user.role);
+    localStorage.setItem('userCourses', JSON.stringify(user.courses));
+  }
 
-    // Update session storage
-    sessionStorage.setItem('userId', user._id!);
-    sessionStorage.setItem('userName', user.name);
-    sessionStorage.setItem('userEmail', user.email);
-    sessionStorage.setItem('userRole', user.role);
-    sessionStorage.setItem('userCourses', JSON.stringify(user.courses));
+  // Recharge l'utilisateur courant depuis le localStorage
+  refreshCurrentUser(): void {
+    const userId = localStorage.getItem('userId');
+    const userName = localStorage.getItem('userName');
+    const userEmail = localStorage.getItem('userEmail');
+    const userRole = localStorage.getItem('userRole');
+    const userCourses = localStorage.getItem('userCourses');
+    if (userId && userName && userEmail && userRole && userCourses) {
+      this.currentUserSubject.next({
+        _id: userId,
+        name: userName,
+        email: userEmail,
+        role: userRole,
+        courses: JSON.parse(userCourses),
+        password: ''
+      });
+    } else {
+      this.currentUserSubject.next(null);
+    }
   }
 }

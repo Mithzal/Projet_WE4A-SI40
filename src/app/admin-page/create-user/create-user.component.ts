@@ -13,6 +13,7 @@ import { User } from '../../../models/user.model';
 export class CreateUserComponent implements OnInit {
   ueForm!: FormGroup;
   @Output() close = new EventEmitter<void>();
+  @Output() refresh = new EventEmitter<void>();
   CurrentUser: User | null = null;
   constructor(
     private fb: FormBuilder,
@@ -57,10 +58,12 @@ export class CreateUserComponent implements OnInit {
             'creation',
             `Utilisateur créé : ${this.ueForm.value.name} par ${this.CurrentUser?.name} ${new Date().toLocaleString()}`
           );
+          this.refresh.emit();
           this.closeForm();
         },
-        error: (error) => {
-          console.error('Erreur lors de la création de l\'utilisateur', error);
+        error: (err) => {
+          console.error('Erreur lors de la création de l\'utilisateur:', err);
+          alert('Erreur lors de la création de l\'utilisateur : ' + (err?.message || err?.error || JSON.stringify(err)));
         }
       });
     } else {

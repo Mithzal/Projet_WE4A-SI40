@@ -21,4 +21,8 @@ export class LogsService {
   addLog(log: any): Observable<any> {
     return this.http.post(this.apiUrl, log, {headers:this.getAuthHeaders()});
   }
+
+  getAllLogs(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl, { headers: this.getAuthHeaders() });
+  }
 }

@@ -13,6 +13,7 @@ import { Ue } from '../../../models/ue.model';
 export class UeListComponent {
   @Input() ues: Ue[] = [];
   @Output() edit = new EventEmitter<string>();
+  @Output() refresh = new EventEmitter<void>();
   CurrentUser: User | null = null;
 
   constructor(
@@ -43,13 +44,15 @@ export class UeListComponent {
   }
 
   deleteUe(id: string) {
+    const ue = this.ues.find(u => u._id === id);
     this.service.deleteUe(id).subscribe({
       next: () => {
         console.log('Delete UE', id);
         this.createLog(
           'delete',
-          `UE supprimée : ${id} par ${this.CurrentUser?.name} ${new Date().toLocaleString()}`
+          `UE supprimée : ${ue?.code || id} par ${this.CurrentUser?.name} ${new Date().toLocaleString()}`
         );
+        this.refresh.emit();
       },
       error: (err) => console.error('Erreur lors de la suppression:', err)
     });
