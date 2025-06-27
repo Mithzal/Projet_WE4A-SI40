@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UeContent } from '../../../models/ue.model';
 import { UEsService } from '../../services/ues.service';
+import {FileService} from "../../services/files.service";
+import {UsersService} from "../../services/users.service";
 
 @Component({
   selector: 'app-add-content',
@@ -21,7 +23,9 @@ export class AddContentComponent implements OnInit {
     private fb: FormBuilder,
     private uesService: UEsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private fileService : FileService,
+    private userService: UsersService
   ) {
     this.contentForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
@@ -34,9 +38,13 @@ export class AddContentComponent implements OnInit {
   ngOnInit(): void {
     this.courseId = this.route.snapshot.paramMap.get('id');
 
+    // Initialisation de hasFile basée sur la valeur initiale du type
+    const initialType = this.contentForm.get('type')?.value;
+    this.hasFile = ['file'].includes(initialType);
+
     // Surveiller les changements de type pour gérer l'affichage du champ file
     this.contentForm.get('type')?.valueChanges.subscribe(type => {
-      this.hasFile = ['document', 'image'].includes(type);
+      this.hasFile = ['file'].includes(type);
     });
   }
 
@@ -72,20 +80,21 @@ export class AddContentComponent implements OnInit {
         const formData = new FormData();
         formData.append('file', file);
 
-        // TODO: Appeler le service d'upload de fichier
-        // Exemple:
-        // this.fileService.uploadFile(formData).subscribe(
-        //   response => {
-        //     newContent.fileId = response.fileId;
-        //     this.addContentToCourse(newContent);
-        //   },
-        //   error => {
-        //     this.handleError(error);
-        //   }
-        // );
+        this.fileService.uploadFile(file, this.courseId, this.userService.getCurrentUserId()!, this.contentForm.value.text).subscribe(
+          response => {
+            newContent.fileId = response.fichier._id;
+            this.addContentToCourse(newContent);
+            console.log(newContent)
+          },
+          error => {
+            this.handleError(error);
+          }
+        )
+
+
 
         // Pour l'instant, on ajoute directement le contenu sans fichier
-        this.addContentToCourse(newContent);
+
       } else {
         // Ajouter directement le contenu sans fichier
         this.addContentToCourse(newContent);
@@ -100,6 +109,7 @@ export class AddContentComponent implements OnInit {
     this.uesService.addContentToUe(this.courseId!, content).subscribe({
       next: () => {
         this.isSubmitting = false;
+        this.router.navigate(['/cours', this.courseId]);
       },
       error: (error) => {
         this.handleError(error);

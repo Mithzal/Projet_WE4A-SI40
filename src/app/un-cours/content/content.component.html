@@ -16,13 +16,25 @@
         <div *ngIf="content.fileId" class="file-content mt-2">
             <p>{{ content.text }}</p>
             <div class="file-info">
-                <span><i class="fas fa-paperclip"></i> Pièce jointe: {{ content.fileId }}</span>
+                <span><i class="fas fa-paperclip"></i> Pièce jointe:
+                  <a href="javascript:void(0)" (click)="downloadFile()" class="file-link">
+                    {{ fileName }}
+                    <i class="fas fa-download ms-1"></i>
+                  </a>
+                </span>
             </div>
         </div>
 
         <!-- Pour tout type de contenu (affichage par défaut) -->
         <div *ngIf="content.type !== 'text' && !content.fileId" class="default-content">
             <p>{{ content.text }}</p>
+        </div>
+
+        <!-- Affichage du nom d'utilisateur si disponible -->
+        <div *ngIf="userName && userName !== 'unknown'" class="user-info mt-2">
+            <small class="text-muted">
+                <i class="fas fa-user"></i> Publié par: {{ userName }}
+            </small>
         </div>
     </div>
 </div>

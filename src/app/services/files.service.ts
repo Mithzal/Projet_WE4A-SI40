@@ -35,7 +35,7 @@ export class FileService {
     return this.http.get<Files[]>(`${this.apiUrl}`, { headers: this.usersService.getAuthHeaders() });
   }
 
-  downloadFile(fileId: string, fileName : string): Observable<Blob> {
+  downloadFile(fileId: string): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/download/${fileId}`, {
       responseType: 'blob',
       headers: this.usersService.getAuthHeaders()
@@ -45,4 +45,9 @@ export class FileService {
   deleteFile(fileId: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/delete/${fileId}`, { headers: this.usersService.getAuthHeaders() });
   }
+
+  getFileName(fileId : string){
+    return this.http.get(`${this.apiUrl}/name/${fileId}`, { headers: this.usersService.getAuthHeaders() });
+  }
+
 }

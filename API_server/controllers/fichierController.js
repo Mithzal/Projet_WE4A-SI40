@@ -163,3 +163,15 @@ exports.deleteFile = async (req, res) => {
     res.status(500).json({ message: 'Erreur lors de la suppression du fichier' });
   }
 }
+
+exports.getNameById = async (req, res) => {
+  try {
+    const fichier = await Fichier.findById(req.params.id);
+    if (!fichier) {
+      return res.status(404).json({ message: 'Fichier non trouvé' });
+    }
+    res.json({ nom: fichier.nom });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
