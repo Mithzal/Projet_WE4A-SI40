@@ -224,4 +224,14 @@ exports.logout = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+}
+
+// Obtenir les utilisateurs inscrits à une UE
+exports.getUsersByUe = async (req, res) => {
+  try {
+    const users = await user.find({ 'courses.courseId': req.params.ueId }, 'name email role');
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };

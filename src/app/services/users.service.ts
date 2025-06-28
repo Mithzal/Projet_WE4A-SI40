@@ -82,4 +82,9 @@ export class UsersService {
     return this.http.get<any>(`http://localhost:7777/api/ues?code=${code}`, { headers: this.getAuthHeaders() });
   }
 
+  // Get users by UE
+  getUsersByUe(ueId: string): Observable<User[]> {
+    return this.http.get<User[]>(`${this.ApiUrl}/byUe/${ueId}`, { headers: this.getAuthHeaders() });
+  }
+
 }

@@ -14,5 +14,8 @@ router.put('/:id/addMessages', auth, forumController.addMessage);
 router.get('/:id/messages', auth, forumController.getMessages);
 router.get('/:courseId', auth, forumController.getForumById);
 router.put('/:id/updateTitle', auth, forumController.updateTitle);
+// Nouvelle route pour obtenir tous les forums d'une UE (par courseId)
+router.get('/byCourse/:courseId', auth, forumController.getForumsByCourseId);
+router.delete('/:forumId/messages/:messageIndex', auth, forumController.deleteMessage);
 
 module.exports = router;

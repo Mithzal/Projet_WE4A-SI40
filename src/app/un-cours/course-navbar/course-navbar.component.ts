@@ -9,7 +9,8 @@ export class CourseNavbarComponent {
   @Input() courseId!: string;
   @Input() userRole!: string; // <--- CE `@Input()` DOIT EXISTER
   @Output() showForumsEvent = new EventEmitter<boolean>();
-  @Output() showCourseEvent = new EventEmitter<boolean>()
+  @Output() showCourseEvent = new EventEmitter<boolean>();
+  @Output() showParticipantsEvent = new EventEmitter<boolean>();
 
   constructor() { }
 
@@ -21,6 +22,9 @@ export class CourseNavbarComponent {
   }
   toggleCourse() {
     this.showCourseEvent.emit(true);
+  }
+  toggleParticipants() {
+    this.showParticipantsEvent.emit(true);
   }
 
 }

@@ -1,11 +1,48 @@
-<div *ngIf="!notFound" class="forum-container">
+<div *ngIf="forumsList.length > 0" class="mb-4">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h4>Forums de cette UE :</h4>
+    <button *ngIf="!showCreateForm" (click)="showCreateFormToggle()" class="btn btn-success">Créer un forum</button>
+  </div>
+  <ul class="list-group">
+    <li *ngFor="let f of forumsList" class="list-group-item list-group-item-action"
+        [class.active]="selectedForum && selectedForum._id === f._id"
+        (click)="selectForum(f)" style="cursor:pointer">
+      {{ f.title }}
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="showCreateForm" class="mt-4 mb-4 col-md-6 mx-auto">
+  <div class="card">
+    <div class="card-header">
+      <h5>Créer un nouveau forum</h5>
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="forumTitle">Titre du forum</label>
+        <input type="text" class="form-control" id="forumTitle" [(ngModel)]="newForumTitle" placeholder="Entrez un titre pour le forum">
+      </div>
+      <div class="mt-3">
+        <button [disabled]="!newForumTitle.trim()" (click)="confirmCreateForum()" class="btn btn-success me-2">Confirmer</button>
+        <button (click)="cancelCreateForum()" class="btn btn-secondary">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="selectedForum && !notFound" class="forum-container">
   <!-- En-tête du forum -->
   <div class="forum-header mb-4">
     <div class="d-flex justify-content-between align-items-center">
       <h2>{{ forum.title }}</h2>
-      <button *ngIf="isAdminOrTeacher && !showEditForm" (click)="showEditForumForm()" class="btn btn-outline-primary btn-sm">
-        <i class="fas fa-edit"></i> Modifier le titre
-      </button>
+      <div>
+        <button *ngIf="isAdminOrTeacher && !showEditForm" (click)="showEditForumForm()" class="btn btn-outline-primary btn-sm me-2">
+          <i class="fas fa-edit"></i> Modifier le titre
+        </button>
+        <button *ngIf="isAdminOrTeacher && !showEditForm" (click)="deleteSelectedForum()" class="btn btn-outline-danger btn-sm">
+          <i class="fas fa-trash"></i> Supprimer
+        </button>
+      </div>
     </div>
 
     <!-- Formulaire de modification du titre (visible uniquement pour admin/prof et quand showEditForm est true) -->
@@ -28,7 +65,12 @@
     </div>
   </div>
 
-  <app-message-list [messages]="forum.messages!"></app-message-list>
+  <app-message-list 
+    [messages]="forum.messages!" 
+    [isAdminOrTeacher]="isAdminOrTeacher" 
+    [forum]="forum"
+    (deleteMessage)="onDeleteMessage($event)"
+  ></app-message-list>
 
   <app-add-message
     [forumId]="forum._id!"
