@@ -8,10 +8,9 @@ const userController = require('../controllers/userController');
 // Public routes
 router.post('/login', userController.login);
 
-// Protected routes - require authentication
+// Protected routes
 router.get('/', auth, userController.index);
 
-// Add logging for user creation
 router.post('/', auth,
     createLog('creation', (req, data) =>
         `Utilisateur créé : ${data.name} par ${req.userData.name || req.userData.userId} ${new Date().toLocaleString()}`
@@ -19,7 +18,6 @@ router.post('/', auth,
     userController.insert
 );
 
-// Add logging for user updates
 router.put('/:id', auth,
     createLog('update', (req, data) =>
         `Utilisateur modifié : ${data.name} par ${req.userData.name || req.userData.userId} ${new Date().toLocaleString()}`
@@ -27,9 +25,13 @@ router.put('/:id', auth,
     userController.update
 );
 
-router.delete('/:id', auth, userController.delete);
+router.delete('/:id', auth,
+  createLog( 'delete', (req, data) =>
+        `Utilisateur supprimé : ${data.name} par ${req.userData.name || req.userData.userId} ${new Date().toLocaleString()}`
+  ),
+  userController.delete
+);
 
-// Add logging for course assignments
 router.put('/enroll/:id/:courseId', auth,
     createLog('assign', (req, data) => {
         const userName = data.name || req.params.id;
