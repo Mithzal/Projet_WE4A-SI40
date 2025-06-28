@@ -29,4 +29,9 @@ export class LogsService {
   getLogsByUser(userId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}?userId=${userId}`, { headers: this.getAuthHeaders() });
   }
+
+  // Ajoute un log de consultation d'UE côté serveur
+  logUeConsultation(ueId: string): Observable<any> {
+    return this.http.post('http://localhost:7777/api/ues/consult/' + ueId, {}, { headers: this.getAuthHeaders() });
+  }
 }
