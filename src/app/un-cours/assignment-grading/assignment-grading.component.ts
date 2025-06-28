@@ -7,7 +7,7 @@ import { FileService } from '../../services/files.service';
 import { UeReturn } from '../../../models/ue.model';
 import { Notes } from '../../../models/notes.model';
 import { forkJoin, Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 interface SubmissionWithGrade {
   submission: UeReturn;
@@ -70,15 +70,34 @@ export class AssignmentGradingComponent implements OnInit {
 
           // Create an array of observables for each submission to get its grade
           const submissionObservables = submissions.map(submission => {
-            return this.notesService.getSubmissionGrade(this.assignmentId, submission.userId)
-              .pipe(
-                catchError(() => of(null)),
-                map(grade => ({
-                  submission,
-                  grade,
-                  isExpanded: false
-                }))
-              );
+            // Check if submission has a gradeId first - this is more efficient
+            if (submission.gradeId) {
+              // If the submission already has a gradeId, directly fetch that grade
+              return this.notesService.updateGrade(submission.gradeId, {} as Notes) // Using updateGrade as a getter
+                .pipe(
+                  catchError(() => {
+                    // If fetching by gradeId fails, try the fallback method
+                    return this.notesService.getSubmissionGrade(this.assignmentId, submission.userId)
+                      .pipe(catchError(() => of(null)));
+                  }),
+                  map(grade => ({
+                    submission,
+                    grade,
+                    isExpanded: false
+                  }))
+                );
+            } else {
+              // Otherwise use the assignment-student lookup method
+              return this.notesService.getSubmissionGrade(this.assignmentId, submission.userId)
+                .pipe(
+                  catchError(() => of(null)),
+                  map(grade => ({
+                    submission,
+                    grade,
+                    isExpanded: false
+                  }))
+                );
+            }
           });
 
           // Wait for all grade requests to complete
@@ -176,6 +195,10 @@ export class AssignmentGradingComponent implements OnInit {
       next: (savedGrade) => {
         // Update the grade in the UI
         this.selectedSubmission!.grade = savedGrade;
+        // Also update the gradeId in the submission object to maintain the link
+        if (!this.selectedSubmission!.submission.gradeId && savedGrade._id) {
+          this.selectedSubmission!.submission.gradeId = savedGrade._id;
+        }
         this.successMessage = 'Note enregistrée avec succès!';
         setTimeout(() => {
           this.successMessage = '';
