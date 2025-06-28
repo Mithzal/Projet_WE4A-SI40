@@ -26,18 +26,20 @@
           </select>
         </div>
 
-        <div class="d-flex flex-wrap gap-3">
-          <app-course-card
-            *ngFor="let course of filterCourses()"
-            [name]="course.name"
-            [code]="course.code || ''"
-            [imageUrl]="'/assets/images/default-course.jpg'"
-            [courseUrl]="'/cours/' + course._id"
-            [progression]="getCourseProgress(course._id!)"
-            [nomimg]="'Image de ' + course.name">
-          </app-course-card>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          <div class="col" *ngFor="let course of filterCourses()">
+            <app-course-card
+              [name]="course.name"
+              [code]="course.code || ''"
+              [imageUrl]="'/assets/images/default-course.jpg'"
+              [courseUrl]="'/cours/' + course._id"
+              [progression]="getCourseProgress(course._id!)"
+              [nomimg]="'Image de ' + course.name">
+            </app-course-card>
+          </div>
 
-          <div *ngIf="filterCourses().length === 0" class="text-muted mt-3">
+          <div *ngIf="filterCourses().length === 0"
+               class="col text-muted mt-3">
             Aucun cours disponible.
           </div>
         </div>
