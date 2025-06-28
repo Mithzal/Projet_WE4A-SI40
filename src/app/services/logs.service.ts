@@ -25,4 +25,8 @@ export class LogsService {
   getAllLogs(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl, { headers: this.getAuthHeaders() });
   }
+
+  getLogsByUser(userId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}?userId=${userId}`, { headers: this.getAuthHeaders() });
+  }
 }
