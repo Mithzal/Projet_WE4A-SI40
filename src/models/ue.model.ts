@@ -12,7 +12,7 @@ export interface UeContent {
   text: string;
   fileId?: string;
   _id?: string;
-  returnDate?: Date;
+  limitDate?: Date;
   returns?: UeReturn[];
 }
 

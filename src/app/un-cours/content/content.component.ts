@@ -145,11 +145,11 @@ export class ContentComponent implements OnInit {
   }
 
   isSubmissionClosed(): boolean {
-    if (!this.content.returnDate) {
+    if (!this.content.limitDate) {
       return false;  // No return date means always open
     }
 
-    const returnDate = new Date(this.content.returnDate);
+    const returnDate = new Date(this.content.limitDate);
     const now = new Date();
 
     return now > returnDate;

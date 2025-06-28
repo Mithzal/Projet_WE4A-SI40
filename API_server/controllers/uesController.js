@@ -124,6 +124,9 @@ exports.addContent = async (req, res) => {
       return res.status(404).json({message: 'UE non trouvée'});
     }
 
+    console.log('Données reçues du client:', req.body);
+    console.log('Type de limitDate:', typeof req.body.limitDate);
+
     const newContent = {
       type: req.body.type,
       title: req.body.title,
@@ -131,10 +134,25 @@ exports.addContent = async (req, res) => {
       fileId: req.body.fileId
     };
 
-    // Add returnDate if it's an assignment type
+    // Gérer les dates pour tous les types de contenu
+    if (req.body.limitDate) {
+      try {
+        // Ensure proper Date object creation regardless of input format
+        newContent.limitDate = new Date(req.body.limitDate);
+        console.log('Date convertie:', newContent.limitDate);
+
+        // Validate the date is valid
+        if (isNaN(newContent.limitDate.getTime())) {
+          console.error('Invalid date format received:', req.body.limitDate);
+          delete newContent.limitDate; // Remove invalid date
+        }
+      } catch (e) {
+        console.error('Error parsing date:', e);
+      }
+    }
+
+    // Add empty returns array for assignments
     if (req.body.type === 'assignement') {
-      newContent.returnDate = req.body.returnDate;
-      // Initialize empty returns array for assignments
       newContent.returns = [];
     }
 
@@ -157,6 +175,7 @@ exports.addContent = async (req, res) => {
 
     res.status(201).json(newContent);
   } catch (err) {
+    console.error('Error adding content:', err);
     res.status(400).json({message: err.message});
   }
 }
@@ -185,7 +204,7 @@ exports.submitAssignment = async (req, res) => {
     }
 
     // Check return date if it exists
-    if (content.returnDate && new Date() > new Date(content.returnDate)) {
+    if (content.limitDate && new Date() > new Date(content.limitDate)) {
       return res.status(400).json({ message: 'La date limite de rendu est dépassée' });
     }
 
