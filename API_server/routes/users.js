@@ -33,9 +33,19 @@ router.delete('/:id', auth,
 );
 
 router.put('/enroll/:id/:courseId', auth,
+    async (req, res, next) => {
+        const Ues = require('../models/ue');
+        let ueCode = req.params.courseId;
+        try {
+            const ue = await Ues.findById(req.params.courseId);
+            if (ue && ue.code) ueCode = ue.code;
+        } catch (e) {}
+        req.ueCodeForLog = ueCode;
+        next();
+    },
     createLog('assign', (req, data) => {
         const userName = data.name || req.params.id;
-        return `UE ${req.params.courseId} assignée à ${userName} par ${req.userData.name || req.userData.userId} ${new Date().toLocaleString()}`;
+        return `UE ${req.ueCodeForLog} assignée à ${userName} par ${req.userData.name || req.userData.userId} ${new Date().toLocaleString()}`;
     }),
     userController.addCourse
 );

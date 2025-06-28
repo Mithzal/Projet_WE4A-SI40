@@ -12,6 +12,8 @@ export class RechercheCoursComponent implements OnInit {
   variableTitre: string = 'Recherche de Cours';
   UEs_details: Ue[] = [];
   teachersByCourse: any[] = [];
+  searchText: string = '';
+  sortField: string = 'name';
 
   constructor(private service : UEsService) {
     this.service.getData().subscribe(data => {
@@ -87,5 +89,24 @@ export class RechercheCoursComponent implements OnInit {
   getTeachersByCourse(courseId: string | undefined): string {
 
     return "John Doe";
+  }
+
+  get filteredUEs(): Ue[] {
+    let filtered = this.UEs_details;
+    if (this.searchText) {
+      const search = this.searchText.toLowerCase();
+      filtered = filtered.filter(ue =>
+        (ue.name && ue.name.toLowerCase().includes(search)) ||
+        (ue.code && ue.code.toLowerCase().includes(search)) ||
+        (ue.description && ue.description.toLowerCase().includes(search))
+      );
+    }
+    // Tri dynamique
+    if (this.sortField === 'name') {
+      filtered = filtered.slice().sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+    } else if (this.sortField === 'code') {
+      filtered = filtered.slice().sort((a, b) => (a.code || '').localeCompare(b.code || ''));
+    }
+    return filtered;
   }
 }

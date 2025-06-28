@@ -7,11 +7,11 @@
       <h1 class="mb-4">Recherche de Cours</h1>
 
       <div class="course-controls d-flex gap-3 mb-3">
-        <input type="text" id="search-bar" class="form-control w-50" placeholder="Rechercher un cours...">
+        <input type="text" id="search-bar" class="form-control w-50" placeholder="Rechercher un cours..." [(ngModel)]="searchText">
 
-        <select id="sort-courses" class="form-select w-auto">
+        <select id="sort-courses" class="form-select w-auto" [(ngModel)]="sortField">
           <option value="name">Trier par nom</option>
-          <option value="date">Trier par code</option>
+          <option value="code">Trier par code</option>
         </select>
       </div>
 
@@ -29,7 +29,7 @@
           </tr>
           </thead>
           <tbody id="table-row">
-          <tr *ngFor="let ue of UEs_details">
+          <tr *ngFor="let ue of filteredUEs">
             <td>{{ ue._id?.toString() }}</td>
             <td>{{ ue.code }}</td>
             <td><a [routerLink]="['/cours', ue._id]" class="text-decoration-none">{{ ue.name }}</a></td>
