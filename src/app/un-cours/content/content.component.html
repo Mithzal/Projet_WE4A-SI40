@@ -35,14 +35,20 @@
           <i class="bi bi-calendar"></i> {{ content.limitDate | date:'dd/MM/yyyy HH:mm' }}
         </small>
       </div>
-      <span class="badge text-uppercase fw-normal"
-            [ngClass]="{
-              'bg-blue' : ['info','link'].includes(content.type),
-              'bg-purple'  : ['file','image'].includes(content.type),
-              'bg-red'  : ['warning','exercise','assignement'].includes(content.type)
-            }">
-        {{ content.type }}
-      </span>
+      <div class="d-flex align-items-center gap-2">
+        <span class="badge text-uppercase fw-normal"
+              [ngClass]="{
+                'bg-blue' : ['info','link'].includes(content.type),
+                'bg-purple'  : ['file','image'].includes(content.type),
+                'bg-red'  : ['warning','exercise','assignement'].includes(content.type)
+              }">
+          {{ content.type }}
+        </span>
+        <!-- Bouton petit à côté du type du post -->
+        <button *ngIf="isInstructor" class="btn btn-sm btn-outline-danger ms-1" type="button" (click)="deleteContent()" title="Supprimer ce post">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
     </div>
     <p class="mb-0" [innerHTML]="content.text"></p>
 

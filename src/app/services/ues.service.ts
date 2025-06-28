@@ -63,4 +63,8 @@ export class UEsService {
     return this.http.post<any>(`${this.ApiUrl}/consult/${ueId}`, {}, { headers: this.getAuthHeaders() });
   }
 
+  deleteContentFromUe(ueId: string, contentId: string): Observable<Ue> {
+    return this.http.delete<Ue>(`${this.ApiUrl}/content/${ueId}/${contentId}`, { headers: this.getAuthHeaders() });
+  }
+
 }

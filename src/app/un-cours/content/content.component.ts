@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import {UeContent, UeReturn} from "../../../models/ue.model";
 import {FileService} from "../../services/files.service";
 import {UsersService} from "../../services/users.service";
 import {AssignmentService} from "../../services/assignment.service";
+import { UEsService } from '../../services/ues.service';
 
 @Component({
   selector: 'app-content',
@@ -15,6 +16,7 @@ export class ContentComponent implements OnInit {
     title: '',
     text:  '',
   }
+  @Output() postDeleted = new EventEmitter<string>();
   fileName : string = "unknown"
   userName : string = "unknown"
   selectedFile: File | null = null;
@@ -25,11 +27,13 @@ export class ContentComponent implements OnInit {
   userSubmission: UeReturn | null = null;
   isLoading: boolean = true;
   editMode: boolean = false;
+  isInstructor: boolean = false; // Ajout de la propriété isInstructor
 
   constructor(
     private fileService : FileService,
     private userService : UsersService,
-    private assignmentService: AssignmentService
+    private assignmentService: AssignmentService,
+    private ueService: UEsService // Ajout du service UEsService
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +46,18 @@ export class ContentComponent implements OnInit {
 
     if (this.content.type === 'assignement' && this.content._id) {
       this.checkUserSubmission();
+    }
+
+    // Vérifier si l'utilisateur courant est le prof responsable de l'UE
+    if (this.courseId) {
+      this.ueService.getDataById(this.courseId).subscribe({
+        next: (ue) => {
+          this.isInstructor = ue.instructorId === this.currentUserId;
+        },
+        error: () => {
+          this.isInstructor = false;
+        }
+      });
     }
   }
 
@@ -414,5 +430,22 @@ export class ContentComponent implements OnInit {
     } else {
       console.error("Impossible de télécharger: ID de fichier non disponible");
     }
+  }
+
+  deleteContent() {
+    if (!this.content._id || !this.courseId) {
+      alert('Impossible de supprimer ce post : identifiant manquant.');
+      return;
+    }
+    if (!confirm('Voulez-vous vraiment supprimer ce post ?')) return;
+    this.ueService.deleteContentFromUe(this.courseId, this.content._id).subscribe({
+      next: () => {
+        this.postDeleted.emit(this.content._id!); // Émet l'ID du post supprimé
+      },
+      error: (err) => {
+        alert('Erreur lors de la suppression du post.');
+        console.error(err);
+      }
+    });
   }
 }
