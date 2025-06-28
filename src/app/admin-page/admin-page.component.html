@@ -65,11 +65,23 @@
           </div>
 
           <div *ngIf="!editUserId">
-            <app-user-list [users]="users" (edit)="onEditUser($event)" (refresh)="refreshList('users')"></app-user-list>
+            <app-user-list [users]="users" (edit)="onEditUser($event)" (refresh)="refreshList('users')" (showLogs)="onShowLogs($event)"></app-user-list>
           </div>
 
           <div class="card card-body" *ngIf="editUserId">
             <app-edit-user [userId]="editUserId" [user]="editUser!" (close)="editUserId = null"></app-edit-user>
+          </div>
+
+          <!-- Affichage des logs de l'utilisateur sélectionné -->
+          <div *ngIf="selectedUserLogs.length > 0" class="card card-body mt-3">
+            <h5>Logs de {{ selectedUserName }}</h5>
+            <ul>
+              <li *ngFor="let log of selectedUserLogs">
+                <strong>{{ log.type }}</strong> - {{ log.message }}<br>
+                <small>{{ log.timestamp | date:'short' }}</small>
+              </li>
+            </ul>
+            <button class="btn btn-secondary btn-sm mt-2" (click)="selectedUserLogs = []; selectedUserName = null;">Fermer</button>
           </div>
         </div>
 
