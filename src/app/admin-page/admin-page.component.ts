@@ -4,6 +4,7 @@ import {UEsService} from "../services/ues.service";
 import {UsersService} from "../services/users.service";
 import {User} from "../../models/user.model";
 import { Ue } from "../../models/ue.model";
+import { LogsService } from '../services/logs.service';
 
 @Component({
   selector: 'app-admin-page',
@@ -17,6 +18,8 @@ export class AdminPageComponent implements OnInit {
   showCreateUserForm = false;
   editUeId: string | null = null;
   editUserId: string | null = null;
+  selectedUserLogs: any[] = [];
+  selectedUserName: string | null = null;
 
   users: User[] = [
   ];
@@ -24,7 +27,7 @@ export class AdminPageComponent implements OnInit {
   ues: Ue[] = [
   ];
 
-  constructor(private UeService : UEsService, private UserService : UsersService ) {
+  constructor(private UeService : UEsService, private UserService : UsersService, private logsService: LogsService ) {
     this.UserService.getAllUsers().subscribe(data =>
     this.users = data)
 
@@ -59,6 +62,15 @@ export class AdminPageComponent implements OnInit {
 
   onEditUser(id: string) {
     this.editUserId = id;
+  }
+
+  onShowLogs(userId: string) {
+    const user = this.users.find(u => u._id === userId);
+    this.selectedUserName = user ? user.name : userId;
+    this.logsService.getLogsByUser(userId).subscribe((logs: any[]) => {
+      // Tri du plus récent au plus ancien
+      this.selectedUserLogs = logs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+    });
   }
 
   // Fonction générique pour rafraîchir une liste

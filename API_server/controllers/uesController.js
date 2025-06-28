@@ -109,6 +109,21 @@ exports.addContent = async (req, res) => {
 
     ue.content.push(newContent);
     await ue.save();
+
+    // Ajout du log ici
+    try {
+      const Log = require('../models/log');
+      const user = req.userData.name || req.userData.userId;
+      const ueCode = ue.code;
+      const type = req.body.type;
+      await Log.create({
+        type: 'post',
+        message: `Contenu ajouté par ${user} dans le cours ${ueCode} (type: ${type}) à ${new Date().toLocaleString()}`,
+        userId: req.userData.userId,
+        timestamp: new Date()
+      });
+    } catch (e) { /* ignore log error */ }
+
     res.status(201).json(newContent);
   } catch (err) {
     res.status(400).json({message: err.message});

@@ -14,6 +14,7 @@ export class UserListComponent {
 
   @Output() edit = new EventEmitter<string>();
   @Output() refresh = new EventEmitter<void>();
+  @Output() showLogs = new EventEmitter<string>();
   CurrentUser: User | null = null;
 
   constructor(
@@ -61,6 +62,10 @@ export class UserListComponent {
 
   editUser(id: string) {
     this.edit.emit(id);
+  }
+
+  showUserLogs(id: string) {
+    this.showLogs.emit(id);
   }
 }
 

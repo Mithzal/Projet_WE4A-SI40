@@ -1,10 +1,14 @@
 // controllers/logController.js
 const Log = require('../models/log');
 
-// Afficher tous les logs
+// Afficher tous les logs ou ceux d'un utilisateur
 exports.index = async (req, res) => {
   try {
-    const logs = await Log.find({});
+    const filter = {};
+    if (req.query.userId) {
+      filter.userId = req.query.userId;
+    }
+    const logs = await Log.find(filter);
     res.json(logs);
   } catch (err) {
     res.status(500).json({ message: err.message });
