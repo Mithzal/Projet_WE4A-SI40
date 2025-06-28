@@ -5,8 +5,8 @@
   <label>Description de l'UE:  <input id="description" formControlName="description"></label><br>
 
   <label>Crédits ECTS:  <input type="number" formControlName="credits"></label><br>
-  <label for="teacherId">Teacher :</label>
-  <select id="teacherId" formControlName="teacherId">
+  <label for="instructorId">Teacher :</label>
+  <select id="instructorId" formControlName="instructorId">
     <option value="" disabled>Choisir un enseignant</option>
     <option *ngFor="let teacher of teachers" [value]="teacher._id">{{ teacher.name }}</option>
   </select><br>

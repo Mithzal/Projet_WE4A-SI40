@@ -7,6 +7,7 @@ const ueController = require('../controllers/uesController');
 
 // Public route - no authentication required for listing courses
 router.get('/', ueController.index);
+router.get('/admin/',auth, ueController.index2)
 
 // All other routes are protected
 // Add logging for UE creation

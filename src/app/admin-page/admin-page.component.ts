@@ -31,7 +31,7 @@ export class AdminPageComponent implements OnInit {
     this.UserService.getAllUsers().subscribe(data =>
     this.users = data)
 
-    this.UeService.getData().subscribe(data =>{
+    this.UeService.getAllUe().subscribe(data =>{
       this.ues = data;
     })
   }

@@ -32,6 +32,10 @@ export class UEsService {
     }
   }
 
+  getAllUe() : Observable<Ue[]>{
+    return this.http.get<Ue[]>(`${this.ApiUrl}/admin`, { headers: this.getAuthHeaders() });
+  }
+
   addUe(ue: Ue): Observable<Ue> {
     return this.http.post<Ue>(this.ApiUrl, ue, { headers: this.getAuthHeaders() });
   }

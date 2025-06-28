@@ -39,6 +39,18 @@ exports.index = async (req, res) => {
   }
 }
 
+exports.index2 = async (req, res) => {
+  try {
+    // Récupération des cours classiques sans transformation
+    const ues = await Ues.find({}, 'code name description credits instructorId imageFileId');
+
+    // Retourner directement les cours sans transformation
+    res.json(ues);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
 exports.insert = async (req, res) => {
   const ue = new Ues({
     code: req.body.code,

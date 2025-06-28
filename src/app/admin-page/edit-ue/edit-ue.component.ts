@@ -29,6 +29,7 @@ export class EditUeComponent implements OnInit {
   ) {
     this.UserService.getTeachers().subscribe(data => {
       this.teachers = data;
+      console.log('Liste des enseignants récupérée avec succès:', this.teachers);
     });
   }
 
@@ -43,7 +44,7 @@ export class EditUeComponent implements OnInit {
       code: [this.ue?.code || ''],
       description: [this.ue?.description || ''],
       credits: [this.ue?.credits || ''],
-      teacherId: [this.ue?.instructorId || '']
+      instructorId: [this.ue?.instructorId || '']
     });
     console.log('Form initialized with UE data:', this.ue);
   }
@@ -73,10 +74,15 @@ export class EditUeComponent implements OnInit {
   onSubmit() {
     if (this.ueForm.valid) {
       // Récupérer les valeurs du formulaire
+      console.log("ue :",this.ue)
+      console.log("ueForm :",this.ueForm.value)
       const updatedUe = {
         ...this.ue,
         ...this.ueForm.value
+
+
       };
+      console.log(updatedUe)
 
       this.UeService.updateUe(updatedUe).subscribe({
         next: (response) => {
