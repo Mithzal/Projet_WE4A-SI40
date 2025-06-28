@@ -24,12 +24,8 @@ export class UEsService {
   }
 
   getData(): Observable<Ue[]> {
-    const token = this.usersService.getToken();
-    if (token) {
-      return this.http.get<Ue[]>(this.ApiUrl, { headers: this.getAuthHeaders() });
-    } else {
-      return this.http.get<Ue[]>(this.ApiUrl);
-    }
+    // This endpoint is now public and doesn't require authentication
+    return this.http.get<Ue[]>(this.ApiUrl);
   }
 
   addUe(ue: Ue): Observable<Ue> {

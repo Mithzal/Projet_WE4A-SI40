@@ -33,7 +33,7 @@
             <td><a [routerLink]="['/cours', ue._id]" class="text-decoration-none">{{ ue.name }}</a></td>
             <td>{{ ue.description }}</td>
             <td>{{ ue.credits }}</td>
-            <td>{{ getTeachersByCourse(ue._id) || 'No teachers assigned' }}</td>
+            <td>{{ ue.instructorId || 'No teacher assigned' }}</td>
           </tr>
           </tbody>
         </table>

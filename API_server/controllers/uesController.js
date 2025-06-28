@@ -1,10 +1,39 @@
 const Ues = require('../models/ue');
 const Log = require('../models/log');
+const User = require('../models/user'); // Ensuring we use the correct model reference
 
 exports.index = async (req, res) => {
   try {
-    const ues = await Ues.find({});
-    res.json(ues);
+    // Find all courses but select only the required fields
+    const ues = await Ues.find({}, 'code name description credits instructorId');
+
+    // Transform the result to replace instructorId with instructor name
+    const uesToSend = await Promise.all(ues.map(async (ue) => {
+      try {
+        // Find the instructor by ID to get their name
+        const instructor = await User.findById(ue.instructorId, 'name');
+
+        // Convert the document to a plain object so we can modify it
+        const ueObject = ue.toObject();
+
+        // Replace instructorId value with instructor name, but keep the field name
+        if (instructor) {
+          ueObject.instructorId = instructor.name;
+        } else {
+          ueObject.instructorId = "Unknown";
+        }
+
+        return ueObject;
+      } catch (error) {
+        // Handle any errors during instructor lookup
+        console.error(`Error processing UE ${ue._id}: ${error.message}`);
+        const ueObject = ue.toObject();
+        ueObject.instructorId = "Error retrieving instructor";
+        return ueObject;
+      }
+    }));
+
+    res.json(uesToSend);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

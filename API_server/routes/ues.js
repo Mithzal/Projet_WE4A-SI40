@@ -5,9 +5,10 @@ const createLog = require('../middleware/logs'); // Import logging middleware
 
 const ueController = require('../controllers/uesController');
 
-// All routes are protected
-router.get('/', auth, ueController.index);
+// Public route - no authentication required for listing courses
+router.get('/', ueController.index);
 
+// All other routes are protected
 // Add logging for UE creation
 router.post('/', auth,
     createLog('creation', (req, data) =>
@@ -67,24 +68,6 @@ router.post('/consult/:id', auth, async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
-});
-
-
-router.get('/', auth, async (req, res) => {
-  if (req.query.code) {
-    try {
-      const ue = await require('../models/ue').findOne({ code: req.query.code });
-      if (!ue) {
-        return res.status(404).json({ message: 'UE non trouvée' });
-      }
-      res.json(ue);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  } else {
-    // Appel du contrôleur standard pour la liste
-    return require('../controllers/uesController').index(req, res);
-  }
 });
 
 module.exports = router;
