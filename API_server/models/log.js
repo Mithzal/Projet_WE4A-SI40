@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const logSchema = new Schema({
     type: {
         type: String,
-        enum: ['logging', 'disconnect', 'post', 'reading', 'homework', 'creation', 'delete','update','assign'],
+        enum: ['logging', 'disconnect', 'post', 'reading', 'homework', 'creation', 'delete','update','assign', 'submission'],
         required: true
     },
     message: {

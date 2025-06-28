@@ -39,6 +39,12 @@ export class UnCoursComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const courseId = params.get('id');
+      if (courseId) {
+        this.service.consultUe(courseId).subscribe({
+          next: () => {},
+          error: (err) => { console.error('Erreur log consultation UE:', err); }
+        });
+      }
       this.loadCourse(courseId!);
       this.loadUserRole();
       this.loadCourseNews(courseId);

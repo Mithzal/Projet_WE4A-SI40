@@ -76,4 +76,10 @@ export class UsersService {
     return this.http.get<string>(`${this.ApiUrl}/${id}/name`, { headers: this.getAuthHeaders() });
   }
 
+  // Récupère l'ID d'une UE à partir de son code
+  getUeIdByCode(code: string): Observable<any> {
+    // On suppose que l'API /api/ues?code=CODE retourne l'UE correspondante
+    return this.http.get<any>(`http://localhost:7777/api/ues?code=${code}`, { headers: this.getAuthHeaders() });
+  }
+
 }

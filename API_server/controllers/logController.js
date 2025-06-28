@@ -64,3 +64,23 @@ exports.delete = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+// Consultation d'un cours (création automatique du log)
+exports.consultCourse = async (req, res) => {
+  try {
+    const { userId, courseCode, userName } = req.body;
+    if (!userId || !courseCode) {
+      return res.status(400).json({ message: 'userId et courseCode sont requis' });
+    }
+    const log = new Log({
+      type: 'reading',
+      message: userName ? `Consultation du cours ${courseCode} par ${userName}` : `Consultation du cours ${courseCode}`,
+      userId: userId,
+      timestamp: new Date().toISOString()
+    });
+    const newLog = await log.save();
+    res.status(201).json({ message: 'Consultation enregistrée', log: newLog });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

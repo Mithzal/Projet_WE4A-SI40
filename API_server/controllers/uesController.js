@@ -1,4 +1,5 @@
 const Ues = require('../models/ue');
+const Log = require('../models/log');
 
 exports.index = async (req, res) => {
   try {
@@ -184,6 +185,17 @@ exports.submitAssignment = async (req, res) => {
     }
 
     await ue.save();
+
+    // Création du log de dépôt
+    let userName = req.userData?.name || userId;
+    let ueCode = ue.code || ueId;
+    await Log.create({
+      type: 'submission',
+      message: `Dépôt par ${userName} pour ${ueCode} le ${new Date().toLocaleString('fr-FR')}`,
+      userId: userId,
+      timestamp: new Date()
+    });
+
     res.status(201).json({
       message: 'Devoir soumis avec succès',
       submission: existingSubmission || content.returns[content.returns.length - 1]

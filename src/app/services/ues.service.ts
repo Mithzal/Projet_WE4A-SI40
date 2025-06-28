@@ -59,4 +59,8 @@ export class UEsService {
     return this.http.post<Ue>(`${this.ApiUrl}/content/${ueId}/`, content, { headers: this.getAuthHeaders() });
   }
 
+  consultUe(ueId: string): Observable<any> {
+    return this.http.post<any>(`${this.ApiUrl}/consult/${ueId}`, {}, { headers: this.getAuthHeaders() });
+  }
+
 }
