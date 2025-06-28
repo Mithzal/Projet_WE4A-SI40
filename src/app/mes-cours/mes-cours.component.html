@@ -20,6 +20,7 @@
           <select
             class="form-select w-auto"
             id="sort-courses"
+            [(ngModel)]="sortBy"
             (change)="updateSort($event)">
             <option value="name">Trier par nom</option>
             <option value="date">Trier par dernier accès</option>
@@ -27,7 +28,7 @@
         </div>
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          <div class="col" *ngFor="let course of filterCourses()">
+          <div class="col" *ngFor="let course of filterCourses(); trackBy: trackByCourse">
             <app-course-card
               [name]="course.name"
               [code]="course.code || ''"
@@ -46,7 +47,7 @@
       </div>
     </div>
 
-    <!-- Fil d’actualités -->
+    <!-- Fil d'actualités -->
     <div class="col-md-3">
       <app-newsfeed [newsItems]="newsItems"></app-newsfeed>
     </div>

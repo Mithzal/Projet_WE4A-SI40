@@ -50,6 +50,13 @@ router.put('/enroll/:id/:courseId', auth,
     userController.addCourse
 );
 
+router.put('/lastAccess/:id/:courseId', auth,
+    createLog('access', (req, data) =>
+        `Utilisateur ${req.userData.name || req.userData.userId} a accédé au cours ${req.params.courseId} à ${new Date().toLocaleString()}`
+    ),
+    userController.updateLastAccess
+);
+
 router.get('/teachers', auth, userController.getTeachers);
 router.get('/students', auth, userController.getStudents);
 router.get('/:id/courses', auth, userController.getCourseFromUserId);

@@ -19,7 +19,6 @@ interface NewsItem {
 export class UnCoursComponent implements OnInit {
   courseId = this.route.snapshot.paramMap.get('id');
 
-
   course: Ue = {
     _id : this.courseId || '',
     name: 'Chargement du cours...',
@@ -37,10 +36,18 @@ export class UnCoursComponent implements OnInit {
   showCourse = true;
   showParticipants = false;
   participants: User[] = [];
+  currentUserId: string | null = null;
 
-  constructor(private route: ActivatedRoute, private service : UEsService, private authService : AuthService, private usersService: UsersService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private service: UEsService,
+    private authService: AuthService,
+    private usersService: UsersService
+  ) { }
 
   ngOnInit(): void {
+    this.currentUserId = this.usersService.getCurrentUserId();
+
     this.route.paramMap.subscribe(params => {
       const courseId = params.get('id');
       if (courseId) {
@@ -48,11 +55,28 @@ export class UnCoursComponent implements OnInit {
           next: () => {},
           error: (err) => { console.error('Erreur log consultation UE:', err); }
         });
+
+        // Update the last access timestamp for this course
+        this.updateLastAccessTimestamp(courseId);
       }
       this.loadCourse(courseId!);
       this.loadUserRole();
       this.loadCourseNews(courseId);
     });
+  }
+
+  // New method to update the lastAccess timestamp
+  private updateLastAccessTimestamp(courseId: string): void {
+    if (this.currentUserId) {
+      this.usersService.updateLastAccess(this.currentUserId, courseId).subscribe({
+        next: () => {
+          console.log('Last access timestamp updated');
+        },
+        error: (err) => {
+          console.error('Error updating last access timestamp:', err);
+        }
+      });
+    }
   }
 
   loadCourse(courseId: string): void {

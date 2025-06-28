@@ -102,13 +102,19 @@ exports.getCourseFromUserId = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const courseIds = userWithCourses.courses.map(course =>
-      course.courseId ? course.courseId._id : course
-    ).filter(id => id);
+    // Create an array of courses with lastAccess information
+    const coursesWithAccess = [];
 
-    const uesList = await Ues.find({ _id: { $in: courseIds } });
+    for (const course of userWithCourses.courses) {
+      if (course.courseId) {
+        // Create a course object with both UE details and lastAccess information
+        const courseData = course.courseId.toObject();
+        courseData.lastAccess = course.lastAccess;
+        coursesWithAccess.push(courseData);
+      }
+    }
 
-    res.json(uesList);
+    res.json(coursesWithAccess);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -193,7 +199,7 @@ exports.login = async (req, res) => {
       userId: foundUser._id,
       timestamp: new Date()
     });
-    
+
 
     // Return user data and token
     res.json({
@@ -235,3 +241,36 @@ exports.getUsersByUe = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+// Update lastAccess for a course
+exports.updateLastAccess = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const courseId = req.params.courseId;
+    const currentTime = new Date();
+
+    // Find the user and update the lastAccess date for the specific course
+    const updatedUser = await user.findOneAndUpdate(
+      {
+        _id: userId,
+        'courses.courseId': courseId
+      },
+      {
+        $set: { 'courses.$.lastAccess': currentTime }
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User or course not found' });
+    }
+
+    res.json({
+      message: 'Last access updated successfully',
+      lastAccess: currentTime
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
