@@ -26,6 +26,10 @@ const userSchema = new Schema({
       enrollmentDate: {
         type: Date,
         default: Date.now
+      },
+      lastAccess: {
+        type: Date,
+        default: null
       }
     }],
     default: []

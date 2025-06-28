@@ -87,4 +87,13 @@ export class UsersService {
     return this.http.get<User[]>(`${this.ApiUrl}/byUe/${ueId}`, { headers: this.getAuthHeaders() });
   }
 
+  // Update the last access time for a course
+  updateLastAccess(userId: string, courseId: string): Observable<any> {
+    return this.http.put<any>(
+      `${this.ApiUrl}/lastAccess/${userId}/${courseId}`,
+      {},
+      { headers: this.getAuthHeaders() }
+    );
+  }
+
 }
