@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Ue} from "../../models/ue.model";
 import {UEsService} from "../services/ues.service";
+import {UsersService} from "../services/users.service";
 
 @Component({
   selector: 'app-recherche-cours',
@@ -11,13 +12,20 @@ export class RechercheCoursComponent implements OnInit {
 
   variableTitre: string = 'Recherche de Cours';
   UEs_details: Ue[] = [];
-  teachersByCourse: any[] = [];
+  teachersMap: { [key: string]: string } = {};
   searchText: string = '';
   sortField: string = 'name';
 
-  constructor(private service : UEsService) {
+  constructor(private service : UEsService, private usersService: UsersService) {
     this.service.getData().subscribe(data => {
-      this.UEs_details = data
+      this.UEs_details = data;
+      // Pour chaque UE, récupérer le nom du prof
+      const instructorIds = Array.from(new Set(data.map(ue => ue.instructorId).filter(Boolean)));
+      instructorIds.forEach(id => {
+        this.usersService.getNameById(id).subscribe((res: any) => {
+          this.teachersMap[id] = res.name;
+        });
+      });
     })
   }
   ajouterNouvelleUe(): void {
@@ -87,8 +95,11 @@ export class RechercheCoursComponent implements OnInit {
   }
 
   getTeachersByCourse(courseId: string | undefined): string {
-
-    return "John Doe";
+    const ue = this.UEs_details.find(u => u._id === courseId);
+    if (ue && ue.instructorId && this.teachersMap[ue.instructorId]) {
+      return this.teachersMap[ue.instructorId];
+    }
+    return '';
   }
 
   get filteredUEs(): Ue[] {

@@ -6,7 +6,7 @@ const createLog = require('../middleware/logs'); // Import logging middleware
 const ueController = require('../controllers/uesController');
 
 // All routes are protected
-router.get('/', auth, ueController.index);
+router.get('/', ueController.index); // <- accès public à la liste des cours
 
 // Add logging for UE creation
 router.post('/', auth,

@@ -24,7 +24,12 @@ export class UEsService {
   }
 
   getData(): Observable<Ue[]> {
-    return this.http.get<Ue[]>(this.ApiUrl, { headers: this.getAuthHeaders() });
+    const token = this.usersService.getToken();
+    if (token) {
+      return this.http.get<Ue[]>(this.ApiUrl, { headers: this.getAuthHeaders() });
+    } else {
+      return this.http.get<Ue[]>(this.ApiUrl);
+    }
   }
 
   addUe(ue: Ue): Observable<Ue> {

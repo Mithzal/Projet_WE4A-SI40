@@ -20,7 +20,6 @@
         <table *ngIf="UEs_details && UEs_details.length > 0" class="table table-striped table-hover">
           <thead class="table-light">
           <tr>
-            <th>ID</th>
             <th>Code</th>
             <th>Name</th>
             <th>Description</th>
@@ -30,7 +29,6 @@
           </thead>
           <tbody id="table-row">
           <tr *ngFor="let ue of filteredUEs">
-            <td>{{ ue._id?.toString() }}</td>
             <td>{{ ue.code }}</td>
             <td><a [routerLink]="['/cours', ue._id]" class="text-decoration-none">{{ ue.name }}</a></td>
             <td>{{ ue.description }}</td>
