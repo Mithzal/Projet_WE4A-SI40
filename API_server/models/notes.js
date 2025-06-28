@@ -30,6 +30,15 @@ const noteSchema = new Schema({
   comments: {
     type: String,
     required: false
+  },
+  assignmentId: {
+    type: Schema.Types.ObjectId,
+    ref: 'UeContent',
+    required: false
+  },
+  submissionId: {
+    type: Schema.Types.ObjectId,
+    required: false
   }
 });
 

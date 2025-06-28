@@ -4,8 +4,10 @@ export class Notes {
                 public value : number,
                 public timestamp: Date = new Date(),
                 public teacherId : string,
-                public comment ?: string,
-                public _id ?: string
+                public comments ?: string,
+                public _id ?: string,
+                public assignmentId?: string,  // Refers to UeContent._id
+                public submissionId?: string   // Refers to UeReturn._id
 
 ) {
     this.studentId = studentId;
@@ -13,8 +15,10 @@ export class Notes {
     this.value = value;
     this.timestamp = timestamp;
     this.teacherId = teacherId;
-    this.comment = comment;
+    this.comments = comments;
     this._id = _id;
+    this.assignmentId = assignmentId;
+    this.submissionId = submissionId;
   }
 
 }

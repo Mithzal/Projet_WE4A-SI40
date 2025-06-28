@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AuthComponent } from './auth.component';
+import { AssignmentGradingComponent } from './assignment-grading.component';
 
-describe('AuthComponent', () => {
-  let component: AuthComponent;
-  let fixture: ComponentFixture<AuthComponent>;
+describe('AssignementGradingComponent', () => {
+  let component: AssignmentGradingComponent;
+  let fixture: ComponentFixture<AssignmentGradingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AuthComponent ]
+      declarations: [ AssignmentGradingComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AuthComponent);
+    fixture = TestBed.createComponent(AssignmentGradingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

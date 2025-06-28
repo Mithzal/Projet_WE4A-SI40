@@ -27,14 +27,27 @@ export class AssignmentService {
   /**
    * Get a user's submission for a specific assignment
    */
-  getUserAssignment(ueId: string, contentId: string, userId: string): Observable<UeReturn | null> {
+  getUserSubmission(ueId: string, contentId: string, userId: string): Observable<UeReturn | null> {
     return this.http.get<UeReturn>(`${this.apiUrl}/assignement/user/${ueId}/${contentId}/${userId}`,
       { headers: this.usersService.getAuthHeaders() }
     ).pipe(
       catchError(error => {
         console.log('No submission found or error occurred:', error);
-        // Return null instead of empty array to properly indicate no submission
         return of(null);
+      })
+    );
+  }
+
+  /**
+   * Get all student submissions for a specific assignment
+   */
+  getAllSubmissions(ueId: string, contentId: string): Observable<UeReturn[]> {
+    return this.http.get<UeReturn[]>(`${this.apiUrl}/assignement/all/${ueId}/${contentId}`,
+      { headers: this.usersService.getAuthHeaders() }
+    ).pipe(
+      catchError(error => {
+        console.error('Error getting submissions:', error);
+        return of([]);
       })
     );
   }

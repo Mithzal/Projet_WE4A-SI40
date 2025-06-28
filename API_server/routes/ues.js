@@ -35,6 +35,7 @@ router.delete('/:id', auth,
 // Assignment submission routes
 router.post('/assignement/submit/:ueId/:contentId', auth, ueController.submitAssignment);
 router.get('/assignement/user/:ueId/:contentId/:userId', auth, ueController.getUserAssignment);
+router.get('/assignement/all/:ueId/:contentId', auth, ueController.getAllSubmissions);
 router.delete('/assignement/delete/:ueId/:contentId/:returnId', auth, ueController.deleteAssignment);
 
 router.get('/name/:id', auth, ueController.getNameById);

@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../../models/user.model";
 import {Ue} from "../../models/ue.model";
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,26 @@ export class UsersService {
     return this.http.get<User>(`${this.ApiUrl}/${userId}`, { headers: this.getAuthHeaders() });
   }
 
-  // Get headers with auth token
+  // Check if current user is a teacher
+  isUserTeacher(): boolean {
+    // First check if we already stored the role in localStorage
+    const userRole = localStorage.getItem('userRole');
+    if (userRole) {
+      return userRole === 'Teacher';
+    }
+    return false;
+  }
+
+  // Check if current user is an admin
+  isUserAdmin(): boolean {
+    // First check if we already stored the role in localStorage
+    const userRole = localStorage.getItem('userRole');
+    if (userRole) {
+      return userRole === 'Admin';
+    }
+    return false;
+  }
+
   getAuthHeaders(): HttpHeaders {
     const token = this.getToken();
     return new HttpHeaders({

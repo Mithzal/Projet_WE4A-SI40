@@ -4,6 +4,7 @@ export interface UeReturn {
   fileName: string;
   submissionDate: Date;
   _id?: string;
+  studentName: string;  // Added to store the student name
 }
 
 export interface UeContent {

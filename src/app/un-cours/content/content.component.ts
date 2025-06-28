@@ -3,6 +3,8 @@ import {UeContent, UeReturn} from "../../../models/ue.model";
 import {FileService} from "../../services/files.service";
 import {UsersService} from "../../services/users.service";
 import {AssignmentService} from "../../services/assignment.service";
+import {NotesService} from "../../services/notes.service";
+import {Notes} from "../../../models/notes.model";
 import {Files} from "../../../models/file.model";
 
 @Component({
@@ -27,10 +29,21 @@ export class ContentComponent implements OnInit {
   isLoading: boolean = true;
   editMode: boolean = false;
 
+  // Grading related properties
+  isTeacher: boolean = false;
+  isAdmin: boolean = false;
+  gradingMode: boolean = false;
+  submissionGrade: Notes | null = null;
+  gradeValue: number | null = null;
+  gradeComment: string = '';
+  gradingError: string = '';
+  gradingSuccess: boolean = false;
+
   constructor(
     private fileService : FileService,
     private userService : UsersService,
-    private assignmentService: AssignmentService
+    private assignmentService: AssignmentService,
+    private notesService: NotesService
   ) { }
 
   ngOnInit(): void {
@@ -41,8 +54,19 @@ export class ContentComponent implements OnInit {
     this.courseId = window.location.pathname.split('/').pop() || '';
     this.loadUserName(this.currentUserId);
 
+    // Check user roles
+    this.isTeacher = this.userService.isUserTeacher();
+    this.isAdmin = this.userService.isUserAdmin();
+
     if (this.content.type === 'assignement' && this.content._id) {
       this.checkUserSubmission();
+    }
+
+    // Check if the current user is a teacher and load the submission grade if in grading mode
+    this.gradingMode = this.content.type === 'assignement' && this.gradingMode;
+
+    if (this.gradingMode && this.content._id) {
+      this.loadSubmissionGrade();
     }
   }
 
@@ -114,7 +138,7 @@ export class ContentComponent implements OnInit {
 
     console.log(`Fetching submission for course: ${this.courseId}, content: ${this.content._id}, user: ${this.currentUserId}`);
 
-    this.assignmentService.getUserAssignment(this.courseId, this.content._id, this.currentUserId)
+    this.assignmentService.getUserSubmission(this.courseId, this.content._id, this.currentUserId)
       .subscribe({
         next: (submission: UeReturn | null) => {
           if (submission) {
@@ -415,6 +439,64 @@ export class ContentComponent implements OnInit {
       });
     } else {
       console.error("Impossible de télécharger: ID de fichier non disponible");
+    }
+  }
+
+  loadSubmissionGrade() {
+    if (!this.content._id || !this.currentUserId) {
+      return;
+    }
+
+    this.notesService.getSubmissionGrade(this.content._id, this.currentUserId).subscribe({
+      next: (grade: Notes | null) => {
+        this.submissionGrade = grade;
+
+        if (grade) {
+          this.gradeValue = grade.value;
+          this.gradeComment = grade.comments || '';
+        } else {
+          this.gradeValue = null;
+          this.gradeComment = '';
+        }
+      },
+      error: (error) => {
+        console.error('Error loading submission grade:', error);
+        this.gradingError = 'Erreur lors du chargement de la note';
+      }
+    });
+  }
+
+  saveGrade() {
+    if (!this.submissionGrade || this.gradeValue === null) {
+      this.gradingError = 'Veuillez entrer une note valide';
+      return;
+    }
+
+    this.submissionGrade.value = this.gradeValue;
+    this.submissionGrade.comments = this.gradeComment;
+
+    this.notesService.saveGrade(this.submissionGrade).subscribe({
+      next: () => {
+        this.gradingSuccess = true;
+        this.gradingError = '';
+        alert('Note enregistrée avec succès!');
+      },
+      error: (error) => {
+        console.error('Error saving grade:', error);
+        this.gradingError = 'Erreur lors de l\'enregistrement de la note';
+      }
+    });
+  }
+
+  toggleGradingMode() {
+    this.gradingMode = !this.gradingMode;
+
+    if (this.gradingMode) {
+      this.loadSubmissionGrade();
+    } else {
+      this.submissionGrade = null;
+      this.gradeValue = null;
+      this.gradeComment = '';
     }
   }
 }

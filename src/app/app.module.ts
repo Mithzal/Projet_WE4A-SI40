@@ -28,7 +28,6 @@ import { UnCoursComponent } from './un-cours/un-cours.component';
 import {HttpClientModule} from "@angular/common/http";
 import { FileComponent } from './file/file.component';
 import { LoginComponent } from './login/login.component';
-import { AuthComponent } from './auth/auth.component';
 import { ProfileOptionComponent } from './nav-bar/profile-option/profile-option.component';
 import { GradePopupComponent } from './nav-bar/grade-popup/grade-popup.component';
 import { CourseNavbarComponent } from './un-cours/course-navbar/course-navbar.component';
@@ -44,6 +43,7 @@ import { LogComponent } from './admin-page/log/log.component';
 import { ContentListComponent } from './un-cours/content-list/content-list.component';
 import { ContentComponent } from './un-cours/content/content.component';
 import { AddContentComponent } from './un-cours/add-content/add-content.component';
+import { AssignmentGradingComponent } from './un-cours/assignment-grading/assignment-grading.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +68,6 @@ import { AddContentComponent } from './un-cours/add-content/add-content.componen
     UnCoursComponent,
     FileComponent,
     LoginComponent,
-    AuthComponent,
     ProfileOptionComponent,
     GradePopupComponent,
     CourseNavbarComponent,
@@ -83,7 +82,8 @@ import { AddContentComponent } from './un-cours/add-content/add-content.componen
     LogComponent,
     ContentListComponent,
     ContentComponent,
-    AddContentComponent
+    AddContentComponent,
+    AssignmentGradingComponent
   ],
   imports: [
     BrowserModule,
