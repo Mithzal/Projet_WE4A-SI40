@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import {UEsService} from "../services/ues.service";
 import {Ue} from "../../models/ue.model";
 import {AuthService} from "../services/auth.service";
+import { UsersService } from '../services/users.service';
+import { User } from '../../models/user.model';
 
 interface NewsItem {
   text: string;
@@ -33,8 +35,10 @@ export class UnCoursComponent implements OnInit {
   showForums = false; // Variable pour contrôler l'affichage du forum
   courseNewsItems: NewsItem[] = [];
   showCourse = true;
+  showParticipants = false;
+  participants: User[] = [];
 
-  constructor(private route: ActivatedRoute, private service : UEsService, private authService : AuthService) { }
+  constructor(private route: ActivatedRoute, private service : UEsService, private authService : AuthService, private usersService: UsersService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -88,10 +92,6 @@ export class UnCoursComponent implements OnInit {
     }
   }
 
-  toggleSidebar(): void {
-    this.sidebarHidden = !this.sidebarHidden;
-  }
-
   isTeacherOrAdmin(): boolean {
     // Check if user is teacher or admin
     return ['Teacher', 'Admin'].includes(this.userRole);
@@ -101,10 +101,24 @@ export class UnCoursComponent implements OnInit {
   onShowForums(show: boolean) {
     this.showForums = show;
     this.showCourse = !show;
+    this.showParticipants = false;
   }
 
-  onShowCourse(show : boolean){
+  onShowCourse(show: boolean) {
     this.showCourse = show;
     this.showForums = !show;
+    this.showParticipants = false;
+  }
+
+  onShowParticipants(show: boolean) {
+    this.showParticipants = show;
+    this.showCourse = !show;
+    this.showForums = false;
+    if (show && this.courseId) {
+      this.usersService.getUsersByUe(this.courseId).subscribe({
+        next: (users) => this.participants = users,
+        error: () => this.participants = []
+      });
+    }
   }
 }

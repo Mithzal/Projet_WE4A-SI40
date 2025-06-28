@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ForumMessage} from "../../../models/forums.model";
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {ForumMessage, Forums} from "../../../models/forums.model";
 import {UsersService} from "../../services/users.service";
 import {auditTime} from "rxjs";
 
@@ -15,6 +15,10 @@ export class MessagesComponent implements OnInit {
     timestamp: new Date(),
     author : ''
   };
+  @Input() isAdminOrTeacher: boolean = false;
+  @Input() forum?: Forums;
+  @Input() index?: number;
+  @Output() delete = new EventEmitter<number>();
 
   name : string = "unknown"
 
@@ -32,11 +36,14 @@ export class MessagesComponent implements OnInit {
     }
   }
 
-
-
-
   ngOnInit(): void {
     this.loadAuthorName()
+  }
+
+  onDelete() {
+    if (this.index !== undefined) {
+      this.delete.emit(this.index);
+    }
   }
 
   protected readonly auditTime = auditTime;

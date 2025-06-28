@@ -23,6 +23,8 @@ export class ForumsComponent implements OnInit, OnChanges {
   showEditForm: boolean = false;
   newForumTitle: string = '';
   isAdminOrTeacher: boolean = false;
+  forumsList: Forums[] = [];
+  selectedForum: Forums | null = null;
 
   constructor(
     private service: ForumService,
@@ -38,10 +40,38 @@ export class ForumsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Cette méthode est appelée quand une @Input property change
     if (changes['courseId'] && this.courseId) {
-      this.loadForum();
+      this.loadForumsList();
     }
+  }
+
+  loadForumsList(): void {
+    if (!this.courseId) {
+      return;
+    }
+    this.service.getForumsByCourseId(this.courseId).subscribe(
+      (forums) => {
+        this.forumsList = forums;
+        if (forums.length > 0) {
+          this.selectForum(forums[0]);
+          this.notFound = false;
+        } else {
+          this.selectedForum = null;
+          this.notFound = true;
+        }
+      },
+      (error) => {
+        this.forumsList = [];
+        this.selectedForum = null;
+        this.notFound = true;
+      }
+    );
+  }
+
+  selectForum(forum: Forums): void {
+    this.selectedForum = forum;
+    this.forum = forum;
+    this.showEditForm = false;
   }
 
   loadForum(): void {
@@ -89,19 +119,17 @@ export class ForumsComponent implements OnInit, OnChanges {
     if (!this.courseId || !this.newForumTitle.trim()) {
       return;
     }
-
     this.isCreating = true;
-
     this.service.createForum(this.courseId, this.newForumTitle.trim()).subscribe(
       (createdForum) => {
-        this.forum = createdForum;
+        this.forumsList.push(createdForum);
+        this.selectForum(createdForum);
         this.notFound = false;
         this.isCreating = false;
         this.showCreateForm = false;
         this.newForumTitle = '';
       },
       (error) => {
-        console.error('Erreur lors de la création du forum:', error);
         this.isCreating = false;
       }
     );
@@ -147,6 +175,49 @@ export class ForumsComponent implements OnInit, OnChanges {
       },
       (error) => {
         console.error('Erreur lors de la modification du titre du forum:', error);
+      }
+    );
+  }
+
+  deleteSelectedForum(): void {
+    if (!this.selectedForum || !this.selectedForum._id) {
+      return;
+    }
+    if (!confirm('Voulez-vous vraiment supprimer ce forum ?')) {
+      return;
+    }
+    this.service.deleteForumById(this.selectedForum._id).subscribe(
+      () => {
+        // Retirer le forum supprimé de la liste
+        this.forumsList = this.forumsList.filter(f => f._id !== this.selectedForum!._id);
+        // Sélectionner le premier forum restant ou rien
+        if (this.forumsList.length > 0) {
+          this.selectForum(this.forumsList[0]);
+        } else {
+          this.selectedForum = null;
+          this.forum = { courseId: '', title: '', messages: [] };
+          this.notFound = true;
+        }
+      },
+      (error) => {
+        alert('Erreur lors de la suppression du forum.');
+      }
+    );
+  }
+
+  onDeleteMessage(index: number): void {
+    if (!this.forum || !this.forum._id || index < 0 || !this.forum.messages || !this.forum.messages[index]) {
+      return;
+    }
+    if (!confirm('Voulez-vous vraiment supprimer ce message ?')) {
+      return;
+    }
+    this.service.deleteForumMessage(this.forum._id, index).subscribe(
+      () => {
+        this.forum.messages!.splice(index, 1);
+      },
+      (error) => {
+        alert('Erreur lors de la suppression du message.');
       }
     );
   }

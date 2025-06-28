@@ -4,14 +4,6 @@
 <body>
   <div class="d-flex flex-row" [class.sidebar-collapsed]="sidebarHidden">
 
-    <!-- Bouton hamburger -->
-    <button  class="btn toggle-btn"
-             (click)="toggleSidebar()">
-      ☰
-    </button>
-
-    <!-- Barre latérale -->
-    <app-course-sidebar [hidden]="sidebarHidden"></app-course-sidebar>
 
     <!-- Contenu principal -->
     <main class="main-content flex-grow-1 container-fluid">
@@ -24,11 +16,32 @@
             <a [routerLink]="['/ajouter-contenu', courseId]" class="btn btn-primary">Ajouter un contenu</a>
           </div>
 
-          <app-course-navbar [courseId]="courseId!" [userRole]="userRole" (showForumsEvent)="onShowForums($event)" (showCourseEvent)="onShowCourse($event)"></app-course-navbar>
+          <app-course-navbar [courseId]="courseId!" [userRole]="userRole"
+            (showForumsEvent)="onShowForums($event)"
+            (showCourseEvent)="onShowCourse($event)"
+            (showParticipantsEvent)="onShowParticipants($event)">
+          </app-course-navbar>
 
           <!-- Affichage conditionnel du composant Forums -->
           <app-forums *ngIf="showForums" [courseId]="courseId!"></app-forums>
           <app-course-details [course]="course" *ngIf="showCourse"></app-course-details>
+
+          <!-- Affichage conditionnel du composant Participants -->
+          <div *ngIf="showParticipants">
+            <div class="card mt-3">
+              <div class="card-header">
+                <h5 class="mb-0">Participants</h5>
+              </div>
+              <div class="card-body p-0">
+                <ul class="list-group list-group-flush">
+                  <li *ngFor="let user of participants" class="list-group-item">
+                    {{ user.name }} <span class="text-muted">({{ user.role }})</span>
+                  </li>
+                  <li *ngIf="participants.length === 0" class="list-group-item text-muted">Aucun participant</li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
         </div>
 

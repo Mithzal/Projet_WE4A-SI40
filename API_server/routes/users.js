@@ -55,6 +55,9 @@ router.get('/students', auth, userController.getStudents);
 router.get('/:id/courses', auth, userController.getCourseFromUserId);
 router.get('/:id/name', auth, userController.getNameById);
 
+// Route pour obtenir les utilisateurs d'une UE
+router.get('/byUe/:ueId', auth, userController.getUsersByUe);
+
 // Déconnexion utilisateur
 router.post('/logout', auth, userController.logout);
 
