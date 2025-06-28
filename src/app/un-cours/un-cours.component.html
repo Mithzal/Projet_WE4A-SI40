@@ -13,7 +13,7 @@
           <h1>{{ course.name }}</h1>
 
           <div *ngIf="isTeacherOrAdmin()" class="mb-3">
-            <a [routerLink]="['/ajouter-contenu', courseId]" class="btn btn-primary">Ajouter un contenu</a>
+            <a *ngIf="showCourse" [routerLink]="['/ajouter-contenu', courseId]" class="btn btn-primary">Ajouter un contenu</a>
           </div>
 
           <app-course-navbar [courseId]="courseId!" [userRole]="userRole"
