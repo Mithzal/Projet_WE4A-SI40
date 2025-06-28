@@ -3,7 +3,6 @@ import {UeContent, UeReturn} from "../../../models/ue.model";
 import {FileService} from "../../services/files.service";
 import {UsersService} from "../../services/users.service";
 import {AssignmentService} from "../../services/assignment.service";
-import {Files} from "../../../models/file.model";
 
 @Component({
   selector: 'app-content',
@@ -259,12 +258,11 @@ export class ContentComponent implements OnInit {
     }
 
     // Create custom filename: username_contentname_filename
-    const fileExt = this.selectedFile.name.split('.').pop() || '';
     const sanitizedTitle = this.content.title.replace(/\s+/g, '_').replace(/[^\w]/g, '');
     const sanitizedUsername = this.userName.replace(/\s+/g, '_').replace(/[^\w]/g, '');
 
     // Create a new file with the custom name
-    const customFileName = `${sanitizedUsername}_${sanitizedTitle}_${Date.now()}.${fileExt}`;
+    const customFileName = `${sanitizedUsername}_${sanitizedTitle}_${this.selectedFile.name}`;
     const customFile = new File(
       [this.selectedFile],
       customFileName,

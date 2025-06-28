@@ -53,10 +53,14 @@ exports.uploadFile = (req, res) => {
     }
 
     try {
+      // Convertir le chemin absolu en chemin relatif
+      const absolutePath = req.file.path;
+      const relativePath = path.basename(absolutePath);
+
       // Créer l'objet fichier après que multer ait traité la requête
       const fichier = new Fichier({
         nom: req.file.originalname,
-        chemin: req.file.path,
+        chemin: relativePath,
         taille: req.file.size,
         uploadedBy : req.body.uploadedBy,
         type: req.file.mimetype,
@@ -105,7 +109,11 @@ exports.downloadFile = async (req, res) => {
       return res.status(404).json({ message: 'Fichier non trouvé' });
     }
 
-    if (!fs.existsSync(fichier.chemin)) {
+    // Construire le chemin complet à partir du chemin relatif stocké
+    const uploadDir = path.join(__dirname, '../uploads');
+    const fullPath = path.join(uploadDir, fichier.chemin);
+
+    if (!fs.existsSync(fullPath)) {
       return res.status(404).json({ message: 'Fichier physique non trouvé sur le serveur' });
     }
 
@@ -122,7 +130,7 @@ exports.downloadFile = async (req, res) => {
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
 
     // Utiliser createReadStream
-    const fileStream = fs.createReadStream(fichier.chemin);
+    const fileStream = fs.createReadStream(fullPath);
     fileStream.pipe(res);
 
     fileStream.on('error', (err) => {
@@ -147,8 +155,12 @@ exports.deleteFile = async (req, res) => {
       return res.status(404).json({ message: 'Fichier non trouvé' });
     }
 
+    // Construire le chemin complet à partir du chemin relatif stocké
+    const uploadDir = path.join(__dirname, '../uploads');
+    const fullPath = path.join(uploadDir, fichier.chemin);
+
     // Supprimer le fichier physique du serveur
-    fs.unlink(fichier.chemin, async (err) => {
+    fs.unlink(fullPath, async (err) => {
       if (err) {
         console.error("Erreur de suppression du fichier physique:", err);
         return res.status(500).json({ message: 'Erreur lors de la suppression du fichier physique' });
