@@ -14,10 +14,12 @@ import {UsersService} from "../../services/users.service";
 export class AddContentComponent implements OnInit {
   contentForm: FormGroup;
   courseId: string | null = null;
-  contentTypes = ['info', 'warning', 'file','return'];
+  contentTypes = ['info', 'warning', 'file', 'assignement'];
   isSubmitting = false;
   errorMessage = '';
   hasFile = false;
+  hasReturnDate = false;
+  enableReturnDate = false;
 
   constructor(
     private fb: FormBuilder,
@@ -29,9 +31,11 @@ export class AddContentComponent implements OnInit {
   ) {
     this.contentForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
-      type: ['text', Validators.required],
+      type: ['info', Validators.required],
       text: ['', Validators.required],
-      file: [null]
+      file: [null],
+      enableReturnDate: [false],
+      returnDate: [null]
     });
   }
 
@@ -41,10 +45,30 @@ export class AddContentComponent implements OnInit {
     // Initialisation de hasFile basée sur la valeur initiale du type
     const initialType = this.contentForm.get('type')?.value;
     this.hasFile = ['file'].includes(initialType);
+    this.hasReturnDate = ['assignement'].includes(initialType);
 
-    // Surveiller les changements de type pour gérer l'affichage du champ file
+    // Surveiller les changements de type pour gérer l'affichage des champs
     this.contentForm.get('type')?.valueChanges.subscribe(type => {
       this.hasFile = ['file'].includes(type);
+      this.hasReturnDate = ['assignement'].includes(type);
+
+      // Reset returnDate checkbox when switching types
+      if (!this.hasReturnDate) {
+        this.contentForm.patchValue({
+          enableReturnDate: false,
+          returnDate: null
+        });
+      }
+    });
+
+    // Monitor the enableReturnDate checkbox
+    this.contentForm.get('enableReturnDate')?.valueChanges.subscribe(checked => {
+      this.enableReturnDate = checked;
+      if (!checked) {
+        this.contentForm.patchValue({
+          returnDate: null
+        });
+      }
     });
   }
 
@@ -72,29 +96,26 @@ export class AddContentComponent implements OnInit {
       text: this.contentForm.value.text
     };
 
+    // Add returnDate if it's an assignment and the date is enabled
+    if (this.contentForm.value.type === 'assignement' && this.contentForm.value.enableReturnDate) {
+      newContent.returnDate = this.contentForm.value.returnDate;
+    }
+
     const file = this.contentForm.value.file;
 
     if (this.courseId) {
       if (file && this.hasFile) {
         // Si un fichier est associé, d'abord l'uploader puis créer le contenu
-        const formData = new FormData();
-        formData.append('file', file);
-
         this.fileService.uploadFile(file, this.courseId, this.userService.getCurrentUserId()!, this.contentForm.value.text).subscribe(
           response => {
             newContent.fileId = response.fichier._id;
             this.addContentToCourse(newContent);
-            console.log(newContent)
+            console.log('Content with file:', newContent);
           },
           error => {
             this.handleError(error);
           }
-        )
-
-
-
-        // Pour l'instant, on ajoute directement le contenu sans fichier
-
+        );
       } else {
         // Ajouter directement le contenu sans fichier
         this.addContentToCourse(newContent);

@@ -1,9 +1,19 @@
+export interface UeReturn {
+  userId: string;
+  fileId: string;
+  fileName: string;
+  submissionDate: Date;
+  _id?: string;
+}
+
 export interface UeContent {
   type: string;
   title: string;
   text: string;
   fileId?: string;
   _id?: string;
+  returnDate?: Date;
+  returns?: UeReturn[];
 }
 
 export class Ue {

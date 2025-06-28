@@ -37,6 +37,25 @@
               </select>
             </div>
 
+            <!-- Return date for assignments -->
+            <div class="mb-3" *ngIf="hasReturnDate">
+              <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="enableReturnDate" formControlName="enableReturnDate">
+                <label class="form-check-label" for="enableReturnDate">
+                  Définir une date limite de rendu
+                </label>
+              </div>
+              <div *ngIf="enableReturnDate" class="mt-2">
+                <label for="returnDate" class="form-label">Date limite de rendu</label>
+                <input
+                  type="datetime-local"
+                  id="returnDate"
+                  formControlName="returnDate"
+                  class="form-control">
+                <small class="text-muted">Les étudiants ne pourront pas déposer de fichier après cette date.</small>
+              </div>
+            </div>
+
             <!-- Contenu texte -->
             <div class="mb-3">
               <label for="text" class="form-label">Contenu</label>

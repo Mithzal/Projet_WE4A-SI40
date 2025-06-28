@@ -32,6 +32,11 @@ router.delete('/:id', auth,
     ueController.delete
 );
 
+// Assignment submission routes
+router.post('/assignement/submit/:ueId/:contentId', auth, ueController.submitAssignment);
+router.get('/assignement/user/:ueId/:contentId/:userId', auth, ueController.getUserAssignment);
+router.delete('/assignement/delete/:ueId/:contentId/:returnId', auth, ueController.deleteAssignment);
+
 router.get('/name/:id', auth, ueController.getNameById);
 router.get('/:id', auth, ueController.getDataById);
 router.post('/content/:id', auth, ueController.addContent);
