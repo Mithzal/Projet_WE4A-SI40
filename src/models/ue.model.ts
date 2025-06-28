@@ -23,6 +23,7 @@ export class Ue {
     public description: string,
     public credits: number,
     public instructorId: string,
+    public imageFileId?: string, // Nouvel attribut pour stocker l'ID de l'image de la carte de cours
     public _id ?: string,
     public content ?: UeContent[]
   ) {
@@ -32,6 +33,7 @@ export class Ue {
     this.description = description
     this.credits = credits
     this.instructorId = instructorId
+    this.imageFileId = imageFileId
     this.content = content;
 
   }

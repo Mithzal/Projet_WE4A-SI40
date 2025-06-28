@@ -25,6 +25,11 @@ const uesSchema = new Schema({
     ref: 'Users',
     required: true
   },
+  "imageFileId": {
+    type: Schema.Types.ObjectId,
+    ref: 'Files',
+    required: false
+  },
  "content": [
    {
      "type": {

@@ -100,7 +100,17 @@ exports.listerFichiers = async (req, res) => {
 
 exports.downloadFile = async (req, res) => {
   const fileId = req.params.id;
-  console.log("req",req)
+  console.log("req", req.method)
+
+  // Gérer les requêtes OPTIONS (preflight)
+  if (req.method === 'OPTIONS') {
+    // Configurer les en-têtes CORS pour les requêtes préalables (preflight)
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Max-Age', '86400');  // 24 heures
+    return res.status(204).end();  // Réponse vide avec statut 204 No Content
+  }
 
   try {
     const fichier = await Fichier.findById(fileId);
@@ -120,14 +130,31 @@ exports.downloadFile = async (req, res) => {
     // S'assurer que le nom du fichier est bien défini
     const fileName = fichier.nom || path.basename(fichier.chemin);
 
-    // Configurer les en-têtes avec deux formats pour une meilleure compatibilité
+    // Ajouter des en-têtes CORS complets
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    // Pour répondre aux navigateurs qui bloquent les ressources opaques
+    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+
+    // Modifier l'en-tête Content-Disposition pour afficher l'image dans le navigateur au lieu de la télécharger
+    // Si c'est une image, on utilise 'inline' au lieu de 'attachment'
+    const isImage = fichier.type?.startsWith('image/');
+    const disposition = isImage ? 'inline' : 'attachment';
+
     const encodedFilename = encodeURIComponent(fileName);
     res.setHeader('Content-Disposition',
-      `attachment; filename="${encodedFilename}"; filename*=UTF-8''${encodedFilename}`);
+      `${disposition}; filename="${encodedFilename}"; filename*=UTF-8''${encodedFilename}`);
     res.setHeader('Content-Type', fichier.type || 'application/octet-stream');
 
-    // Ajouter Cache-Control pour éviter la mise en cache
-    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    // Ajouter Cache-Control avec des valeurs qui permettent la mise en cache côté client pour les images
+    if (isImage) {
+      // Permettre la mise en cache pendant 1 heure pour les images
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+    } else {
+      // Pas de mise en cache pour les autres types de fichiers
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    }
 
     // Utiliser createReadStream
     const fileStream = fs.createReadStream(fullPath);
