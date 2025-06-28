@@ -9,6 +9,11 @@ import { User } from '../../models/user.model';
 interface NewsItem {
   text: string;
   courseId: string;
+  courseCode?: string;
+  contentId?: string;
+  contentTitle?: string;
+  date?: Date;
+  type?: string;
 }
 
 @Component({
@@ -37,6 +42,7 @@ export class UnCoursComponent implements OnInit {
   showParticipants = false;
   participants: User[] = [];
   currentUserId: string | null = null;
+  isLoadingNews: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -85,6 +91,8 @@ export class UnCoursComponent implements OnInit {
        this.service.getDataById(courseId).subscribe(
         (data: Ue) => {
           this.course = data;
+          // Reload news with the updated course data
+          this.loadCourseNews(courseId);
         },
         (error) => {
           console.error('Error fetching course data:', error);
@@ -107,13 +115,47 @@ export class UnCoursComponent implements OnInit {
   }
 
   loadCourseNews(courseId: string | null): void {
-    // This would be an API call in a real app
-    if (courseId) {
-      this.courseNewsItems = [
-        { text: 'Nouveau chapitre disponible', courseId: courseId },
-        { text: 'Date d\'examen publiée', courseId: courseId }
-      ];
+    this.isLoadingNews = true;
+
+    // Reset news items
+    this.courseNewsItems = [];
+
+    if (!courseId || !this.course) {
+      this.isLoadingNews = false;
+      return;
     }
+
+    // Extract course code for consistent display
+    const courseCode = this.course.code || 'Course';
+
+    // Check if the course has content items with dates
+    if (this.course.content && this.course.content.length > 0) {
+      // Filter for content items with dates and create news items
+      this.course.content.forEach(content => {
+        if (content.limitDate) {
+          this.courseNewsItems.push({
+            text: `${courseCode}: ${content.title}`,
+            courseId: courseId,
+            courseCode: courseCode,
+            contentId: content._id,
+            contentTitle: content.title,
+            date: new Date(content.limitDate),
+            type: content.type || 'content'
+          });
+        }
+      });
+    }
+
+    // Sort news items by date (most recent first)
+    if (this.courseNewsItems.length > 0) {
+      this.courseNewsItems.sort((a, b) => {
+        if (!a.date) return 1;
+        if (!b.date) return -1;
+        return b.date.getTime() - a.date.getTime(); // Changed to descending order (newest first)
+      });
+    }
+
+    this.isLoadingNews = false;
   }
 
   isTeacherOrAdmin(): boolean {
