@@ -31,7 +31,7 @@
             <app-course-card
               [name]="course.name"
               [code]="course.code || ''"
-              [imageUrl]="'/assets/images/default-course.jpg'"
+              [imageFileId]="course.imageFileId!"
               [courseUrl]="'/cours/' + course._id"
               [progression]="getCourseProgress(course._id!)"
               [nomimg]="'Image de ' + course.name">

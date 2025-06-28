@@ -5,7 +5,7 @@ const User = require('../models/user'); // Ensuring we use the correct model ref
 exports.index = async (req, res) => {
   try {
     // Find all courses but select only the required fields
-    const ues = await Ues.find({}, 'code name description credits instructorId');
+    const ues = await Ues.find({}, 'code name description credits instructorId imageFileId');
 
     // Transform the result to replace instructorId with instructor name
     const uesToSend = await Promise.all(ues.map(async (ue) => {
@@ -45,7 +45,8 @@ exports.insert = async (req, res) => {
     name: req.body.name,
     credits: req.body.credits,
     description: req.body.description,
-    instructorId: req.body.instructorId
+    instructorId: req.body.instructorId,
+    imageFileId: req.body.imageFileId // Ajout du champ imageFileId
   });
 
   try {
