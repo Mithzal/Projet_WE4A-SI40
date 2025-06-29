@@ -1,0 +1,16 @@
+a {
+  background-color: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+
+a:hover {
+  background-color: #2980b9;
+}
+
+.course-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}

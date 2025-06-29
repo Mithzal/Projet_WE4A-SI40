@@ -1,0 +1,57 @@
+body {
+  font-family: Verdana, serif;
+  background-color: #E0ECF9;
+  margin: 0;
+  padding-bottom: 20px;
+}
+
+.min-vh-75 {
+  min-height: 75vh;
+}
+
+/* Pour les images dans les cartes */
+img.img-fluid {
+  height: 70%;
+  object-fit: cover;
+}
+
+/* Champs de recherche et de tri, si réutilisés */
+#search-bar,
+#sort-courses {
+  padding: 8px;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Table stylée */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th, table td {
+  padding: 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Lien stylé */
+a:hover {
+  color: #2980b9 !important;
+}

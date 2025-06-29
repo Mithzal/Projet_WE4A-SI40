@@ -1,0 +1,50 @@
+/* -------------------------------------------------- */
+/*  Base : même ombre, même rayon et color‑bar à gauche */
+/* -------------------------------------------------- */
+.content-container {
+  box-shadow: 0 0 10px rgba(0,0,0,.1);
+  border-left-width: 5px !important; /* assurée par les classes *.style */
+}
+
+/* -------------------------------------------------- */
+/*  GROUPES de couleurs : BLEU, VIOLET, ROUGE           */
+/* -------------------------------------------------- */
+.blue-style   { border-left: 5px solid #3498db; background-color: #eaf4fc; }
+.violet-style { border-left: 5px solid #9C39ED; background-color: #EBDAFF; }
+.red-style    { border-left: 5px solid #e74c3c; background-color: #fdecea; }
+
+/* -------------------------------------------------- */
+/*  Icônes circulaires                                */
+/* -------------------------------------------------- */
+.circle-icon {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  color: #fff;                        /* couleur du pictogramme */
+  font-size: 1.6rem;                  /* taille du pictogramme */
+  box-shadow: 0 0 10px rgba(0,0,0,.12);
+}
+
+/* Couleurs de fond pour le disque */
+.bg-blue   { background-color: #3498db; }
+.bg-violet { background-color: #9C39ED; }
+.bg-red    { background-color: #e74c3c; }
+
+/* -------------------------------------------------- */
+/*  Bouton violet (hérité du design #1)               */
+/* -------------------------------------------------- */
+.btn-purple {
+  background-color: #9C39ED;
+  border-color:     #9C39ED;
+}
+.btn-purple:hover {
+  background-color: #8631CC;
+  border-color:     #8631CC;
+}
+
+/* Badge violet (Bootstrap ne propose pas cette teinte) */
+.bg-purple {
+  background-color: #9C39ED !important;
+}

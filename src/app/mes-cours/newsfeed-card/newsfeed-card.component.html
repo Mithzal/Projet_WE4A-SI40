@@ -1,0 +1,33 @@
+<li class="news-item mb-3">
+  <a [routerLink]="['/cours', courseId]" class="text-decoration-none">
+    <div class="card shadow-sm">
+      <div class="card-body p-2">
+        <div class="d-flex align-items-center">
+          <div class="flex-shrink-0 me-2">
+            <i class="bi {{ getTypeIcon() }} fs-5" [ngClass]="getUrgencyClass()"></i>
+          </div>
+          <div class="flex-grow-1">
+            <div class="d-flex justify-content-between align-items-start">
+              <span class="badge rounded-pill"
+                    [ngClass]="{
+                      'bg-info': type === 'info',
+                      'bg-warning': type === 'warning',
+                      'bg-danger': type === 'assignement',
+                      'bg-primary': type === 'file'
+                    }">{{ courseCode }}</span>
+              <small class="text-muted" *ngIf="date">
+                {{ date | date:'dd/MM/yyyy HH:mm' }}
+              </small>
+            </div>
+            <h6 class="card-title mb-0 mt-1">{{ contentTitle }}</h6>
+            <div class="d-flex justify-content-end">
+              <small [ngClass]="getUrgencyClass()" class="fw-bold">
+                {{ getDaysRemaining() }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+</li>

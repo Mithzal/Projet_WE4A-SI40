@@ -1,0 +1,23 @@
+body {
+  font-family: Verdana, serif;
+  background-color: #E0ECF9;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+.main-content {
+  max-width: 960px;
+}
+
+/* Lien dans le tableau */
+a {
+  color: black;
+}
+
+a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}

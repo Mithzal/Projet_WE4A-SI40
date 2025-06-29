@@ -1,0 +1,23 @@
+<h3>Assigner une UE à un utilisateur</h3>
+<form (ngSubmit)="onSubmit()">
+  <label for="user">Utilisateur :</label>
+  <select id="user" [(ngModel)]="selectedUserId" name="user" required>
+    <option *ngFor="let user of users" [value]="user._id">
+      {{ user.name }} ({{ user.email }})
+    </option>
+  </select>
+
+  <label for="ue">UE :</label>
+  <select id="ue" [(ngModel)]="selectedUeId" name="ue" required>
+    <option *ngFor="let ue of ues" [value]="ue._id">
+      {{ ue.code }} - {{ ue.name }}
+    </option>
+  </select>
+  <div *ngIf="errorMessage" class="alert alert-danger" style="color: red">
+    {{ errorMessage }}
+  </div>
+
+  <button type="submit">Assigner</button>
+  <button type="button" (click)="onCancel()">Annuler</button>
+</form>
+

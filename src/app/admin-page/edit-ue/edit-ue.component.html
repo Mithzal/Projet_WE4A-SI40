@@ -1,0 +1,17 @@
+<h3>Modifier l'UE {{ ueId }}</h3>
+<form [formGroup]="ueForm" (ngSubmit)="onSubmit()">
+  <label>Code:  <input type="text" formControlName="code">  </label><br>
+  <label>Titre de l'UE:  <input type="text" formControlName="name"></label><br>
+  <label>Description de l'UE:  <input id="description" formControlName="description"></label><br>
+
+  <label>Crédits ECTS:  <input type="number" formControlName="credits"></label><br>
+  <label for="instructorId">Teacher :</label>
+  <select id="instructorId" formControlName="instructorId">
+    <option value="" disabled>Choisir un enseignant</option>
+    <option *ngFor="let teacher of teachers" [value]="teacher._id">{{ teacher.name }}</option>
+  </select><br>
+
+
+    <button type="submit">Enregistrer</button>
+    <button type="button" (click)="onClose()">Annuler</button>
+</form>

@@ -1,0 +1,12 @@
+<div class="logs-list-container">
+  <div style="display: flex; align-items: center; gap: 1rem;">
+    <h2 style="margin: 0;">Logs</h2>
+    <select [(ngModel)]="selectedType" (change)="filterLogs()">
+      <option *ngFor="let type of logTypes" [value]="type">{{ getTypeLabel(type) }}</option>
+    </select>
+  </div>
+  <ul>
+    <li *ngFor="let message of messages">{{ message }}</li>
+  </ul>
+  <p *ngIf="!messages || messages.length === 0">Aucun log à afficher.</p>
+</div>

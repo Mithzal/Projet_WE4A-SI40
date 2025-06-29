@@ -1,0 +1,35 @@
+body {
+  background: #E0ECF9;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+.hidden {
+  transform: translateX(-100%);
+}
+
+.toggle-btn {
+  position: fixed;
+  top: 45%;
+  left: 250px;
+  background: white;
+  color: black;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 500;
+  transition: left 0.3s ease;
+}
+
+.main-content {
+  flex: 1;
+  background: white;
+  padding: 1% 2%;
+  margin-left: 19%;
+  margin-right: 2%;
+  margin-top: 6%;
+  transition: margin-left 0.3s ease;
+  border-radius: 10px;
+}
+
+.sidebar-collapsed .toggle-btn   { left: 0; }
+.sidebar-collapsed .main-content { margin-left: 2%; }

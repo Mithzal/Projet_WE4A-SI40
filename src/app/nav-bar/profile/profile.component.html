@@ -1,0 +1,21 @@
+<div id="profilePopup" class="popup">
+  <div class="popup-box">
+    <span class="close" (click)="closeProfilePopup()">&times;</span>
+    <div class="popup-content">
+      <div class="profile">
+        <h2>Informations de l'utilisateur</h2>
+        <p>{{currentUser.name}}</p>
+        <p>Email: {{currentUser.email}}</p>
+      </div>
+      <div class="popup-UE">
+        <h2>Mes UEs</h2>
+        <ul *ngFor="let ue of ues">
+          <li>{{ue.name}}</li>
+        </ul>
+      </div>
+    </div>
+    <button (click)="OpenEditProfile()" class="popup-button">Modifier</button>
+  </div>
+</div>
+<app-profile-option></app-profile-option>
+

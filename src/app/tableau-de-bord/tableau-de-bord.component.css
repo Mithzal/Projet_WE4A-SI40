@@ -1,0 +1,21 @@
+/* ---- Palette & base ---- */
+body {
+  font-family: Verdana, serif;
+  background-color: #E0ECF9;   /* arrière‑plan bleu clair “institutionnel” */
+}
+
+/* ---- Ajustements spécifiques (le reste est géré par Bootstrap) ---- */
+
+
+/* Exemple de réduction de hauteur d’image dans vos <app-course-card>
+   (si votre composant n’utilise pas déjà les classes Bootstrap).  */
+app-course-card img {
+  height: 150px;
+  object-fit: cover;
+  border-radius: .5rem;
+}
+
+.badge {
+  font-size: .85rem;
+  text-transform: capitalize;
+}

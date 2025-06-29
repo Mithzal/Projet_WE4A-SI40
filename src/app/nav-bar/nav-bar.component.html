@@ -1,0 +1,74 @@
+<header class="header">
+  <div class="menu">
+    <!-- Logo UTBM, redirige vers la page d'accueil -->
+    <a class="nav-link" routerLink="/">
+      <button class="logo-button" >
+        <img src="assets/logo_utbm.png" alt="Logo" class="logo">
+      </button>
+    </a>
+    <!-- Navigation principale -->
+    <a routerLink="/recherche">
+      <button>Recherche de Cours</button>
+    </a>
+
+    <!-- Only show these options if user is authenticated -->
+    <ng-container *ngIf="isAuthenticated">
+      <a routerLink="/mes-cours">
+        <button>Mes cours</button>
+      </a>
+      <a routerLink="/tableau-de-bord">
+        <button>Tableau de bord</button>
+      </a>
+    </ng-container>
+
+    <!-- Menu déroulant pour les sites externes de l'UTBM -->
+    <div class="dropdown">
+      <button class="dropbtn">Sites de l'UTBM ▼</button>
+      <div class="dropdown-content">
+        <a href="https://outlook.office.com/mail/">Outlook</a>
+        <a href="https://utbm.sharepoint.com/sites/Portail?sw=auth">My UTBM</a>
+        <a href="https://bibliotheque.utbm.fr/">Bibliotheque</a>
+        <a href="https://ae.utbm.fr/">AE</a>
+      </div>
+    </div>
+
+    <!-- Affichage du bouton d'administration si l'utilisateur est admin -->
+    <a routerLink="/admin-page" *ngIf="isAuthenticated && isAdmin">
+      <button>Administration</button>
+    </a>
+
+    <!-- Menu déroulant du profil utilisateur -->
+    <div class="dropdown_account">
+      <button class="profile-button_right" (click)="toggleDropdown()">
+        <img class="profile_picture" src="assets/no_image.webp" alt="Profile Icon">
+      </button>
+
+      <!-- Profile dropdown for authenticated users -->
+      <div class="dropdown-content_account" id="profileDropdown" *ngIf="isAuthenticated">
+        <a href="javascript:void(0)" id="profile" (click)="openProfilePopup()">Profil</a>
+        <a href="javascript:void(0)" id="grades" (click)="openGradePopup()">Notes</a>
+        <a href="javascript:void(0)" id="logout" (click)="logout()">Déconnexion</a>
+      </div>
+    </div>
+
+    <div id="content"></div>
+
+    <!-- Profile and grade popups only for authenticated users -->
+    <ng-container *ngIf="isAuthenticated">
+      <!-- Popup d'affichage et d'édition du profil utilisateur -->
+      <app-profile></app-profile>
+
+      <!-- Popup d'affichage des notes -->
+      <app-grade-popup></app-grade-popup>
+    </ng-container>
+
+    <!-- Login popup for unauthenticated users -->
+    <div class="login-popup" *ngIf="showLoginPopup">
+      <div class="login-popup-content">
+        <span class="close" (click)="toggleLoginPopup()">&times;</span>
+        <app-login (loginSuccess)="handleLoginSuccess()"></app-login>
+      </div>
+    </div>
+
+  </div>
+</header>
