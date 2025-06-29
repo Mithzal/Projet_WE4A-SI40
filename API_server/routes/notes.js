@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/auth'); // Import auth middleware
 
 // Require controller module
 const notesController = require('../controllers/notesController');
 
-router.get('/', notesController.index);
-router.post('/', notesController.insert);
-router.put('/:id', notesController.update);
-router.delete('/:id', notesController.delete);
-router.get('/course/:ueId', notesController.findByCourse);
-router.get('/student/:studentId', notesController.findByStudent);
+// All routes are protected
+router.get('/', auth, notesController.index);
+router.post('/', auth, notesController.insert);
+router.put('/:id', auth, notesController.update);
+router.delete('/:id', auth, notesController.delete);
+router.get('/course/:ueId', auth, notesController.findByCourse);
+router.get('/student/:studentId', auth, notesController.findByStudent);
 
 module.exports = router;
-

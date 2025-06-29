@@ -1,69 +1,35 @@
-<div class="container">
-  <main class="main-content">
-    <h1>Tableau de bord</h1>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 
-    <div class="section">
-      <div class="course-controls">
-        <h2>Mes cours</h2>
-      </div>
-      <div class="courses">
-        <app-course-card
-          *ngFor="let course of userCourses"
-          [name]="course.name"
-          [code]="course.code"
-          [imageUrl]="'/assets/images/default-course.jpg'"
-          [courseUrl]="'/cours/' + course._id"
-          [progression]="getCourseProgress(course._id!)"
-          [nomimg]="'Image de ' + course.name">
-        </app-course-card>
+<body>
+<!-- Bootstrap container -->
+  <div class="container my-5">
+    <main class="bg-white p-4 rounded-3 shadow-sm">
+      <h1 class="mb-4">Tableau de bord</h1>
 
-        <!-- Message if no courses available -->
-        <div *ngIf="userCourses.length === 0" class="empty-state">
-          Vous n'êtes inscrit à aucun cours
-        </div>
-      </div>
-    </div>
+      <!-- ==== Cours consultés récemment ==== -->
+      <section class="mb-5">
+        <h2 class="h4 mb-3">Cours consultés récemment</h2>
 
-    <div class="section">
-      <h2>Cours consultés récemment</h2>
-      <div class="courses">
-        <app-course-card
-          *ngFor="let ue of getRecentCourses()"
-          [name]="ue.name"
-          [code]="ue.code"
-          [imageUrl]="'/assets/images/default-course.jpg'"
-          [courseUrl]="'/cours/' + ue._id"
-          [progression]="getCourseProgress(ue._id!)"
-          [nomimg]="'Image de ' + ue.name">
-        </app-course-card>
+        <div class="row g-3">
+          <div class="col-6 col-md-4 col-lg-3"
+               *ngFor="let ue of getRecentCourses()">
+            <app-course-card
+              [name]="ue.name"
+              [code]="ue.code"
+              [imageUrl]="'/assets/images/default-course.jpg'"
+              [courseUrl]="'/cours/' + ue._id"
+              [progression]="getCourseProgress(ue._id!)"
+              [nomimg]="'Image de ' + ue.name">
+            </app-course-card>
+          </div>
 
-        <!-- Message if no courses available -->
-        <div *ngIf="getRecentCourses().length === 0" class="empty-state">
-          Aucun cours consulté récemment
-        </div>
-      </div>
-    </div>
-
-    <!-- Removed favorite courses section as it's commented out in the TS file -->
-
-    <div class="calendar-section">
-      <h2>Calendar</h2>
-      <div id="calendar">
-        <!-- Calendar would be rendered here through a library like FullCalendar -->
-        <div class="upcoming-events">
-          <h3>Événements à venir</h3>
-          <ul>
-            <li *ngFor="let event of calendarEvents">
-              <div class="event-date">{{ event.date }}</div>
-              <div class="event-title">{{ event.title }}</div>
-              <div class="event-type" [ngClass]="event.type">{{ event.type }}</div>
-            </li>
-          </ul>
-          <div *ngIf="calendarEvents.length === 0" class="empty-state">
-            Aucun événement à venir
+          <div *ngIf="getRecentCourses().length === 0"
+               class="col-12 text-center text-muted py-5">
+            Aucun cours consulté récemment
           </div>
         </div>
-      </div>
-    </div>
-  </main>
-</div>
+      </section>
+    </main>
+  </div>
+ </body>

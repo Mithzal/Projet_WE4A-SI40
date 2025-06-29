@@ -1,84 +1,23 @@
 body {
   font-family: Verdana, serif;
-  display: flex;
   background-color: #E0ECF9;
   margin: 0;
-}
-
-.container {
   display: flex;
-  width: 96%;
-  margin-top: 6%;
-  margin-left: 2%;
-  margin-right: 2%;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem 0;
 }
 
 .main-content {
-  border-radius: 10px;
-  background: #FFFFFF;
-  padding: 20px;
-  flex-grow: 1;
+  max-width: 960px;
 }
 
-a{
+/* Lien dans le tableau */
+a {
   color: black;
 }
 
 a:hover {
   color: #2980b9;
-}
-
-/* style des blocs de news dans la page d'accueil */
-.grid-container {
-  display: grid;
-  grid-template-columns: 50% 50% 50%;
-  text-align: center;
-  width: 60%;
-  margin:5%;
-  grid-column-gap: 2%;
-}
-
-.grid-container-img {
-  width: 100%;
-  height: 70%;
-  border-radius: 3%;
-}
-
-#search-bar {
-  padding: 8px;
-  width: 30%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-#sort-courses {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-/* table in recherche cours */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-table th, table td {
-  padding: 15px; /* Add padding for more space */
-  text-align: left;
-  border: 1px solid #ddd; /* Add borders for better separation */
-}
-
-table th {
-  background-color: #f4f4f4; /* Light background for headers */
-  font-weight: bold;
-}
-
-table tr:nth-child(even) {
-  background-color: #f9f9f9; /* Alternate row colors for better readability */
-}
-
-table tr:hover {
-  background-color: #f1f1f1; /* Highlight row on hover */
+  text-decoration: underline;
 }

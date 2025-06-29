@@ -1,6 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {UsersService} from "../../services/users.service";
+import { UsersService } from '../../services/users.service';
+import { LogsService } from '../../services/logs.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { User } from '../../../models/user.model';
 
 @Component({
   selector: 'app-create-user',
@@ -10,9 +13,16 @@ import {UsersService} from "../../services/users.service";
 export class CreateUserComponent implements OnInit {
   ueForm!: FormGroup;
   @Output() close = new EventEmitter<void>();
-  constructor(private fb: FormBuilder, private service : UsersService) { }
+  @Output() refresh = new EventEmitter<void>();
+  CurrentUser: User | null = null;
+  constructor(
+    private fb: FormBuilder,
+    private service: UsersService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
+    this.CurrentUser = this.authService.getCurrentUser();
     this.ueForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -33,10 +43,31 @@ export class CreateUserComponent implements OnInit {
           console.error('Erreur lors de la création de l\'utilisateur', error);
         }
       });
-    }else{
+    } else {
+      const errors: string[] = [];
+      const emailCtrl = this.ueForm.get('email');
+      const passwordCtrl = this.ueForm.get('password');
+      if (emailCtrl && emailCtrl.invalid) {
+        if (emailCtrl.errors?.['required']) {
+          errors.push('L\'email est requis.');
+        } else if (emailCtrl.errors?.['email']) {
+          errors.push('Le format de l\'email est incorrect.');
+        }
+      }
+      if (passwordCtrl && passwordCtrl.invalid) {
+        if (passwordCtrl.errors?.['required']) {
+          errors.push('Le mot de passe est requis.');
+        } else if (passwordCtrl.errors?.['minlength']) {
+          errors.push('Le mot de passe doit contenir au moins 6 caractères.');
+        }
+      }
+      if (errors.length > 0) {
+        alert('Erreur(s) dans le formulaire :\n' + errors.join('\n'));
+      } else {
+        alert('Formulaire invalide.');
+      }
       console.log('Formulaire invalide');
       console.log(this.ueForm.value);
-
     }
   }
 

@@ -1,5 +1,6 @@
 const user = require('../models/user');
 const Ues = require("../models/ue");
+const jwt = require('jsonwebtoken');
 
 // Afficher tous les utilisateurs
 exports.index = async (req, res) => {
@@ -63,7 +64,6 @@ exports.delete = async (req, res) => {
   }
 }
 
-
 exports.addCourse = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -83,7 +83,7 @@ exports.addCourse = async (req, res) => {
 
     const updatedUser = await user.findByIdAndUpdate(
       userId,
-      { push: { courses: { courseId: courseId } } },
+      { $push: { courses: { courseId: courseId } } },
       { new: true }
     );
 
@@ -102,13 +102,19 @@ exports.getCourseFromUserId = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const courseIds = userWithCourses.courses.map(course =>
-      course.courseId ? course.courseId._id : course
-    ).filter(id => id);
+    // Create an array of courses with lastAccess information
+    const coursesWithAccess = [];
 
-    const uesList = await Ues.find({ _id: { $in: courseIds } });
+    for (const course of userWithCourses.courses) {
+      if (course.courseId) {
+        // Create a course object with both UE details and lastAccess information
+        const courseData = course.courseId.toObject();
+        courseData.lastAccess = course.lastAccess;
+        coursesWithAccess.push(courseData);
+      }
+    }
 
-    res.json(uesList);
+    res.json(coursesWithAccess);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -147,4 +153,124 @@ exports.getStudents = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 }
+
+exports.getNameById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const foundUser = await user.findById(userId);
+    if (!foundUser) {
+      return res.status(404).json({message: 'Utilisateur non trouvé'});
+    }
+    res.json({name: foundUser.name});
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+
+}
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Find user by email
+    const foundUser = await user.findOne({ email });
+
+    if (!foundUser) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // Validate password (in production, use bcrypt to compare hashed passwords)
+    if (foundUser.password !== password) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // Generate token
+    const token = jwt.sign(
+      { userId: foundUser._id, role: foundUser.role },
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '24h' }
+    );
+
+    // Log the login action
+    const loginLog = require('../models/log');
+    await loginLog.create({
+      type: 'logging',
+      message: `Utilisateur connecté : ${foundUser.name || foundUser.email || 'inconnu'} à ${new Date().toLocaleString()}`,
+      userId: foundUser._id,
+      timestamp: new Date()
+    });
+
+
+    // Return user data and token
+    res.json({
+      token,
+      user: {
+        _id: foundUser._id,
+        name: foundUser.name,
+        email: foundUser.email,
+        role: foundUser.role,
+        courses : foundUser.courses
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.logout = async (req, res) => {
+  try {
+    const Log = require('../models/log');
+    await Log.create({
+      type: 'disconnect',
+      message: `Utilisateur déconnecté : ${req.userData.name || req.userData.userId || 'inconnu'} à ${new Date().toLocaleString()}`,
+      userId: req.userData.userId,
+      timestamp: new Date()
+    });
+    res.json({ message: 'Déconnexion réussie' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+// Obtenir les utilisateurs inscrits à une UE
+exports.getUsersByUe = async (req, res) => {
+  try {
+    const users = await user.find({ 'courses.courseId': req.params.ueId }, 'name email role');
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Update lastAccess for a course
+exports.updateLastAccess = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const courseId = req.params.courseId;
+    const currentTime = new Date();
+
+    // Find the user and update the lastAccess date for the specific course
+    const updatedUser = await user.findOneAndUpdate(
+      {
+        _id: userId,
+        'courses.courseId': courseId
+      },
+      {
+        $set: { 'courses.$.lastAccess': currentTime }
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User or course not found' });
+    }
+
+    res.json({
+      message: 'Last access updated successfully',
+      lastAccess: currentTime
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 

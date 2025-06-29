@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const forumSchema = new Schema({
-  "courseCode" : {
-    type: String,
+  "courseId" : {
+    type: Schema.Types.ObjectId,
+    ref: 'ues',
     required: true,
-    match: /^[A-Z]{2,3}\d{2}$/
   },
   "title": {
     type: String,
@@ -18,7 +18,7 @@ const forumSchema = new Schema({
       },
       "type": {
         type: String,
-        enum: ['announcement', 'assignment', 'discussion'],
+        enum: ['announcement', 'message'],
         required: true
       },
       "timestamp": {
@@ -26,7 +26,8 @@ const forumSchema = new Schema({
         default: Date.now
       },
       "author": {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref : 'Users',
         required: true
       }
     }

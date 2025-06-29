@@ -1,0 +1,24 @@
+<!-- Formulaire pour ajouter un nouveau message -->
+<div class="new-message-form mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="mb-0">Nouveau message</h4>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="addNewMessage()">
+        <div class="mb-3">
+          <label for="messageType" class="form-label">Type de message</label>
+          <select class="form-select" id="messageType" [(ngModel)]="newMessage.type" name="type" required>
+            <option value="announcement">Annonce</option>
+            <option value="message">Message</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="messageContent" class="form-label">Message</label>
+          <textarea class="form-control" id="messageContent" rows="3" [(ngModel)]="newMessage.content" name="content" placeholder="Votre message..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Publier</button>
+      </form>
+    </div>
+  </div>
+</div>

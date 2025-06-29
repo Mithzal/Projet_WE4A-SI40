@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UEsService } from "../services/ues.service";
 import { UsersService } from "../services/users.service";
+import { AuthService } from "../services/auth.service";
 import { User } from "../../models/user.model";
 import { Ue } from "../../models/ue.model";
 
@@ -19,16 +20,9 @@ interface CalendarEvent {
   styleUrls: ['./tableau-de-bord.component.css']
 })
 export class TableauDeBordComponent implements OnInit {
-  currentUser: User = {
-    _id: "684dc8793a0e6e40c1aa96e5",
-    name: "Alex Ramallo",
-    email: "alex.ramallo@mail.com",
-    role: "student",
-    courses: [],
-    password: "alex",
-  };
-
+  currentUser: User | null = null;
   userCourses: Ue[] = [];
+  recentCourses: Ue[] = []; // Add a separate array for recent courses sorted by lastAccess
 
   // Calendar events
   calendarEvents: CalendarEvent[] = [
@@ -48,33 +42,66 @@ export class TableauDeBordComponent implements OnInit {
     }
   ];
 
-  constructor(private usersService: UsersService) {
-    this.fetchUserCourses();
-    // Initialize calendar events if needed
-    // this.initializeCalendar();
-  }
+  constructor(
+    private usersService: UsersService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
+    // Get user from auth service
+    this.currentUser = this.authService.getCurrentUser();
+
+    // If user exists, fetch their courses
+    if (this.currentUser && this.currentUser._id) {
+      this.fetchUserCourses();
+    }
+
+    // Subscribe to changes in the current user
+    this.authService.currentUser$.subscribe(user => {
+      if (user) {
+        this.currentUser = user;
+        this.fetchUserCourses();
+      }
+    });
   }
 
   fetchUserCourses(): void {
-    this.usersService.getCourseFromUserId(this.currentUser._id!).subscribe({
-      next: (data) => {
-        this.userCourses = data;
-        console.log('User courses fetched:', this.userCourses);
-      },
-      error: (err) => {
-        console.error('Error fetching user courses:', err);
-      }
+    if (this.currentUser && this.currentUser._id) {
+      this.usersService.getCourseFromUserId(this.currentUser._id).subscribe({
+        next: (courses) => {
+          this.userCourses = courses;
+          // Sort the recent courses immediately when we get the data
+          this.updateRecentCourses();
+        },
+        error: (error) => {
+          console.error('Error fetching user courses:', error);
+        }
+      });
+    }
+  }
+
+  // Update the recent courses list sorted by lastAccess date
+  updateRecentCourses(): void {
+    // Filter courses that have been accessed at least once
+    const accessedCourses = this.userCourses.filter(course => course.lastAccess);
+
+    // Sort courses by lastAccess date (most recent first)
+    this.recentCourses = accessedCourses.sort((a, b) => {
+      if (!a.lastAccess) return 1;
+      if (!b.lastAccess) return -1;
+
+      // Convert string dates to Date objects if needed
+      const dateA = a.lastAccess instanceof Date ? a.lastAccess : new Date(a.lastAccess);
+      const dateB = b.lastAccess instanceof Date ? b.lastAccess : new Date(b.lastAccess);
+
+      // Sort in descending order (most recent first)
+      return dateB.getTime() - dateA.getTime();
     });
   }
 
   // Get recently accessed courses
   getRecentCourses(): Ue[] {
-    if (!this.currentUser.courses || this.userCourses.length === 0) {
-      return [];
-    }
-    return this.userCourses
+    return this.recentCourses;
   }
 
   // Get course progress
@@ -82,40 +109,4 @@ export class TableauDeBordComponent implements OnInit {
     // Mock function - would normally calculate actual progress
     return Math.floor(Math.random() * 100);
   }
-
-  // Get favorite courses
-  // getFavoriteCourses(): Ue[] {
-  //   if (!this.currentUser.favoriteCourses || this.userCourses.length === 0) {
-  //     return [];
-  //   }
-  //
-  //   return this.userCourses
-  //     .filter(enrollment =>
-  //       this.currentUser.favoriteCourses?.includes(enrollment.courseId._id))
-  //     .map(enrollment => enrollment.courseId);
-  // }
-  //
-  //
-  // // Initialize calendar
-  // initializeCalendar(): void {
-  //   // Calendar initialization code
-  // }
-  //
-  // // Toggle favorite status
-  // toggleFavorite(course: Ue): void {
-  //   if (!this.currentUser.favoriteCourses) {
-  //     this.currentUser.favoriteCourses = [];
-  //   }
-  //
-  //   if (this.currentUser.favoriteCourses.includes(course._id)) {
-  //     // If course is already in favorites, remove it
-  //     this.currentUser.favoriteCourses = this.currentUser.favoriteCourses.filter(id => id !== course._id);
-  //   } else {
-  //     // If course is not in favorites, add it
-  //     this.currentUser.favoriteCourses.push(course._id);
-  //   }
-  // }
-    // Save updated favorites to server (would implement with API call)
-    // For example:
-    // this.usersService.updateUser(this.currentUser._id, { favoriteCourses: this.currentUser.favoriteCourses }).subscribe();
 }

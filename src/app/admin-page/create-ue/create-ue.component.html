@@ -15,8 +15,25 @@
       <option *ngFor="let teacher of teachers" [value]="teacher._id">{{ teacher.name }}</option>
     </select><br>
 
+    <!-- Nouveau champ pour l'upload d'image -->
+    <div class="image-upload-section">
+      <label for="ueImage">Image du cours :</label>
+      <input
+        type="file"
+        id="ueImage"
+        (change)="onFileSelected($event)"
+        accept="image/*"
+      />
+
+      <!-- Prévisualisation de l'image -->
+      <div *ngIf="imagePreview" class="image-preview-container">
+        <p>Aperçu de l'image :</p>
+        <img [src]="imagePreview" alt="Aperçu de l'image du cours" class="image-preview">
+      </div>
+    </div>
+
     <div class="button-group">
-      <button type="submit" (click)="log()" class="sub-button">Créer</button>
+      <button type="submit" class="sub-button">Créer</button>
       <button type="button" class="close-form" (click)="closeForm()">Annuler</button>
     </div>
   </form>

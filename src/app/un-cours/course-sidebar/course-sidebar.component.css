@@ -1,0 +1,7 @@
+#sidebarMenu {
+  width: 250px;          /* Largeur identique à l’original */
+  height: 100vh;         /* Pleine hauteur */
+  transition: transform .3s ease;  /* Animation d’apparition/disparition */
+  transform: translateX(0);        /* Changez en translateX(-100%) pour la masquer */
+  z-index:40;
+}

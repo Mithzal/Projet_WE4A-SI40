@@ -25,11 +25,16 @@ const uesSchema = new Schema({
     ref: 'Users',
     required: true
   },
+  "imageFileId": {
+    type: Schema.Types.ObjectId,
+    ref: 'Files',
+    required: false
+  },
  "content": [
    {
      "type": {
        type: String,
-       enum: ['info', 'warning', 'file','return'],
+       enum: ['info', 'warning', 'file','assignement'],
        required: true
      },
       "title": {
@@ -44,7 +49,33 @@ const uesSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Files',
         required: false
-     }
+     },
+     "limitDate": {
+        type: Date,
+        required: false
+     },
+     "returns": [
+       {
+         "userId": {
+           type: Schema.Types.ObjectId,
+           ref: 'Users',
+           required: true
+         },
+         "fileId": {
+           type: Schema.Types.ObjectId,
+           ref: 'Files',
+           required: true
+         },
+         "fileName": {
+           type: String,
+           required: true
+         },
+         "submissionDate": {
+           type: Date,
+           default: Date.now
+         }
+       }
+     ]
    }
  ]
 })

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const logSchema = new Schema({
     type: {
         type: String,
-        enum: ['logging', 'disconnect', 'post', 'reading', 'homework', 'creation', 'delete','update','assign'],
+        enum: ['logging', 'disconnect', 'post', 'reading', 'homework', 'creation', 'delete','update','assign', 'submission'],
         required: true
     },
     message: {
@@ -14,10 +14,6 @@ const logSchema = new Schema({
     timestamp: {
         type: Date,
         default: Date.now
-    },
-    source: {
-      type : String,
-      metadata: Schema.Types.Mixed
     },
     userId :{
       type: Schema.Types.ObjectId,

@@ -16,18 +16,24 @@ const userSchema = new Schema({
     enum: ['Student', 'Teacher', 'Admin'],
     required: true
   },
-  "courses": [{
-    courseId: {
-      type: Schema.Types.ObjectId,
-      ref: 'UEs',
-      unique : true,
-      required: true
-    },
-    enrollmentDate: {
-      type: Date,
-      default: Date.now
-    }
-  }],
+  "courses": {
+    type :[{
+      courseId: {
+        type: Schema.Types.ObjectId,
+        ref: 'UEs',
+        required: true
+      },
+      enrollmentDate: {
+        type: Date,
+        default: Date.now
+      },
+      lastAccess: {
+        type: Date,
+        default: null
+      }
+    }],
+    default: []
+  },
   "password": {
     type: String,
     required: true

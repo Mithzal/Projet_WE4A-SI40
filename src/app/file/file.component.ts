@@ -119,7 +119,7 @@ export class FileComponent implements OnInit {
   }
 
   download(fileId: string, fileName : string): void {
-    this.fileService.downloadFile(fileId, fileName).subscribe(
+    this.fileService.downloadFile(fileId).subscribe(
       (blob: Blob) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
