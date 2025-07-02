@@ -1,0 +1,116 @@
+<div class="card mt-3">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Notes</h5>
+    <button *ngIf="isTeacher" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addGradeModal">
+      Ajouter une note
+    </button>
+  </div>
+  <div class="card-body">
+    <div *ngIf="grades.length === 0" class="text-center text-muted py-3">
+      Aucune note disponible pour le moment
+    </div>
+
+    <table *ngIf="grades.length > 0" class="table table-striped">
+      <thead>
+        <tr>
+          <th *ngIf="isTeacher">Étudiant</th>
+          <th>Devoir</th>
+          <th>Note</th>
+          <th>Commentaire</th>
+          <th>Date</th>
+          <th *ngIf="isTeacher">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let grade of grades">
+          <td *ngIf="isTeacher">{{ getStudentName(grade.studentId) }}</td>
+          <td>{{ grade.assignmentName || 'Devoir' }}</td>
+          <td><strong>{{ grade.value }}/20</strong></td>
+          <td>{{ grade.comment || '-' }}</td>
+          <td>{{ grade.timestamp | date:'short' }}</td>
+          <td *ngIf="isTeacher">
+            <div class="btn-group btn-group-sm">
+              <button class="btn btn-outline-primary" (click)="onEditGrade(grade)" data-toggle="modal" data-target="#editGradeModal">
+                <i class="fas fa-edit"></i> Modifier
+              </button>
+              <button class="btn btn-outline-danger" (click)="onDeleteGrade(grade._id || '')">
+                <i class="fas fa-trash"></i> Supprimer
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Add Grade Modal -->
+<div *ngIf="isTeacher" class="modal fade" id="addGradeModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ajouter une note</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="gradeForm">
+          <div class="form-group">
+            <label>Étudiant</label>
+            <select class="form-control" formControlName="studentId">
+              <option value="">-- Sélectionner un étudiant --</option>
+              <option *ngFor="let student of students" [value]="student._id">{{ student.name }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Nom du devoir</label>
+            <input type="text" class="form-control" formControlName="assignmentName">
+          </div>
+          <div class="form-group">
+            <label>Note (sur 20)</label>
+            <input type="number" class="form-control" formControlName="value" min="0" max="20">
+          </div>
+          <div class="form-group">
+            <label>Commentaire</label>
+            <textarea class="form-control" formControlName="comment" rows="3"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" [disabled]="!gradeForm.valid" (click)="onAddGrade()" data-dismiss="modal">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Grade Modal -->
+<div *ngIf="isTeacher && selectedGrade" class="modal fade" id="editGradeModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modifier la note</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cancelEdit()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="gradeForm">
+          <div class="form-group">
+            <label>Note (sur 20)</label>
+            <input type="number" class="form-control" formControlName="value" min="0" max="20">
+          </div>
+          <div class="form-group">
+            <label>Commentaire</label>
+            <textarea class="form-control" formControlName="comment" rows="3"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancelEdit()">Annuler</button>
+        <button type="button" class="btn btn-primary" [disabled]="!gradeForm.valid" (click)="onUpdateGrade()" data-dismiss="modal">Mettre à jour</button>
+      </div>
+    </div>
+  </div>
+</div>

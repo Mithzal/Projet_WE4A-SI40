@@ -73,6 +73,11 @@ const uesSchema = new Schema({
          "submissionDate": {
            type: Date,
            default: Date.now
+         },
+         "gradeId": {
+           type: Schema.Types.ObjectId,
+           ref: 'Notes',
+           required: false
          }
        }
      ]

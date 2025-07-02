@@ -1,8 +1,10 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UeContent, UeReturn} from "../../../models/ue.model";
 import {FileService} from "../../services/files.service";
 import {UsersService} from "../../services/users.service";
 import {AssignmentService} from "../../services/assignment.service";
+import {NotesService} from "../../services/notes.service";
+import {Notes} from "../../../models/notes.model";
 import { UEsService } from '../../services/ues.service';
 
 @Component({
@@ -29,11 +31,22 @@ export class ContentComponent implements OnInit {
   editMode: boolean = false;
   isInstructor: boolean = false; // Ajout de la propriété isInstructor
 
+  // Grading related properties
+  isTeacher: boolean = false;
+  isAdmin: boolean = false;
+  gradingMode: boolean = false;
+  submissionGrade: Notes | null = null;
+  gradeValue: number | null = null;
+  gradeComment: string = '';
+  gradingError: string = '';
+  gradingSuccess: boolean = false;
+
   constructor(
     private fileService : FileService,
     private userService : UsersService,
     private assignmentService: AssignmentService,
-    private ueService: UEsService // Ajout du service UEsService
+    private ueService: UEsService, // Ajout du service UEsService
+    private notesService: NotesService
   ) { }
 
   ngOnInit(): void {
@@ -44,20 +57,19 @@ export class ContentComponent implements OnInit {
     this.courseId = window.location.pathname.split('/').pop() || '';
     this.loadUserName(this.currentUserId);
 
+    // Check user roles
+    this.isTeacher = this.userService.isUserTeacher();
+    this.isAdmin = this.userService.isUserAdmin();
+
     if (this.content.type === 'assignement' && this.content._id) {
       this.checkUserSubmission();
     }
 
-    // Vérifier si l'utilisateur courant est le prof responsable de l'UE
-    if (this.courseId) {
-      this.ueService.getDataById(this.courseId).subscribe({
-        next: (ue) => {
-          this.isInstructor = ue.instructorId === this.currentUserId;
-        },
-        error: () => {
-          this.isInstructor = false;
-        }
-      });
+    // Check if the current user is a teacher and load the submission grade if in grading mode
+    this.gradingMode = this.content.type === 'assignement' && this.gradingMode;
+
+    if (this.gradingMode && this.content._id) {
+      this.loadSubmissionGrade();
     }
   }
 
@@ -129,7 +141,7 @@ export class ContentComponent implements OnInit {
 
     console.log(`Fetching submission for course: ${this.courseId}, content: ${this.content._id}, user: ${this.currentUserId}`);
 
-    this.assignmentService.getUserAssignment(this.courseId, this.content._id, this.currentUserId)
+    this.assignmentService.getUserSubmission(this.courseId, this.content._id, this.currentUserId)
       .subscribe({
         next: (submission: UeReturn | null) => {
           if (submission) {
@@ -274,11 +286,12 @@ export class ContentComponent implements OnInit {
     }
 
     // Create custom filename: username_contentname_filename
+    const fileExt = this.selectedFile.name.split('.').pop() || '';
     const sanitizedTitle = this.content.title.replace(/\s+/g, '_').replace(/[^\w]/g, '');
     const sanitizedUsername = this.userName.replace(/\s+/g, '_').replace(/[^\w]/g, '');
 
     // Create a new file with the custom name
-    const customFileName = `${sanitizedUsername}_${sanitizedTitle}_${this.selectedFile.name}`;
+    const customFileName = `${sanitizedUsername}_${sanitizedTitle}_${Date.now()}.${fileExt}`;
     const customFile = new File(
       [this.selectedFile],
       customFileName,
@@ -432,20 +445,67 @@ export class ContentComponent implements OnInit {
     }
   }
 
+  loadSubmissionGrade() {
+    if (!this.content._id || !this.currentUserId) {
+      return;
+    }
+
+    this.notesService.getSubmissionGrade(this.content._id, this.currentUserId).subscribe({
+      next: (grade: Notes | null) => {
+        this.submissionGrade = grade;
+
+        if (grade) {
+          this.gradeValue = grade.value;
+          this.gradeComment = grade.comments || '';
+        } else {
+          this.gradeValue = null;
+          this.gradeComment = '';
+        }
+      },
+      error: (error) => {
+        console.error('Error loading submission grade:', error);
+        this.gradingError = 'Erreur lors du chargement de la note';
+      }
+    });
+  }
+
+  saveGrade() {
+    if (!this.submissionGrade || this.gradeValue === null) {
+      this.gradingError = 'Veuillez entrer une note valide';
+      return;
+    }
+
+    this.submissionGrade.value = this.gradeValue;
+    this.submissionGrade.comments = this.gradeComment;
+
+    this.notesService.saveGrade(this.submissionGrade).subscribe({
+      next: () => {
+        this.gradingSuccess = true;
+        this.gradingError = '';
+        alert('Note enregistrée avec succès!');
+      },
+      error: (error) => {
+        console.error('Error saving grade:', error);
+        this.gradingError = 'Erreur lors de l\'enregistrement de la note';
+      }
+    });
+  }
+
+  toggleGradingMode() {
+    this.gradingMode = !this.gradingMode;
+
+    if (this.gradingMode) {
+      this.loadSubmissionGrade();
+    } else {
+      this.submissionGrade = null;
+      this.gradeValue = null;
+      this.gradeComment = '';
+    }
+  }
   deleteContent() {
     if (!this.content._id || !this.courseId) {
       alert('Impossible de supprimer ce post : identifiant manquant.');
       return;
-    }
-    if (!confirm('Voulez-vous vraiment supprimer ce post ?')) return;
-    this.ueService.deleteContentFromUe(this.courseId, this.content._id).subscribe({
-      next: () => {
-        this.postDeleted.emit(this.content._id!); // Émet l'ID du post supprimé
-      },
-      error: (err) => {
-        alert('Erreur lors de la suppression du post.');
-        console.error(err);
-      }
-    });
-  }
+    }}
+
 }
