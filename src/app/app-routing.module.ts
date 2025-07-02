@@ -12,6 +12,7 @@ import {AuthGuard} from "./guards/auth.guard";
 import {LoginComponent} from "./login/login.component";
 import {ForumsComponent} from "./forums/forums.component";
 import {AddContentComponent} from "./un-cours/add-content/add-content.component";
+import {AssignmentGradingComponent} from "./un-cours/assignment-grading/assignment-grading.component";
 
 
 
@@ -26,6 +27,7 @@ const routes : Routes =[
   {path :"profile", component : ProfileComponent, canActivate: [AuthGuard]},
   {path: "cours/:id", component: UnCoursComponent, canActivate: [AuthGuard]},
   {path : "ajouter-contenu/:id", component : AddContentComponent , canActivate : [AuthGuard]},
+  {path : "assignment-grading/:courseId/:assignmentId", component : AssignmentGradingComponent , canActivate : [AuthGuard]},
 ]
 //todo : ajouter un AdminGuard pour les routes admin
 

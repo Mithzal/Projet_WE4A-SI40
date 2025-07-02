@@ -361,3 +361,37 @@ exports.deleteAssignment = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+exports.getAllSubmissions = async (req, res) => {
+  try {
+    const { ueId, contentId } = req.params;
+
+    // Authorization check: Only instructors and admins can see all submissions
+    if (req.userData.role !== 'Teacher' && req.userData.role !== 'Admin') {
+      return res.status(403).json({ message: "Vous n'êtes pas autorisé à accéder à toutes les soumissions" });
+    }
+
+    // Find the UE
+    const ue = await Ues.findById(ueId);
+    if (!ue) {
+      return res.status(404).json({ message: 'UE non trouvée' });
+    }
+
+    // Find the content
+    const content = ue.content.id(contentId);
+    if (!content) {
+      return res.status(404).json({ message: 'Contenu non trouvé' });
+    }
+
+    // Get all submissions for this assignment
+    if (!content.returns || content.returns.length === 0) {
+      return res.json([]);
+    }
+
+    // Return all submissions
+    res.json(content.returns);
+  } catch (err) {
+    console.error('Error fetching all submissions:', err);
+    res.status(500).json({ message: err.message });
+  }
+};

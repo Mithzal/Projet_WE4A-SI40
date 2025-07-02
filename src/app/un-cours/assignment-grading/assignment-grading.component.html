@@ -1,0 +1,155 @@
+<div class="container mt-4">
+  <!-- Back button and page title -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <button class="btn btn-outline-secondary" (click)="backToCourse()">
+      <i class="bi bi-arrow-left me-1"></i> Retour au cours
+    </button>
+    <h1 class="h3">Notation des devoirs</h1>
+  </div>
+
+  <!-- Status messages -->
+  <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+    <i class="bi bi-check-circle-fill me-2"></i>{{ successMessage }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="successMessage = ''"></button>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ errorMessage }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="errorMessage = ''"></button>
+  </div>
+
+  <!-- Loading indicator -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+    <p class="mt-2">Chargement des soumissions...</p>
+  </div>
+
+  <!-- Empty state -->
+  <div *ngIf="!isLoading && submissions.length === 0" class="text-center py-5 card shadow-sm">
+    <div class="card-body py-5">
+      <i class="bi bi-inbox text-muted" style="font-size: 3rem;"></i>
+      <h2 class="h4 mt-3">Aucune soumission</h2>
+      <p class="text-muted">Aucun étudiant n'a encore déposé de devoir pour cette activité.</p>
+    </div>
+  </div>
+
+  <!-- Submissions Table -->
+  <div *ngIf="!isLoading && submissions.length > 0" class="card mb-4 shadow-sm">
+    <div class="card-header bg-primary text-white py-3">
+      <h5 class="mb-0">
+        <i class="bi bi-list-ul me-2"></i>Soumissions ({{ submissions.length }})
+      </h5>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover table-striped mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col" class="py-3">Étudiant</th>
+              <th scope="col" class="py-3">Document</th>
+              <th scope="col" class="py-3">Date de dépôt</th>
+              <th scope="col" class="py-3">Note</th>
+              <th scope="col" class="text-center py-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of submissions" [ngClass]="{'table-active': item.isExpanded}">
+              <td class="align-middle py-3">
+                <span class="fw-semibold">{{ item.submission.studentName || 'Étudiant' }}</span>
+              </td>
+              <td class="align-middle py-3">
+                <span class="d-inline-block text-truncate" style="max-width: 200px;">
+                  {{ item.submission.fileName || 'Document sans nom' }}
+                </span>
+              </td>
+              <td class="align-middle py-3">{{ getSubmissionDate(item.submission) }}</td>
+              <td class="align-middle py-3">
+                <span *ngIf="item.grade" class="badge bg-success py-2 px-3 fs-6">{{ item.grade.value }}/20</span>
+                <span *ngIf="!item.grade" class="badge bg-secondary py-2 px-3 fs-6">Non noté</span>
+              </td>
+              <td class="text-center align-middle py-3">
+                <div class="btn-group">
+                  <button class="btn btn-primary me-2"
+                          (click)="downloadSubmission(item.submission)"
+                          title="Télécharger le document">
+                    <i class="bi bi-download"></i> Télécharger
+                  </button>
+                  <button class="btn"
+                          [ngClass]="(item.grade ? 'btn-info' : 'btn-success')"
+                          (click)="toggleSubmission(item)"
+                          title="{{ item.grade ? 'Modifier la note' : 'Noter ce devoir' }}">
+                    <i class="bi bi-pencil me-1"></i>
+                    {{ item.grade ? 'Modifier' : 'Noter' }}
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selected Submission Grading Panel -->
+  <div *ngIf="selectedSubmission" class="card mb-4 shadow"
+       [ngClass]="selectedSubmission.grade ? 'border-info' : 'border-success'">
+    <div class="card-header py-3"
+         [ngClass]="selectedSubmission.grade ? 'bg-info' : 'bg-success'"
+         style="color: white;">
+      <div class="d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">
+          <i class="bi" [ngClass]="selectedSubmission.grade ? 'bi-pencil-square me-2' : 'bi-plus-circle me-2'"></i>
+          {{ selectedSubmission.grade ? 'Modifier la note' : 'Noter la soumission' }}
+        </h5>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="selectedSubmission = null"></button>
+      </div>
+    </div>
+    <div class="card-body p-4">
+      <div class="row mb-4 bg-light p-3 rounded">
+        <div class="col-md-4 mb-3 mb-md-0">
+          <p class="mb-1 text-secondary"><i class="bi bi-file-earmark me-2"></i>Document</p>
+          <p class="fw-bold">{{ selectedSubmission?.submission?.fileName || 'Sans nom' }}</p>
+        </div>
+        <div class="col-md-4 mb-3 mb-md-0">
+          <p class="mb-1 text-secondary"><i class="bi bi-person me-2"></i>Étudiant</p>
+          <p class="fw-bold">{{ selectedSubmission?.submission?.studentName || 'Étudiant' }}</p>
+        </div>
+        <div class="col-md-4">
+          <p class="mb-1 text-secondary"><i class="bi bi-calendar me-2"></i>Date de dépôt</p>
+          <p class="fw-bold">{{ selectedSubmission?.submission ? getSubmissionDate(selectedSubmission.submission) : '' }}</p>
+        </div>
+      </div>
+
+      <!-- Grading form -->
+      <div class="mb-4">
+        <label for="gradeInput" class="form-label fw-bold">Note sur 20</label>
+        <div class="input-group">
+          <input type="number" class="form-control form-control-lg" id="gradeInput"
+                min="0" max="20" step="0.5"
+                [(ngModel)]="currentGrade" placeholder="Entrez une note entre 0 et 20">
+          <span class="input-group-text bg-light">/20</span>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="commentArea" class="form-label fw-bold">Commentaire (optionnel)</label>
+        <textarea class="form-control" id="commentArea" rows="4"
+                [(ngModel)]="currentComment"
+                placeholder="Ajouter un commentaire constructif pour aider l'étudiant à comprendre sa note..."></textarea>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-lg btn-outline-secondary me-2" (click)="selectedSubmission = null">
+          <i class="bi bi-x-circle me-2"></i>Annuler
+        </button>
+        <button class="btn btn-lg btn-success"
+                [disabled]="currentGrade === null"
+                (click)="saveGrade()">
+          <i class="bi bi-save me-2"></i>Enregistrer la note
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

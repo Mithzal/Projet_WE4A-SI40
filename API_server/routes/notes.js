@@ -12,5 +12,7 @@ router.put('/:id', auth, notesController.update);
 router.delete('/:id', auth, notesController.delete);
 router.get('/course/:ueId', auth, notesController.findByCourse);
 router.get('/student/:studentId', auth, notesController.findByStudent);
+router.get('/assignment/:assignmentId/student/:studentId', auth, notesController.findByAssignmentAndStudent);
+router.get('/submission/:submissionId', auth, notesController.findBySubmissionId);
 
 module.exports = router;
