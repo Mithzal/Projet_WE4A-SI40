@@ -1,11 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UeContent, UeReturn} from "../../../models/ue.model";
 import {FileService} from "../../services/files.service";
 import {UsersService} from "../../services/users.service";
 import {AssignmentService} from "../../services/assignment.service";
 import {NotesService} from "../../services/notes.service";
 import {Notes} from "../../../models/notes.model";
-import {Files} from "../../../models/file.model";
 import { UEsService } from '../../services/ues.service';
 
 @Component({
@@ -174,11 +173,11 @@ export class ContentComponent implements OnInit {
   }
 
   isSubmissionClosed(): boolean {
-    if (!this.content.returnDate) {
+    if (!this.content.limitDate) {
       return false;  // No return date means always open
     }
 
-    const returnDate = new Date(this.content.returnDate);
+    const returnDate = new Date(this.content.limitDate);
     const now = new Date();
 
     return now > returnDate;
@@ -503,4 +502,10 @@ export class ContentComponent implements OnInit {
       this.gradeComment = '';
     }
   }
+  deleteContent() {
+    if (!this.content._id || !this.courseId) {
+      alert('Impossible de supprimer ce post : identifiant manquant.');
+      return;
+    }}
+
 }
