@@ -25,6 +25,12 @@ export class NotesService {
       { headers: this.usersService.getAuthHeaders() });
   }
 
+  // Get a grade by submission ID
+  getGradeBySubmissionId(submissionId: string): Observable<Notes> {
+    return this.http.get<Notes>(`${this.apiUrl}submission/${submissionId}`,
+      { headers: this.usersService.getAuthHeaders() });
+  }
+
   // Create a new grade for an assignment submission
   createGrade(grade: Notes): Observable<Notes> {
     return this.http.post<Notes>(this.apiUrl, grade,

@@ -5,6 +5,7 @@ export interface UeReturn {
   submissionDate: Date;
   _id?: string;
   studentName: string;  // Added to store the student name
+  gradeId?: string;     // Reference to the grade in the Notes collection
 }
 
 export interface UeContent {
