@@ -96,4 +96,24 @@ export class UsersService {
     return this.http.get<string>(`${this.ApiUrl}/${id}/name`, { headers: this.getAuthHeaders() });
   }
 
+  // Récupère l'ID d'une UE à partir de son code
+  getUeIdByCode(code: string): Observable<any> {
+    // On suppose que l'API /api/ues?code=CODE retourne l'UE correspondante
+    return this.http.get<any>(`http://localhost:7777/api/ues?code=${code}`, { headers: this.getAuthHeaders() });
+  }
+
+  // Get users by UE
+  getUsersByUe(ueId: string): Observable<User[]> {
+    return this.http.get<User[]>(`${this.ApiUrl}/byUe/${ueId}`, { headers: this.getAuthHeaders() });
+  }
+
+  // Update the last access time for a course
+  updateLastAccess(userId: string, courseId: string): Observable<any> {
+    return this.http.put<any>(
+      `${this.ApiUrl}/lastAccess/${userId}/${courseId}`,
+      {},
+      { headers: this.getAuthHeaders() }
+    );
+  }
+
 }

@@ -7,38 +7,6 @@
     <main class="bg-white p-4 rounded-3 shadow-sm">
       <h1 class="mb-4">Tableau de bord</h1>
 
-      <!-- ==== Mes cours ==== -->
-      <section class="mb-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h2 class="h4 mb-0">Mes cours</h2>
-        </div>
-
-        <!-- Grille Bootstrap : g-3 = gap‑3 -->
-        <div class="row g-3">
-          <!--  ► Carte (votre composant)                  -->
-          <!--      col‑6  : 2 cartes par ligne <576 px     -->
-          <!--      col‑md‑4: 3 cartes par ligne ≥768 px   -->
-          <!--      col‑lg‑3: 4 cartes par ligne ≥992 px   -->
-          <div class="col-6 col-md-4 col-lg-3"
-               *ngFor="let course of userCourses">
-            <app-course-card
-              [name]="course.name"
-              [code]="course.code"
-              [imageUrl]="'/assets/images/default-course.jpg'"
-              [courseUrl]="'/cours/' + course._id"
-              [progression]="getCourseProgress(course._id!)"
-              [nomimg]="'Image de ' + course.name">
-            </app-course-card>
-          </div>
-
-          <!-- État vide -->
-          <div *ngIf="userCourses.length === 0"
-               class="col-12 text-center text-muted py-5">
-            Vous n'êtes inscrit à aucun cours
-          </div>
-        </div>
-      </section>
-
       <!-- ==== Cours consultés récemment ==== -->
       <section class="mb-5">
         <h2 class="h4 mb-3">Cours consultés récemment</h2>
@@ -62,42 +30,6 @@
           </div>
         </div>
       </section>
-
-      <!-- ==== Calendrier ==== -->
-      <section>
-        <h2 class="h4 mb-3">Calendrier</h2>
-
-        <div class="card border-0 shadow-sm">
-          <div class="card-header bg-light">
-            <h3 class="h5 mb-0">Événements à venir</h3>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item d-flex align-items-start"
-                *ngFor="let event of calendarEvents">
-              <span class="me-3 fw-semibold">{{ event.date }}</span>
-              <div class="flex-grow-1">
-                <div class="fw-bold">{{ event.title }}</div>
-                <!-- Utilise les classes badge Bootstrap via ngClass -->
-                <span class="badge"
-                      [ngClass]="{
-                    'bg-primary': event.type === 'lecture',
-                    'bg-success': event.type === 'exam',
-                    'bg-warning text-dark': event.type === 'assignment'
-                  }">
-                  {{ event.type === 'lecture' ? 'Cours' : event.type === 'exam' ? 'Examen' : event.type === 'assignment' ? 'TP' : event.type }}
-                </span>
-              </div>
-            </li>
-
-            <!-- Aucun événement -->
-            <li *ngIf="calendarEvents.length === 0"
-                class="list-group-item text-center text-muted py-4">
-              Aucun événement à venir
-            </li>
-          </ul>
-        </div>
-      </section>
-
     </main>
   </div>
  </body>

@@ -8,6 +8,11 @@ import {UeContent} from "../../../models/ue.model";
 })
 export class ContentListComponent implements OnInit {
   @Input() contents: UeContent[] = [];
+
+  removeContent(contentId: string) {
+    this.contents = this.contents.filter(c => c._id !== contentId);
+  }
+
   constructor() { }
 
   ngOnInit(): void {

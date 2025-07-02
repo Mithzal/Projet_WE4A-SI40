@@ -6,6 +6,7 @@ import {AssignmentService} from "../../services/assignment.service";
 import {NotesService} from "../../services/notes.service";
 import {Notes} from "../../../models/notes.model";
 import {Files} from "../../../models/file.model";
+import { UEsService } from '../../services/ues.service';
 
 @Component({
   selector: 'app-content',
@@ -18,6 +19,7 @@ export class ContentComponent implements OnInit {
     title: '',
     text:  '',
   }
+  @Output() postDeleted = new EventEmitter<string>();
   fileName : string = "unknown"
   userName : string = "unknown"
   selectedFile: File | null = null;
@@ -28,6 +30,7 @@ export class ContentComponent implements OnInit {
   userSubmission: UeReturn | null = null;
   isLoading: boolean = true;
   editMode: boolean = false;
+  isInstructor: boolean = false; // Ajout de la propriété isInstructor
 
   // Grading related properties
   isTeacher: boolean = false;
@@ -43,6 +46,7 @@ export class ContentComponent implements OnInit {
     private fileService : FileService,
     private userService : UsersService,
     private assignmentService: AssignmentService,
+    private ueService: UEsService, // Ajout du service UEsService
     private notesService: NotesService
   ) { }
 

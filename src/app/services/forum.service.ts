@@ -24,6 +24,11 @@ export class ForumService {
     return this.http.get<Forums[]>(this.apiUrl,{headers : this.getAuthHeaders()});
   }
 
+  // Get all forums for a specific course (UE)
+  getForumsByCourseId(courseId: string): Observable<Forums[]> {
+    return this.http.get<Forums[]>(`${this.apiUrl}byCourse/${courseId}`, { headers: this.getAuthHeaders() });
+  }
+
   getMessagesByForumId(forumId: string): Observable<ForumMessage[]> {
     return this.http.get<ForumMessage[]>(`${this.apiUrl}${forumId}`,{headers : this.getAuthHeaders()});
   }
@@ -51,5 +56,10 @@ export class ForumService {
   // Update forum title
   updateForumTitle(forumId: string, newTitle: string): Observable<Forums> {
     return this.http.put<Forums>(`${this.apiUrl}${forumId}/updateTitle`, { title: newTitle }, {headers : this.getAuthHeaders()});
+  }
+
+  // Delete a message from a forum by index
+  deleteForumMessage(forumId: string, messageIndex: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}${forumId}/messages/${messageIndex}`, { headers: this.getAuthHeaders() });
   }
 }

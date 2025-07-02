@@ -32,6 +32,10 @@ export class UEsService {
     }
   }
 
+  getAllUe() : Observable<Ue[]>{
+    return this.http.get<Ue[]>(`${this.ApiUrl}/admin`, { headers: this.getAuthHeaders() });
+  }
+
   addUe(ue: Ue): Observable<Ue> {
     return this.http.post<Ue>(this.ApiUrl, ue, { headers: this.getAuthHeaders() });
   }
@@ -57,6 +61,14 @@ export class UEsService {
   }
   addContentToUe(ueId: string, content: any): Observable<Ue> {
     return this.http.post<Ue>(`${this.ApiUrl}/content/${ueId}/`, content, { headers: this.getAuthHeaders() });
+  }
+
+  consultUe(ueId: string): Observable<any> {
+    return this.http.post<any>(`${this.ApiUrl}/consult/${ueId}`, {}, { headers: this.getAuthHeaders() });
+  }
+
+  deleteContentFromUe(ueId: string, contentId: string): Observable<Ue> {
+    return this.http.delete<Ue>(`${this.ApiUrl}/content/${ueId}/${contentId}`, { headers: this.getAuthHeaders() });
   }
 
 }

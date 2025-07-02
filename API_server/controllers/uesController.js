@@ -1,8 +1,50 @@
 const Ues = require('../models/ue');
+const Log = require('../models/log');
+const User = require('../models/user'); // Ensuring we use the correct model reference
 
 exports.index = async (req, res) => {
   try {
-    const ues = await Ues.find({});
+    // Find all courses but select only the required fields
+    const ues = await Ues.find({}, 'code name description credits instructorId imageFileId');
+
+    // Transform the result to replace instructorId with instructor name
+    const uesToSend = await Promise.all(ues.map(async (ue) => {
+      try {
+        // Find the instructor by ID to get their name
+        const instructor = await User.findById(ue.instructorId, 'name');
+
+        // Convert the document to a plain object so we can modify it
+        const ueObject = ue.toObject();
+
+        // Replace instructorId value with instructor name, but keep the field name
+        if (instructor) {
+          ueObject.instructorId = instructor.name;
+        } else {
+          ueObject.instructorId = "Unknown";
+        }
+
+        return ueObject;
+      } catch (error) {
+        // Handle any errors during instructor lookup
+        console.error(`Error processing UE ${ue._id}: ${error.message}`);
+        const ueObject = ue.toObject();
+        ueObject.instructorId = "Error retrieving instructor";
+        return ueObject;
+      }
+    }));
+
+    res.json(uesToSend);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+exports.index2 = async (req, res) => {
+  try {
+    // Récupération des cours classiques sans transformation
+    const ues = await Ues.find({}, 'code name description credits instructorId imageFileId');
+
+    // Retourner directement les cours sans transformation
     res.json(ues);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -15,7 +57,8 @@ exports.insert = async (req, res) => {
     name: req.body.name,
     credits: req.body.credits,
     description: req.body.description,
-    instructorId: req.body.instructorId
+    instructorId: req.body.instructorId,
+    imageFileId: req.body.imageFileId // Ajout du champ imageFileId
   });
 
   try {
@@ -93,6 +136,9 @@ exports.addContent = async (req, res) => {
       return res.status(404).json({message: 'UE non trouvée'});
     }
 
+    console.log('Données reçues du client:', req.body);
+    console.log('Type de limitDate:', typeof req.body.limitDate);
+
     const newContent = {
       type: req.body.type,
       title: req.body.title,
@@ -100,10 +146,25 @@ exports.addContent = async (req, res) => {
       fileId: req.body.fileId
     };
 
-    // Add returnDate if it's an assignment type
+    // Gérer les dates pour tous les types de contenu
+    if (req.body.limitDate) {
+      try {
+        // Ensure proper Date object creation regardless of input format
+        newContent.limitDate = new Date(req.body.limitDate);
+        console.log('Date convertie:', newContent.limitDate);
+
+        // Validate the date is valid
+        if (isNaN(newContent.limitDate.getTime())) {
+          console.error('Invalid date format received:', req.body.limitDate);
+          delete newContent.limitDate; // Remove invalid date
+        }
+      } catch (e) {
+        console.error('Error parsing date:', e);
+      }
+    }
+
+    // Add empty returns array for assignments
     if (req.body.type === 'assignement') {
-      newContent.returnDate = req.body.returnDate;
-      // Initialize empty returns array for assignments
       newContent.returns = [];
     }
 
@@ -126,6 +187,7 @@ exports.addContent = async (req, res) => {
 
     res.status(201).json(newContent);
   } catch (err) {
+    console.error('Error adding content:', err);
     res.status(400).json({message: err.message});
   }
 }
@@ -154,7 +216,7 @@ exports.submitAssignment = async (req, res) => {
     }
 
     // Check return date if it exists
-    if (content.returnDate && new Date() > new Date(content.returnDate)) {
+    if (content.limitDate && new Date() > new Date(content.limitDate)) {
       return res.status(400).json({ message: 'La date limite de rendu est dépassée' });
     }
 
@@ -184,6 +246,17 @@ exports.submitAssignment = async (req, res) => {
     }
 
     await ue.save();
+
+    // Création du log de dépôt
+    let userName = req.userData?.name || userId;
+    let ueCode = ue.code || ueId;
+    await Log.create({
+      type: 'submission',
+      message: `Dépôt par ${userName} pour ${ueCode} le ${new Date().toLocaleString('fr-FR')}`,
+      userId: userId,
+      timestamp: new Date()
+    });
+
     res.status(201).json({
       message: 'Devoir soumis avec succès',
       submission: existingSubmission || content.returns[content.returns.length - 1]

@@ -1,7 +1,7 @@
 <!-- Liste des messages -->
 <div class="messages-list">
   <div class="card mb-3" *ngFor="let content of contents">
-    <app-content [content]="content" ></app-content>
+    <app-content [content]="content" (postDeleted)="removeContent($event)"></app-content>
   </div>
 
   <!-- Message si aucun message n'existe -->

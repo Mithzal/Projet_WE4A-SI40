@@ -22,8 +22,8 @@ import { CreateUserComponent } from './admin-page/create-user/create-user.compon
 import { CreateUeComponent } from './admin-page/create-ue/create-ue.component';
 import { EditUserComponent } from './admin-page/edit-user/edit-user.component';
 import { EditUeComponent } from './admin-page/edit-ue/edit-ue.component';
-import { NewsfeedComponent } from './newsfeed/newsfeed.component';
-import { NewsfeedCardComponent } from './newsfeed-card/newsfeed-card.component';
+import { NewsfeedComponent } from './mes-cours/newsfeed/newsfeed.component';
+import { NewsfeedCardComponent } from './mes-cours/newsfeed-card/newsfeed-card.component';
 import { UnCoursComponent } from './un-cours/un-cours.component';
 import {HttpClientModule} from "@angular/common/http";
 import { FileComponent } from './file/file.component';

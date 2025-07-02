@@ -1,12 +1,16 @@
-
-    <div class="card-header d-flex justify-content-between">
+<div class="card-header d-flex justify-content-between">
       <div>
         <strong>{{ name }}</strong>
         <small class="text-muted ms-2">{{ message.timestamp | date:'dd/MM/yyyy à HH:mm' }}</small>
       </div>
-      <span class="badge" [ngClass]="message.type === 'question' ? 'bg-primary' : 'bg-success'">
+      <div class="d-flex align-items-center">
+        <span class="badge me-2" [ngClass]="message.type === 'question' ? 'bg-primary' : 'bg-success'">
           {{ message.type }}
         </span>
+        <button *ngIf="isAdminOrTeacher" (click)="onDelete()" class="btn btn-sm btn-outline-danger" title="Supprimer le message">
+          Supprimer
+        </button>
+      </div>
     </div>
     <div class="card-body">
       <p class="card-text">{{ message.content }}</p>

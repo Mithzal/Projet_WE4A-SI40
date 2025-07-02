@@ -1,6 +1,7 @@
 export interface UserCourse {
   courseId: string;
   enrollmentDate: Date;
+  lastAccess?: Date;
 }
 
 export class User {

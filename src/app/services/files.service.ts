@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Files } from "../../models/file.model";
 import { UsersService } from './users.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class FileService {
 
   constructor(
     private http: HttpClient,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private sanitizer: DomSanitizer
   ) {}
 
   // Méthode pour uploader un fichier
@@ -50,4 +52,23 @@ export class FileService {
     return this.http.get(`${this.apiUrl}/name/${fileId}`, { headers: this.usersService.getAuthHeaders() });
   }
 
+  // Nouvelle méthode pour obtenir une URL d'image sécurisée
+  getSecureImageUrl(fileId: string): Observable<SafeUrl> {
+    if (!fileId) {
+      // Si pas d'ID de fichier, renvoyer une image par défaut
+      return of(this.sanitizer.bypassSecurityTrustUrl('/assets/no_image.webp'));
+    }
+
+    return this.http.get(`${this.apiUrl}/download/${fileId}`, {
+      responseType: 'blob',
+      headers: this.usersService.getAuthHeaders()
+    }).pipe(
+      map(blob => {
+        // Créer une URL à partir du Blob
+        const objectUrl = URL.createObjectURL(blob);
+        // Sécuriser l'URL avec le sanitizer Angular
+        return this.sanitizer.bypassSecurityTrustUrl(objectUrl);
+      })
+    );
+  }
 }

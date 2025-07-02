@@ -25,6 +25,11 @@ const uesSchema = new Schema({
     ref: 'Users',
     required: true
   },
+  "imageFileId": {
+    type: Schema.Types.ObjectId,
+    ref: 'Files',
+    required: false
+  },
  "content": [
    {
      "type": {
@@ -45,7 +50,7 @@ const uesSchema = new Schema({
         ref: 'Files',
         required: false
      },
-     "returnDate": {
+     "limitDate": {
         type: Date,
         required: false
      },
